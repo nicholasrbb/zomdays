@@ -17,17 +17,18 @@ public class ModelManager{
 			map.SpriteList.get(i).setSpriteOrientation();
 			if (map.SpriteList.get(i).isAlive == false){
 				map.removeSprite(map.SpriteList.get(i));}
-			
-			for (int j = 0; j!=i && j<map.SpriteList.size(); j++){
-				if (isCollision(map.SpriteList.get(i),map.SpriteList.get(j)) == false){
-					
-				}
+			if ( map.SpriteList.size() > 1){
+				for (int j = 0; j!=i && j<map.SpriteList.size(); j++){
+					if (isCollision(map.SpriteList.get(i),map.SpriteList.get(j)) == false){
+						
+					}
+				}	
 			}
 		}
 	}
 
 	
-	public boolean isCollision(Sprite sprite1, Sprite sprite2){
+	public synchronized boolean isCollision(Sprite sprite1, Sprite sprite2){
 		double x = (sprite1.getX() - sprite2.getX())*(sprite1.getX() - sprite2.getX());
 		double y = (sprite1.getY() - sprite2.getY())*(sprite1.getY() - sprite2.getY());
 		

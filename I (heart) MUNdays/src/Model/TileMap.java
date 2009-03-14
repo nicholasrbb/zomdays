@@ -98,7 +98,59 @@ public class TileMap {
             for (int x=0; x<line.length(); x++) {
                 char ch = line.charAt(x);
                 if (ch == 'A') {
-                	this.setTile(x, y, toolkit.getImage("black.jpg") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_TB.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'B') {
+                	this.setTile(x, y, toolkit.getImage("cornerTL.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'C') {
+                	this.setTile(x, y, toolkit.getImage("cornerTR.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'D') {
+                	this.setTile(x, y, toolkit.getImage("cornerBL.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'E') {
+                	this.setTile(x, y, toolkit.getImage("cornerBR.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'F') {
+                	this.setTile(x, y, toolkit.getImage("wall_T.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'G') {
+                	this.setTile(x, y, toolkit.getImage("wall_B.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'H') {
+                	this.setTile(x, y, toolkit.getImage("wall_R.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'I') {
+                	this.setTile(x, y, toolkit.getImage("innerwall_TL.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'J') {
+                	this.setTile(x, y, toolkit.getImage("innerwall_LR.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'K') {
+                	this.setTile(x, y, toolkit.getImage("innerwall_TR.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'L') {
+                	this.setTile(x, y, toolkit.getImage("wall_L.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'M') {
+                	this.setTile(x, y, toolkit.getImage("innerwall_BR.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                if (ch == 'N') {
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.jpg") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == ' ') {
