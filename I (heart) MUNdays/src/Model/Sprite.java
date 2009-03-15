@@ -22,6 +22,7 @@ public abstract class Sprite {
 	public enum Direction{ UP, RIGHT, LEFT, DOWN, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT }
 	private Sprite CollidedSprite;
 	
+	
 	public Sprite(double health, int width, int height, int x, int y, double dx, double dy, TileMap Map){
 		radius = 25;
 		Health = health;
@@ -70,8 +71,8 @@ public abstract class Sprite {
 		
 		double tempDistanceX = 0;
 		double tempDistanceY = 0;
-		if (getCollider() != null){
-			CollidedSprite = getCollider();
+		if (getCollider(PositionX, PositionY) != null){
+			CollidedSprite = getCollider(PositionX, PositionY);
 			tempDistanceX = this.getX() - CollidedSprite.getX();
 			tempDistanceY = this.getY() - CollidedSprite.getY();
 		}
@@ -81,7 +82,6 @@ public abstract class Sprite {
 			case UP :
 				PositionY = (int) (PositionY - this.getYSpeed()*time);
 				if (tempDistanceY > 0){
-					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;
@@ -89,7 +89,6 @@ public abstract class Sprite {
 			case DOWN :
 				PositionY = (int) (PositionY + this.getYSpeed()*time);
 				if (tempDistanceY < 0){
-					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;
@@ -97,7 +96,6 @@ public abstract class Sprite {
 			case RIGHT :
 				PositionX = (int) (PositionX + this.getXSpeed()*time);
 				if (tempDistanceX < 0){
-					System.out.println("sprite not moving");
 					PositionX = tempX1;
 				}
 				break ;	
@@ -105,7 +103,6 @@ public abstract class Sprite {
 			case LEFT :
 				PositionX = (int) (PositionX - this.getXSpeed()*time);
 				if (tempDistanceX > 0){
-					System.out.println("sprite not moving");
 					PositionX = tempX1;
 				}
 				break ;	
@@ -114,11 +111,9 @@ public abstract class Sprite {
 				PositionX = (int) (PositionX + this.getXSpeed()*time);
 				PositionY = (int) (PositionY - this.getYSpeed()*time);
 				if (tempDistanceX < 0){
-					System.out.println("sprite not moving");
 					PositionX = tempX1;
 				}
 				if (tempDistanceY > 0){
-					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;
@@ -127,11 +122,9 @@ public abstract class Sprite {
 				PositionX = (int) (PositionX - this.getXSpeed()*time);
 				PositionY = (int) (PositionY - this.getYSpeed()*time);
 				if (tempDistanceX > 0){
-					System.out.println("sprite not moving");
 					PositionX = tempX1;
 				}
 				if (tempDistanceY > 0){
-					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;
@@ -140,11 +133,9 @@ public abstract class Sprite {
 				PositionX = (int) (PositionX + this.getXSpeed()*time);
 				PositionY = (int) (PositionY + this.getYSpeed()*time);
 				if (tempDistanceX < 0){
-					System.out.println("sprite not moving");
 					PositionX = tempX1;
 				}
 				if (tempDistanceY < 0){
-					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;
@@ -153,11 +144,9 @@ public abstract class Sprite {
 				PositionX = (int) (PositionX - this.getXSpeed()*time);
 				PositionY = (int) (PositionY + this.getYSpeed()*time);
 				if (tempDistanceX > 0){
-					System.out.println("sprite not moving");
 					PositionX = tempX1;
 				}
 				if (tempDistanceY < 0){
-					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;	
@@ -221,14 +210,19 @@ public abstract class Sprite {
 	
 	public abstract void attack();
 	
-	public synchronized Sprite getCollider(){
-		
-		//Search for sprite.
-		for  (int i =0; i < map.SpriteList.size(); i++){
-			if ( isCollision(map.SpriteList.get(i))){
-				return map.SpriteList.get(i);
-			}
+	public synchronized Sprite getCollider(double checkx, double checky){
+		//Search for other sprite.
+		double checkRadius = 0;
+		if ( checkx == PositionX && PositionY == getY()){
+			checkRadius = radius;
 		}
+			for  (int i =0; i < map.SpriteList.size(); i++){
+				if ( Math.abs(map.SpriteList.get(i).getX() - checkx) < (checkRadius + map.SpriteList.get(i).radius)){
+					if ( Math.abs(map.SpriteList.get(i).getY() - checky) < (checkRadius + map.SpriteList.get(i).radius)){
+						return map.SpriteList.get(i);
+					}
+				}
+			}
 		return null;
 	}
 }

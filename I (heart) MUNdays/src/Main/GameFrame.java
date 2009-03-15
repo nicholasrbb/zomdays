@@ -111,7 +111,7 @@ public class GameFrame extends JFrame {
 				        	manager.manageSprites();
 				        	manager.updateSprites(loopTime);
 				        	display.repaint();
-				        	System.out.println(" Health: " + playa.getHealth() + "          Zombies Killed: " + manager.killed);
+				        	//System.out.println(" Health: " + playa.getHealth() + "          Zombies Killed: " + manager.killed);
 				        }
 				    }
 				}.start();

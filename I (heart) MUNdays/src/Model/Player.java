@@ -80,12 +80,15 @@ public class Player extends Sprite{
 
 	@Override
 	public void attack() {
-		double slope = (mouseY -  this.getY())/(mouseX - this.getX());
-		double b = this.getY();
 		
-		for ( int x = 0; x < 100; x++){
-			double y = slope * x + b;
-			
+		
+		for ( int r = 0; r <= 300; r++){
+			System.out.println("Angle: " + (angle) + "gun hitting x: " +(PositionX + r*Math.sin(Math.toRadians(angle)))  + " y: " + (PositionY - r*Math.cos(Math.toRadians(angle))));
+			Sprite target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle)));
+			if ( target != null){
+				target.updateHealth(-10);
+				return;
+			}
 		}
 		
 		

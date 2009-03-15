@@ -62,8 +62,8 @@ public class GameMouseEvents implements MouseListenerInterface {
 		int targetY = worldY + d.cornerY1;
 		
 		if ( button == 1){
-			//player.attack();
-			
+			player.attack();
+			/*
 			//System.out.println("Attacking position: x = " + targetX + " y = " + targetY);
 			for ( int i = 0; i < map.SpriteList.size(); i++){
 				if ( Math.abs(targetX - map.SpriteList.get(i).getX()) < 25 && Math.abs(targetY - map.SpriteList.get(i).getY()) <25){
@@ -71,7 +71,7 @@ public class GameMouseEvents implements MouseListenerInterface {
 					return;
 				}
 			}
-			
+			*/
 		}
 	}
 
