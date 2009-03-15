@@ -20,6 +20,7 @@ public abstract class Sprite {
 	public int mouseY;
 	public double angle;
 	public enum Direction{ UP, RIGHT, LEFT, DOWN, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT }
+	private Sprite CollidedSprite;
 	
 	public Sprite(double health, int width, int height, int x, int y, double dx, double dy, TileMap Map){
 		radius = 25;
@@ -67,42 +68,78 @@ public abstract class Sprite {
 		int tempX1 = PositionX;
 		int tempY1 = PositionY;
 		
+		double tempDistanceX = 0;
+		double tempDistanceY = 0;
+		if (getCollider() != null){
+			CollidedSprite = getCollider();
+			tempDistanceX = this.getX() - CollidedSprite.getX();
+			tempDistanceY = this.getY() - CollidedSprite.getY();
+		}
+		
 		switch( direction){
 		
 			case UP :
 				PositionY = (int) (PositionY - this.getYSpeed()*time);
+				if (tempDistanceY > 0){
+					PositionY = tempY1;
+				}
 				break ;
 				
 			case DOWN :
 				PositionY = (int) (PositionY + this.getYSpeed()*time);
+				if (tempDistanceY < 0){
+					PositionY = tempY1;
+				}
 				break ;
 				
 			case RIGHT :
 				PositionX = (int) (PositionX + this.getXSpeed()*time);
+				if (tempDistanceX < 0){
+					PositionX = tempX1;
+				}
 				break ;	
 				
 			case LEFT :
 				PositionX = (int) (PositionX - this.getXSpeed()*time);
+				if (tempDistanceX < 0){
+					PositionX = tempX1;
+				}
 				break ;	
 				
 			case UPRIGHT :
 				PositionX = (int) (PositionX + this.getXSpeed()*time);
 				PositionY = (int) (PositionY - this.getYSpeed()*time);
+				if (tempDistanceX < 0 && tempDistanceY > 0){
+					PositionX = tempX1;
+					PositionY = tempY1;
+				}
 				break ;
 				
 			case UPLEFT :
 				PositionX = (int) (PositionX - this.getXSpeed()*time);
 				PositionY = (int) (PositionY - this.getYSpeed()*time);
+				if (tempDistanceX > 0 && tempDistanceY > 0){
+					PositionX = tempX1;
+					PositionY = tempY1;
+				}
 				break ;
 				
 			case DOWNRIGHT :
 				PositionX = (int) (PositionX + this.getXSpeed()*time);
 				PositionY = (int) (PositionY + this.getYSpeed()*time);
+				if (tempDistanceX < 0 && tempDistanceY < 0){
+					PositionX = tempX1;
+					PositionY = tempY1;
+				}
 				break ;
 				
 			case DOWNLEFT :
 				PositionX = (int) (PositionX - this.getXSpeed()*time);
 				PositionY = (int) (PositionY + this.getYSpeed()*time);
+				if (tempDistanceX < 0 && tempDistanceY > 0){
+					PositionX = tempX1;
+					PositionY = tempY1;
+				}
 				break ;	
 				
 		}
@@ -111,38 +148,7 @@ public abstract class Sprite {
 			PositionX = tempX1;
 			PositionY = tempY1;
 		}
-		/*
-		int gridX = PositionX/50;
-		int gridY = PositionY/50;
-		for ( int i = gridY - 1; i < gridY + 1; i++){
-			for ( int j = gridX - 1; j < gridX + 1; j++){
-				System.out.println("gridX= " + gridX + " gridY= " + gridY);
-				
-				for ( int k = 0; k <= map.Grid[i][j].size(); k++){
-					System.out.println(map.Grid[i][j].size());
-					
-					if (isCollision(map.Grid[i][j].get(k)) == true){
-						PositionX = tempX1;
-						PositionY = tempY1;
-					}
-					
-				}
-				
-			}
-		}
-		*/
-		/*if (PositionX < 25){
-			PositionX = tempX1;
-		}
-		if (PositionY < 25){
-			PositionY = tempY1;
-		}
-		if (PositionX > 1975){
-			PositionX = tempX2;
-		}
-		if (PositionY > 1975){
-			PositionY = tempY2;
-		}*/
+		
 	}
 	public abstract void Movement(long time);
 	
@@ -173,17 +179,20 @@ public abstract class Sprite {
 	}
 	
 	public synchronized boolean isCollision(Sprite sprite2){
-		double x = (this.getX() - sprite2.getX())*(this.getX() - sprite2.getX());
-		double y = (this.getY() - sprite2.getY())*(this.getY() - sprite2.getY());
-		
-		double spriteDistance = Math.sqrt(x+y);
-		
-		if (spriteDistance <= (this.radius + sprite2.radius)){
-			//System.out.println(x + "  " + y +  " " + spriteDistance + "  " + "Collision:  " + sprite1.getX() + "  " + sprite2.getX() );
-			return true;
-		}else{
-			return false;
+		if ( sprite2 != this){
+			double x = (this.getX() - sprite2.getX())*(this.getX() - sprite2.getX());
+			double y = (this.getY() - sprite2.getY())*(this.getY() - sprite2.getY());
+			
+			double spriteDistance = Math.sqrt(x+y);
+			
+			if (spriteDistance <= (this.radius + sprite2.radius)){
+				//System.out.println(x + "  " + y +  " " + spriteDistance + "  " + "Collision:  " + sprite1.getX() + "  " + sprite2.getX() );
+				return true;
+			}else{
+				return false;
+			}
 		}
+		return false;	
 	}
 	
 	public int getHealth(){
@@ -191,4 +200,15 @@ public abstract class Sprite {
 	}
 	
 	public abstract void attack();
+	
+	public synchronized Sprite getCollider(){
+		
+		//Search for sprite.
+		for  (int i =0; i < map.SpriteList.size(); i++){
+			if ( isCollision(map.SpriteList.get(i))){
+				return map.SpriteList.get(i);
+			}
+		}
+		return null;
+	}
 }

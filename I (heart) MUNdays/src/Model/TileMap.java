@@ -23,7 +23,7 @@ public class TileMap {
         Map = new Image[width][height];
         SpriteList = new ArrayList <Sprite>();
         PlayerList = new ArrayList <Sprite>();
-        //Grid = new ArrayList[80][80];
+        Grid = new ArrayList [width][height];
         charMap = new String[width][height];
         loadMap(file);
         this.width = width;
