@@ -81,6 +81,7 @@ public abstract class Sprite {
 			case UP :
 				PositionY = (int) (PositionY - this.getYSpeed()*time);
 				if (tempDistanceY > 0){
+					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;
@@ -88,6 +89,7 @@ public abstract class Sprite {
 			case DOWN :
 				PositionY = (int) (PositionY + this.getYSpeed()*time);
 				if (tempDistanceY < 0){
+					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;
@@ -95,13 +97,15 @@ public abstract class Sprite {
 			case RIGHT :
 				PositionX = (int) (PositionX + this.getXSpeed()*time);
 				if (tempDistanceX < 0){
+					System.out.println("sprite not moving");
 					PositionX = tempX1;
 				}
 				break ;	
 				
 			case LEFT :
 				PositionX = (int) (PositionX - this.getXSpeed()*time);
-				if (tempDistanceX < 0){
+				if (tempDistanceX > 0){
+					System.out.println("sprite not moving");
 					PositionX = tempX1;
 				}
 				break ;	
@@ -109,8 +113,12 @@ public abstract class Sprite {
 			case UPRIGHT :
 				PositionX = (int) (PositionX + this.getXSpeed()*time);
 				PositionY = (int) (PositionY - this.getYSpeed()*time);
-				if (tempDistanceX < 0 && tempDistanceY > 0){
+				if (tempDistanceX < 0){
+					System.out.println("sprite not moving");
 					PositionX = tempX1;
+				}
+				if (tempDistanceY > 0){
+					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;
@@ -118,8 +126,12 @@ public abstract class Sprite {
 			case UPLEFT :
 				PositionX = (int) (PositionX - this.getXSpeed()*time);
 				PositionY = (int) (PositionY - this.getYSpeed()*time);
-				if (tempDistanceX > 0 && tempDistanceY > 0){
+				if (tempDistanceX > 0){
+					System.out.println("sprite not moving");
 					PositionX = tempX1;
+				}
+				if (tempDistanceY > 0){
+					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;
@@ -127,8 +139,12 @@ public abstract class Sprite {
 			case DOWNRIGHT :
 				PositionX = (int) (PositionX + this.getXSpeed()*time);
 				PositionY = (int) (PositionY + this.getYSpeed()*time);
-				if (tempDistanceX < 0 && tempDistanceY < 0){
+				if (tempDistanceX < 0){
+					System.out.println("sprite not moving");
 					PositionX = tempX1;
+				}
+				if (tempDistanceY < 0){
+					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;
@@ -136,8 +152,12 @@ public abstract class Sprite {
 			case DOWNLEFT :
 				PositionX = (int) (PositionX - this.getXSpeed()*time);
 				PositionY = (int) (PositionY + this.getYSpeed()*time);
-				if (tempDistanceX < 0 && tempDistanceY > 0){
+				if (tempDistanceX > 0){
+					System.out.println("sprite not moving");
 					PositionX = tempX1;
+				}
+				if (tempDistanceY < 0){
+					System.out.println("sprite not moving");
 					PositionY = tempY1;
 				}
 				break ;	

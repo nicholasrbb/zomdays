@@ -16,7 +16,7 @@ public class ModelManager{
 	}
 	
 	public void manageSprites(){
-		while(map.SpriteList.size() < 50){
+		while(map.SpriteList.size() < 100){
 			int x = Math.abs(generator.nextInt(3300)) + 50;
 			int y = Math.abs(generator.nextInt(1500)) + 50;
 			for (int i = 0; i < map.PlayerList.size(); i++){
