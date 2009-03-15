@@ -15,6 +15,7 @@ public class TileMap {
 	private String[][] charMap;
     public ArrayList <Sprite> SpriteList;
     public ArrayList <Sprite> PlayerList;
+    public ArrayList < Sprite> [][] Grid;
     public int width;
     public int height;
     
@@ -22,6 +23,7 @@ public class TileMap {
         Map = new Image[width][height];
         SpriteList = new ArrayList <Sprite>();
         PlayerList = new ArrayList <Sprite>();
+        //Grid = new ArrayList[80][80];
         charMap = new String[width][height];
         loadMap(file);
         this.width = width;
@@ -48,6 +50,14 @@ public class TileMap {
         Map[x][y] = tile;
     }
 
+    public void addToGrid(int x, int y, Sprite sprite) {
+    	Grid[x][y].add(sprite);
+    }
+    
+    public void removeFromGrid(int x, int y, Sprite sprite) {
+        Grid[x][y].remove(sprite);
+    }
+    
     public void addSprite(Sprite sprite) {
         SpriteList.add(sprite);
     }
@@ -55,6 +65,7 @@ public class TileMap {
     public void removeSprite(Sprite sprite) {
         SpriteList.remove(sprite);
     }
+    
     
     public void addPlayer(Sprite sprite) {
         PlayerList.add(sprite);

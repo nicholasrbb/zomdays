@@ -7,7 +7,7 @@ import View.Display;
 
 public abstract class Sprite {
 	protected Image image;
-	int Health;
+	double Health;
 	boolean isAlive = false;
 	int PositionX;
 	int PositionY;
@@ -21,7 +21,7 @@ public abstract class Sprite {
 	public double angle;
 	public enum Direction{ UP, RIGHT, LEFT, DOWN, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT }
 	
-	public Sprite(int health, int width, int height, int x, int y, double dx, double dy, TileMap Map){
+	public Sprite(double health, int width, int height, int x, int y, double dx, double dy, TileMap Map){
 		radius = 25;
 		Health = health;
 		isAlive = true;
@@ -57,12 +57,11 @@ public abstract class Sprite {
 	public double getYSpeed(){
 		return dy;
 	}
-	public void updateHealth(int change){
+	public void updateHealth(double change){
 		Health = Health + change;
 		if (Health <= 0){
 			isAlive = false;
 		}
-		System.out.println("The health is: " + Health);
 	}
 	protected void makeMovement(Direction direction, long time){
 		int tempX1 = PositionX;
@@ -88,27 +87,21 @@ public abstract class Sprite {
 				
 			case UPRIGHT :
 				PositionX = (int) (PositionX + this.getXSpeed()*time);
-				
-				
 				PositionY = (int) (PositionY - this.getYSpeed()*time);
 				break ;
 				
 			case UPLEFT :
 				PositionX = (int) (PositionX - this.getXSpeed()*time);
-				
-				
 				PositionY = (int) (PositionY - this.getYSpeed()*time);
 				break ;
 				
 			case DOWNRIGHT :
 				PositionX = (int) (PositionX + this.getXSpeed()*time);
-								
 				PositionY = (int) (PositionY + this.getYSpeed()*time);
 				break ;
 				
 			case DOWNLEFT :
 				PositionX = (int) (PositionX - this.getXSpeed()*time);
-							
 				PositionY = (int) (PositionY + this.getYSpeed()*time);
 				break ;	
 				
@@ -118,6 +111,26 @@ public abstract class Sprite {
 			PositionX = tempX1;
 			PositionY = tempY1;
 		}
+		/*
+		int gridX = PositionX/50;
+		int gridY = PositionY/50;
+		for ( int i = gridY - 1; i < gridY + 1; i++){
+			for ( int j = gridX - 1; j < gridX + 1; j++){
+				System.out.println("gridX= " + gridX + " gridY= " + gridY);
+				
+				for ( int k = 0; k <= map.Grid[i][j].size(); k++){
+					System.out.println(map.Grid[i][j].size());
+					
+					if (isCollision(map.Grid[i][j].get(k)) == true){
+						PositionX = tempX1;
+						PositionY = tempY1;
+					}
+					
+				}
+				
+			}
+		}
+		*/
 		/*if (PositionX < 25){
 			PositionX = tempX1;
 		}
@@ -142,6 +155,7 @@ public abstract class Sprite {
 	public Image getSpriteImage(){
 		return image;
 	}
+	
 	public void solveAngle(int x, int y){
 		
 		if ( x >= getX() && y <= getY()){
@@ -157,4 +171,24 @@ public abstract class Sprite {
 			angle = -90 + (180*Math.atan2(getY()-y,getX()-x))/Math.PI;
 		}
 	}
+	
+	public synchronized boolean isCollision(Sprite sprite2){
+		double x = (this.getX() - sprite2.getX())*(this.getX() - sprite2.getX());
+		double y = (this.getY() - sprite2.getY())*(this.getY() - sprite2.getY());
+		
+		double spriteDistance = Math.sqrt(x+y);
+		
+		if (spriteDistance <= (this.radius + sprite2.radius)){
+			//System.out.println(x + "  " + y +  " " + spriteDistance + "  " + "Collision:  " + sprite1.getX() + "  " + sprite2.getX() );
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public int getHealth(){
+		return (int) Health;
+	}
+	
+	public abstract void attack();
 }

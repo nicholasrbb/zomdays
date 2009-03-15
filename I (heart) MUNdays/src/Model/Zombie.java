@@ -11,8 +11,8 @@ public class Zombie extends Sprite{
 	public boolean left = false;
 	public boolean down = false;
 	private Sprite targetPlayer;
+	private double damage = 0.05;
 		
-	
 	public Zombie(Image npcImage, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map) {
 		super(health, width, height, x, y, dx, dy, Map);
 		this.image = npcImage;
@@ -40,16 +40,16 @@ public class Zombie extends Sprite{
 		Sprite target = whichPlayer();
 		targetPlayer = target;
 		
-		if ( (target.getX() - 50) > getX()){
+		if ( (target.getX() - 35) > getX()){
 			right = true;
 		}
-		if ( (target.getX() + 50) < getX()){
+		if ( (target.getX() + 35) < getX()){
 			left = true;
 		}
-		if ( (target.getY() + 50) < getY()){
+		if ( (target.getY() + 35) < getY()){
 			up = true;
 		}
-		if ( (target.getY() - 50) > getY()){
+		if ( (target.getY() - 35) > getY()){
 			down = true;
 		}
 		if (up && !right && !left && !down){
@@ -82,6 +82,7 @@ public class Zombie extends Sprite{
 		down = false;
 		//System.out.println("Zombie position is: " + getX() + "    " + getY());
 	}
+	
 	public synchronized void setSpriteOrientation(){
 		int x = targetPlayer.getX();
 		int y = targetPlayer.getY();
@@ -97,8 +98,10 @@ public class Zombie extends Sprite{
 
 	@Override
 	public void setPlayerSpriteOrientation(int x, int y) {
-		// TODO Auto-generated method stub
 		
+	}
+	public void attack(){
+		targetPlayer.updateHealth(-damage);
 	}
 
 	

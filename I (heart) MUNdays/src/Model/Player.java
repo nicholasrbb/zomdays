@@ -75,6 +75,23 @@ public class Player extends Sprite{
 			
 			
 	}
+
+
+
+	@Override
+	public void attack() {
+		double slope = (mouseY -  this.getY())/(mouseX - this.getX());
+		double b = this.getY();
+		
+		for ( int x = 0; x < 100; x++){
+			double y = slope * x + b;
+			
+		}
+		
+		
+	}
+	
+
 	
 	
 	

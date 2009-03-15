@@ -33,30 +33,26 @@ public class GameMouseEvents implements MouseListenerInterface {
 	@Override
 	public void mouseDragged(int worldX, int worldY) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered() {
-			
+				
 		Image image = Toolkit.getDefaultToolkit().createImage("crosshair.jpg");
 		
 		Cursor aimer = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(15,15), "crosshairCursor");
 		d.setCursor(aimer);
-		
 	}
 
 	@Override
 	public void mouseExited() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseMoved(int worldX, int worldY) {
 		player.mouseX = worldX + d.cornerX1;
 		player.mouseY = worldY + d.cornerY1;
-		
 	}
 
 	@Override
@@ -65,38 +61,17 @@ public class GameMouseEvents implements MouseListenerInterface {
 		int targetX = worldX + d.cornerX1;
 		int targetY = worldY + d.cornerY1;
 		
-		/*
-		if (worldX < 250){
-			x = player.getX() - (250 - worldX);
-		}
-		if (worldX > 250){
-			x = player.getX() + (worldX - 250);
-		}
-		if (worldY < 250){
-			y = player.getY() + (worldY - 250);
-		}
-		if (worldY > 250){
-			y = player.getY() - (250 - worldY);
-		}
-						
 		if ( button == 1){
-			System.out.println("Attacking position: x = " + x + " y = " + y);
-			for ( int i = 0; i < map.SpriteList.size(); i++){
-				if ( Math.abs(x - map.SpriteList.get(i).getX()) < 25 && Math.abs(y - map.SpriteList.get(i).getY()) <25){
-					//System.out.println("Sprite found.");
-					map.SpriteList.get(i).updateHealth(-10);
-				}
-			}
-		}
-		*/
-		if ( button == 1){
-			System.out.println("Attacking position: x = " + targetX + " y = " + targetY);
+			//player.attack();
+			
+			//System.out.println("Attacking position: x = " + targetX + " y = " + targetY);
 			for ( int i = 0; i < map.SpriteList.size(); i++){
 				if ( Math.abs(targetX - map.SpriteList.get(i).getX()) < 25 && Math.abs(targetY - map.SpriteList.get(i).getY()) <25){
 					map.SpriteList.get(i).updateHealth(-10);
 					return;
 				}
 			}
+			
 		}
 	}
 
