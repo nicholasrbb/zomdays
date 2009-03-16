@@ -5,7 +5,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import Model.Player;
-import PlayerAnimations.PlayerAnimationManager.AnimationStates;
 
 
 
@@ -48,8 +47,6 @@ public class Buttons implements KeyListener{
 	    	break;
 		}
 		
-		if (player.down == true || player.up == true || player.left == true || player.right == true)
-			player.pAnim.setState(AnimationStates.Walking);
 	}
 
 	@Override
@@ -68,7 +65,5 @@ public class Buttons implements KeyListener{
 	    	player.down = false;
 	    	break;
 		}
-		if (player.down == false && player.up == false && player.left == false && player.right == false)
-			player.pAnim.setState(AnimationStates.Still);
 	}
 }

@@ -5,6 +5,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 import PlayerAnimations.PlayerAnimationManager;
+import PlayerAnimations.PlayerAnimationManager.PlayerAnimationStates;
 
 
 public class Player extends Sprite{
@@ -29,6 +30,15 @@ public class Player extends Sprite{
 	
 	
 	public void Movement(long time){
+		
+		//PlayerAnimationManager Controls for Animating Walking and staying still
+		if (up || down || right || left)
+			pAnim.setState(PlayerAnimationStates.Walking);
+		else
+			pAnim.setState(PlayerAnimationStates.Still);
+
+		
+		
 		if (up && !right && !left && !down){
 			makeMovement(Direction.UP, time);
 		}
@@ -53,7 +63,9 @@ public class Player extends Sprite{
 		if (!up && !right && left && down){
 			makeMovement(Direction.DOWNLEFT, time);
 		}
-		//System.out.println("Player position is: " + getX() + "    " + getY());
+		
+		
+			
 	}
 
 	
@@ -118,6 +130,7 @@ public class Player extends Sprite{
 		int damage = attackingWeapon.getDamage();
 		
 		if ( attackingWeapon.magAmmo() != 0){
+			pAnim.setState(PlayerAnimationStates.Shooting);	
 			attackingWeapon.updateAmmo(-1);
 			
 			for ( int r = 0; r <= range; r++){

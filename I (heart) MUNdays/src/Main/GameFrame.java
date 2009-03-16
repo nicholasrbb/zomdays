@@ -87,9 +87,7 @@ public class GameFrame extends JFrame {
 				playa.addWeapon(Gun);
 				playa.addWeapon(Knife);	
 				
-				PlayerAnimationManager pAnimation = new PlayerAnimationManager(playa);
-				System.out.println(playa.getSpriteImage());
-				
+
 				//Add player to map SpriteList.
 				map1.addPlayer(playa);
 				

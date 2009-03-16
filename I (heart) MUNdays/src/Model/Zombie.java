@@ -3,8 +3,16 @@ package Model;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 
+import ZombieAnimations.ZombieAnimationManager;
+import ZombieAnimations.ZombieAnimationManager.ZombieAnimationStates;
+
+import PlayerAnimations.PlayerAnimationManager;
+
 
 public class Zombie extends Sprite{
+	public ZombieAnimationManager zAnim;
+
+	
 	private AffineTransform npcOrientation;
 	public boolean up = false;
 	public boolean right = false;
@@ -17,6 +25,7 @@ public class Zombie extends Sprite{
 		super(health, width, height, x, y, dx, dy, Manager);
 		this.image = npcImage;
 		npcOrientation = new AffineTransform();
+		zAnim =  new ZombieAnimationManager(this);
 	}
 	
 	public Sprite whichPlayer(){
@@ -39,6 +48,8 @@ public class Zombie extends Sprite{
 	public void Movement(long time){
 		Sprite target = whichPlayer();
 		targetPlayer = target;
+		
+		zAnim.setState(ZombieAnimationStates.Walking);
 		
 		if ( (target.getX() - 35) > getX()){
 			right = true;
@@ -80,7 +91,6 @@ public class Zombie extends Sprite{
 		right = false;
 		left = false;
 		down = false;
-		//System.out.println("Zombie position is: " + getX() + "    " + getY());
 	}
 	
 	public synchronized void setSpriteOrientation(){
@@ -101,7 +111,18 @@ public class Zombie extends Sprite{
 		
 	}
 	public void attack(){
+		zAnim.setState(ZombieAnimationStates.Attacking);
+
 		targetPlayer.updateHealth(-damage);
+	}
+	@Override
+	public void updateHealth(double change){
+		zAnim.setState(ZombieAnimationStates.Damage);
+
+		Health = Health + change;
+		if (Health <= 0){
+			isAlive = false;
+		}
 	}
 
 	
