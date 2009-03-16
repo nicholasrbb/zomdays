@@ -114,11 +114,7 @@ public class Player extends Sprite{
 		
 		if ( attackingWeapon.magAmmo() != 0){
 			attackingWeapon.updateAmmo(-1);
-			if (attackingWeapon.magAmmo() < 0){
-				System.out.println("Using Melee Weapon");
-			}else{
-				System.out.println("Using Gun");
-			}
+			
 			for ( int r = 0; r <= range; r++){
 				String tileShoot = manager.map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/50),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/50));
 				//System.out.println("Angle: " + (angle) + "gun hitting x: " +(PositionX + r*Math.sin(Math.toRadians(angle)))  + " y: " + (PositionY - r*Math.cos(Math.toRadians(angle))));

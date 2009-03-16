@@ -94,7 +94,6 @@ public class Display extends JPanel{
 		player.mouseX = player.mouseX - dcornerX1;
 		player.mouseY = player.mouseY - dcornerY1;
 		
-		//System.out.println("Corner One: " + cornerX1 + " " + cornerY1 + " Corner Two: " + cornerX2 + " " + cornerY2 +  " Player: " + player.getX() + "  " + player.getY() +  " Mouse: " + player.mouseX + "  " + player.mouseY +  " Zombie: " + map.SpriteList.get(0).getX() + "  " + map.SpriteList.get(0).getY());
 		
 		
 		offsetX = cornerX1%50;
@@ -130,7 +129,14 @@ public class Display extends JPanel{
 		for ( int i = 0; i < manager.map.PlayerList.size(); i++){	
 			if(manager.map.PlayerList.get(i) != player)
 				g2d.drawImage(manager.map.PlayerList.get(i).getSpriteImage(),playerOrientation, null);
-    	}
+				Player playdizzle = (Player) manager.map.PlayerList.get(i);
+        		g2d.drawString("Health: " + manager.map.PlayerList.get(i).getHealth(),50,400);
+        		g2d.drawString("Zombies Killed: " + manager.killed,50,415);
+        		g2d.drawString("Mag: " + playdizzle.WeaponList.get(0).magAmmo(),50,430); 
+        		g2d.drawString("Ammo: " + playdizzle.WeaponList.get(0).getAmmo(),50,445);
+        		g2d.drawString("Current Weapon: " + playdizzle.WeaponList.get(playdizzle.getCurrentWeapon()).getWeaponName() , 50, 460);
+        		
+		}
 		
 		// Print all NPC's
     	for ( int i = 0; i < manager.map.SpriteList.size(); i++){

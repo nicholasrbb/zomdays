@@ -82,8 +82,8 @@ public class GameFrame extends JFrame {
 				
 				//Create Player and Zombie.
 				final Player playa = new Player(playerImage, 50, 10, 10, DEFAULT_WIDTH/2-5, DEFAULT_HEIGHT/2-5, 0.2, 0.2, manager);
-				final Weapon Gun = new Weapon(npcImage,500,10,1000,15);
-				Weapon Knife = new Weapon(npcImage,50,25, -1,-1);
+				final Weapon Gun = new Weapon(npcImage,500,10,1000,15, "Hand Gun");
+				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
 				playa.addWeapon(Gun);
 				playa.addWeapon(Knife);	
 				
@@ -135,7 +135,7 @@ public class GameFrame extends JFrame {
 				        	display.repaint();
 				        	
 				        	
-				        	//System.out.println("map: " + manager.map + " Health: " + playa.getHealth() + "     Zombies Killed: " + manager.killed + "    Mag: " + Gun.magAmmo() + "    Ammo: " + Gun.getAmmo() + "Current Weapon: " + playa.getCurrentWeapon());
+				        	//System.out.println("Health: " + playa.getHealth() + "     Zombies Killed: " + manager.killed + "    Mag: " + Gun.magAmmo() + "    Ammo: " + Gun.getAmmo() + "    Current Weapon: " + playa.getCurrentWeapon());
 				        }
 				    }
 				}.start();

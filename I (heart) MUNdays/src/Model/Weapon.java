@@ -8,14 +8,16 @@ public class Weapon {
 	int damage;
 	int ammo;
 	int magAmmo;
+	String name;
 		
 	
-	public Weapon(Image image, int range, int damage, int ammo, int mag){
+	public Weapon(Image image, int range, int damage, int ammo, int mag, String name){
 		this.image = image;
 		this.range = range;
 		this.damage = damage;
 		this.ammo = ammo;
 		this.magAmmo = mag;
+		this.name = name;
 	}
 	
 	public Image getImage(){
@@ -36,6 +38,10 @@ public class Weapon {
 	
 	public int magAmmo(){
 		return magAmmo;
+	}
+	
+	public String getWeaponName(){
+		return name;
 	}
 	
 	public void reload(){
