@@ -153,9 +153,11 @@ public abstract class Sprite {
 				
 		}
 		
-		if (map.getCharTile(PositionX/50, PositionY/50) != " "){
-			PositionX = tempX1;
+		if (map.getCharTile(tempX1/50, PositionY/50) != " "){
 			PositionY = tempY1;
+		}
+		if (map.getCharTile(PositionX/50, tempY1/50) != " "){
+			PositionX = tempX1;
 		}
 		
 	}

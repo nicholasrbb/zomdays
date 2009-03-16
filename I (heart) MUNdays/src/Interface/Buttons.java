@@ -39,6 +39,12 @@ public class Buttons implements KeyListener{
 	    case KeyEvent.VK_S: 
 	    	player.down = true;
 	    	break;
+	    case KeyEvent.VK_Q: 
+	    	player.changeWeapon();
+	    	break;
+	    case KeyEvent.VK_R: 
+	    	player.reloadWeapon();
+	    	break;
 		}
 	}
 

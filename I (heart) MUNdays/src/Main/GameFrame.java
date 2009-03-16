@@ -19,6 +19,7 @@ import Interface.MouseEventListener;
 import Model.ModelManager;
 import Model.Player;
 import Model.TileMap;
+import Model.Weapon;
 import Model.Zombie;
 import View.Display;
 
@@ -54,11 +55,11 @@ public class GameFrame extends JFrame {
 				
 			//Create Player and Zombie.
 				final Player playa = new Player(playerImage, 50, 10, 10, DEFAULT_WIDTH/2-5, DEFAULT_HEIGHT/2-5, 0.2, 0.2, map1);
-				Zombie zombay = new Zombie(npcImage, 50, 10, 10, 800, 500, 0.1, 0.1, map1);
-				Zombie zombay1 = new Zombie(npcImage, 50, 10, 10, 400, 500, 0.1, 0.1, map1);
-				Zombie zombay2 = new Zombie(npcImage, 50, 10, 10, 800, 800, 0.1, 0.1, map1);
-				Zombie zombay3 = new Zombie(npcImage, 50, 10, 10, 200, 300, 0.1, 0.1, map1);
-				Zombie zombay4 = new Zombie(npcImage, 50, 10, 10, 300, 400, 0.1, 0.1, map1);
+				Weapon Gun = new Weapon(npcImage,500,10,1000);
+				Weapon Knife = new Weapon(npcImage,50,25, -1);
+				playa.addWeapon(Gun);
+				playa.addWeapon(Knife);
+				
 				
 			//Add player to map SpriteList.
 				map1.addPlayer(playa);
