@@ -81,10 +81,16 @@ public class Player extends Sprite{
 	@Override
 	public void attack() {
 		
-		
 		for ( int r = 0; r <= 300; r++){
+			String tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/50),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/50));
 			System.out.println("Angle: " + (angle) + "gun hitting x: " +(PositionX + r*Math.sin(Math.toRadians(angle)))  + " y: " + (PositionY - r*Math.cos(Math.toRadians(angle))));
 			Sprite target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle)));
+			System.out.println((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/50));
+			System.out.println((int)((PositionY - r*Math.cos(Math.toRadians(angle)))/50));
+			System.out.println(tileShoot);
+			
+			if (tileShoot != " ")
+				return;
 			if ( target != null){
 				target.updateHealth(-10);
 				return;
