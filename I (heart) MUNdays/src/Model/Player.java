@@ -4,8 +4,12 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
+import PlayerAnimations.PlayerAnimationManager;
+
 
 public class Player extends Sprite{
+	public PlayerAnimationManager pAnim;
+	
 	private AffineTransform playerOrientation;
 	public boolean up = false;
 	public boolean right = false;
@@ -20,7 +24,7 @@ public class Player extends Sprite{
 		this.image = playerImage;
 		playerOrientation = new AffineTransform();
 		WeaponList = new ArrayList <Weapon>();
-	}
+		pAnim = new PlayerAnimationManager(this);}
 
 	
 	
@@ -78,8 +82,10 @@ public class Player extends Sprite{
 	}
 
 	public int getCurrentWeapon(){
-		return currentWeapon;
-	}
+		return currentWeapon;}
+	
+	public Weapon playersWeapon(){
+		return WeaponList.get(currentWeapon);	}
 	
 	public void changeWeapon(){
 		

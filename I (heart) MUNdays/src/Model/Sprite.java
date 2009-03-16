@@ -178,6 +178,10 @@ public abstract class Sprite {
 		return image;
 	}
 	
+	public void setSpriteImage(Image image){
+		this.image = image;
+	}
+	
 	public void solveAngle(int x, int y){
 		
 		if ( x >= getX() && y <= getY()){

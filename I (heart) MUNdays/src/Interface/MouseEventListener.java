@@ -41,7 +41,9 @@ public class MouseEventListener implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		int x = e.getX();
+		int y = e.getY();
+		mouse.mouseReleased(x, y,e.getButton());
 		
 	}
 

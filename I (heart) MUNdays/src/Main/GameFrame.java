@@ -7,7 +7,6 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -23,6 +22,7 @@ import Model.Sprite;
 import Model.TileMap;
 import Model.Weapon;
 import Model.Zombie;
+import PlayerAnimations.PlayerAnimationManager;
 import View.Display;
 
 @SuppressWarnings("serial")
@@ -86,6 +86,9 @@ public class GameFrame extends JFrame {
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
 				playa.addWeapon(Gun);
 				playa.addWeapon(Knife);	
+				
+				PlayerAnimationManager pAnimation = new PlayerAnimationManager(playa);
+				System.out.println(playa.getSpriteImage());
 				
 				//Add player to map SpriteList.
 				map1.addPlayer(playa);
