@@ -100,7 +100,9 @@ public class Player extends Sprite{
 	}
 	
 	public void reloadWeapon(){
-		WeaponList.get(currentWeapon).reload();
+		if (WeaponList.get(currentWeapon).getAmmo() >=0){
+			WeaponList.get(currentWeapon).reload();
+		}
 	}
 
 	@Override
@@ -115,7 +117,7 @@ public class Player extends Sprite{
 			if (attackingWeapon.magAmmo() < 0){
 				System.out.println("Using Melee Weapon");
 			}else{
-				//System.out.println("Mag: " + attackingWeapon.magAmmo() + " Ammo: " + attackingWeapon.getAmmo());
+				System.out.println("Using Gun");
 			}
 			for ( int r = 0; r <= range; r++){
 				String tileShoot = manager.map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/50),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/50));

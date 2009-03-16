@@ -10,12 +10,12 @@ public class Weapon {
 	int magAmmo;
 		
 	
-	public Weapon(Image image, int range, int damage, int ammo){
+	public Weapon(Image image, int range, int damage, int ammo, int mag){
 		this.image = image;
 		this.range = range;
 		this.damage = damage;
 		this.ammo = ammo;
-		this.magAmmo = 0;
+		this.magAmmo = mag;
 	}
 	
 	public Image getImage(){
