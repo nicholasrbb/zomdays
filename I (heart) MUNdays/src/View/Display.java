@@ -80,13 +80,13 @@ public class Display extends JPanel{
 			cornerY2 = screenHeight;
 		}
 		
-		if ( cornerX2 >= 3300 ){
-			cornerX1 = 3300 - screenWidth; 
-			cornerX2 = 3300;
+		if ( cornerX2 >= 50*manager.map.getWidth() ){
+			cornerX1 = 50*manager.map.getWidth() - screenWidth; 
+			cornerX2 = 50*manager.map.getWidth();
 		}
-		if ( cornerY2 >= 3300 ){
-			cornerX1 = 3300 - screenHeight; 
-			cornerX2 = 3300;
+		if ( cornerY2 >= 50*manager.map.getHeight() ){
+			cornerY1 = 50*manager.map.getHeight() - screenHeight; 
+			cornerY2 = 50*manager.map.getHeight();
 		}
 		
 		dcornerX1 = dcornerX1-cornerX1;

@@ -48,7 +48,7 @@ public class GameFrame extends JFrame {
 			//Create Map of Engineering Building Second Floor.
 				TileMap map1 = null;
 				try {
-					map1 = new TileMap(80,80, "EngSecondFloor.txt");
+					map1 = new TileMap(66,31, "EngSecondFloor.txt");
 					MapList.add(map1);
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -57,7 +57,7 @@ public class GameFrame extends JFrame {
 				
 				TileMap map2 = null;
 				try {
-					map2 = new TileMap(80,80, "EngFirstFloor.txt");
+					map2 = new TileMap(66,31, "EngFirstFloor.txt");
 					MapList.add(map2);
 				} catch (IOException e1) {
 					e1.printStackTrace();

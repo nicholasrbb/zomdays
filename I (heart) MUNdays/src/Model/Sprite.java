@@ -159,7 +159,8 @@ public abstract class Sprite {
 		if (manager.map.getCharTile(tempX1/50, PositionY/50) != " " && manager.map.getCharTile(tempX1/50, PositionY/50) != "1" && manager.map.getCharTile(tempX1/50, PositionY/50) != "2"){
 			PositionY = tempY1;
 		}
-		if (manager.map.getCharTile(PositionX/50, tempY1/50) != " " && manager.map.getCharTile(PositionX/50, tempY1/50) != "1" && manager.map.getCharTile(tempX1/50, PositionY/50) != "2"){
+		if (manager.map.getCharTile(PositionX/50, tempY1/50) != " " && manager.map.getCharTile(PositionX/50, tempY1/50) != "1" && manager.map.getCharTile(PositionX/50,tempY1/50 ) != "2"){
+			System.out.println("cant walk");
 			PositionX = tempX1;
 		}
 		
