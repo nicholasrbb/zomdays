@@ -88,7 +88,6 @@ public class Player extends Sprite{
 		}else{
 			currentWeapon = 0;
 		}
-		System.out.println("current weapon: " + currentWeapon + "    number of weapons: " + WeaponList.size());
 	}
 	
 	public void addWeapon(Weapon weapon){
