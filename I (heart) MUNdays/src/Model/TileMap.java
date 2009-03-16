@@ -83,7 +83,7 @@ public class TileMap {
         int height = 0;
 
         // read every line in the text file into the list
-        BufferedReader reader = new BufferedReader( new FileReader("EngSecondFloor.txt"));
+        BufferedReader reader = new BufferedReader( new FileReader(filename));
         while (true) {
             String line = reader.readLine();
             // no more lines to read
@@ -163,6 +163,14 @@ public class TileMap {
                 if (ch == 'N') {
                 	this.setTile(x, y, toolkit.getImage("innerwall_BL.jpg") );
                 	this.setCharTile(x, y, "x");
+                }
+                if (ch == '1') {
+                	this.setTile(x, y, toolkit.getImage("black.jpg") );
+                	this.setCharTile(x, y, "1");
+                }
+                if (ch == '2') {
+                	this.setTile(x, y, toolkit.getImage("black.jpg") );
+                	this.setCharTile(x, y, "2");
                 }
                 if (ch == ' ') {
                     this.setTile(x, y, toolkit.getImage("white.jpg") );

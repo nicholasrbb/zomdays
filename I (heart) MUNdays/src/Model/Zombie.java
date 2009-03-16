@@ -13,23 +13,23 @@ public class Zombie extends Sprite{
 	private Sprite targetPlayer;
 	private double damage = 0.05;
 		
-	public Zombie(Image npcImage, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map) {
-		super(health, width, height, x, y, dx, dy, Map);
+	public Zombie(Image npcImage, int health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager) {
+		super(health, width, height, x, y, dx, dy, Manager);
 		this.image = npcImage;
 		npcOrientation = new AffineTransform();
 	}
 	
 	public Sprite whichPlayer(){
-		int closestX = map.PlayerList.get(0).getX();
-		int closestY = map.PlayerList.get(0).getY();
-		Sprite player = map.PlayerList.get(0);
+		int closestX = manager.map.PlayerList.get(0).getX();
+		int closestY = manager.map.PlayerList.get(0).getY();
+		Sprite player = manager.map.PlayerList.get(0);
 		
-		for (int i = 1; i < map.PlayerList.size(); i++){
-			if (map.PlayerList.get(i).getX() != PositionX || map.SpriteList.get(i).getY() != PositionY){
-				if ( (Math.abs(PositionX - map.PlayerList.get(i).getX()) < Math.abs(PositionX - closestX)) && ((Math.abs(PositionY - map.PlayerList.get(i).getY()) < Math.abs(PositionY - closestY)))){
-					closestX = map.PlayerList.get(i).getX();	
-					closestY = map.PlayerList.get(i).getY();
-					player = map.PlayerList.get(i);
+		for (int i = 1; i < manager.map.PlayerList.size(); i++){
+			if (manager.map.PlayerList.get(i).getX() != PositionX || manager.map.SpriteList.get(i).getY() != PositionY){
+				if ( (Math.abs(PositionX - manager.map.PlayerList.get(i).getX()) < Math.abs(PositionX - closestX)) && ((Math.abs(PositionY - manager.map.PlayerList.get(i).getY()) < Math.abs(PositionY - closestY)))){
+					closestX = manager.map.PlayerList.get(i).getX();	
+					closestY = manager.map.PlayerList.get(i).getY();
+					player = manager.map.PlayerList.get(i);
 				}
 			}
 		}

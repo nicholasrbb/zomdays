@@ -8,6 +8,7 @@ import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
 
+import Model.ModelManager;
 import Model.Player;
 import Model.TileMap;
 
@@ -15,7 +16,7 @@ import Model.TileMap;
 @SuppressWarnings("serial")
 public class Display extends JPanel{
 	AffineTransform playerOrientation;
-	TileMap map;
+	ModelManager manager;
 	int offsetX, offsetY;
 	int screenWidth;
 	int screenHeight;
@@ -30,8 +31,8 @@ public class Display extends JPanel{
 	
 	final Canvas canvas ;
 	
-	public Display(TileMap Map, Player playa, int SW, int SH){
-		map = Map;
+	public Display(ModelManager Manager, Player playa, int SW, int SH){
+		manager = Manager;
 		player = playa;	
 		setPreferredSize( new Dimension(500, 500) ) ;
 		screenWidth = SW;
@@ -112,7 +113,7 @@ public class Display extends JPanel{
 		for(int y = firstTileY; y < lastTileY; y++ ){
 			int dx = 0;
 			for(int x = firstTileX; x < lastTileX; x++ ){
-				Image image = map.getTile(x, y);
+				Image image = manager.map.getTile(x, y);
 				g2d.drawImage(image,dx - offsetX,dy - offsetY, null);
 				dx = dx+50;
 			}
@@ -126,17 +127,17 @@ public class Display extends JPanel{
     	
 			
 		// Paint all other Players	
-		for ( int i = 0; i < map.PlayerList.size(); i++){	
-			if(map.PlayerList.get(i) != player)
-				g2d.drawImage(map.PlayerList.get(i).getSpriteImage(),playerOrientation, null);
+		for ( int i = 0; i < manager.map.PlayerList.size(); i++){	
+			if(manager.map.PlayerList.get(i) != player)
+				g2d.drawImage(manager.map.PlayerList.get(i).getSpriteImage(),playerOrientation, null);
     	}
 		
 		// Print all NPC's
-    	for ( int i = 0; i < map.SpriteList.size(); i++){
+    	for ( int i = 0; i < manager.map.SpriteList.size(); i++){
     		AffineTransform npcTransform = new AffineTransform();
-    		npcTransform.setToTranslation(map.SpriteList.get(i).getX() - cornerX1 - 25, map.SpriteList.get(i).getY() - cornerY1 - 25);	
-    		npcTransform.rotate(Math.toRadians(map.SpriteList.get(i).angle),map.SpriteList.get(i).getSpriteImage().getWidth(null)/2, map.SpriteList.get(i).getSpriteImage().getHeight(null)/2);    	
-    		g2d.drawImage(map.SpriteList.get(i).getSpriteImage(),npcTransform, null);
+    		npcTransform.setToTranslation(manager.map.SpriteList.get(i).getX() - cornerX1 - 25, manager.map.SpriteList.get(i).getY() - cornerY1 - 25);	
+    		npcTransform.rotate(Math.toRadians(manager.map.SpriteList.get(i).angle),manager.map.SpriteList.get(i).getSpriteImage().getWidth(null)/2, manager.map.SpriteList.get(i).getSpriteImage().getHeight(null)/2);    	
+    		g2d.drawImage(manager.map.SpriteList.get(i).getSpriteImage(),npcTransform, null);
     	}
 		
 	}

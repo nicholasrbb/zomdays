@@ -47,7 +47,6 @@ public class Weapon {
 			magAmmo = magAmmo + add;
 		}
 		ammo = ammo - add;
-		System.out.println("Mag: " + magAmmo() + " Ammo: " + getAmmo());
 	}
 	
 	public void updateAmmo(int change){

@@ -15,7 +15,7 @@ public abstract class Sprite {
 	int Width;
 	double radius;
 	double dx,dy;
-	TileMap map;
+	ModelManager manager;
 	public int mouseX;
 	public int mouseY;
 	public double angle;
@@ -23,7 +23,7 @@ public abstract class Sprite {
 	private Sprite CollidedSprite;
 	
 	
-	public Sprite(double health, int width, int height, int x, int y, double dx, double dy, TileMap Map){
+	public Sprite(double health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager){
 		radius = 25;
 		Health = health;
 		isAlive = true;
@@ -33,14 +33,17 @@ public abstract class Sprite {
 		this.dy = dy;
 		PositionX = x;
 		PositionY = y;
-		map = Map;
+		manager = Manager;
 	}
+	
 	public int getHeight(){
 		return Height;
 	}
+	
 	public int getWidth(){
 		return Width;
 	}
+	
 	public int getX(){
 		return PositionX;
 	}
@@ -153,12 +156,13 @@ public abstract class Sprite {
 				
 		}
 		
-		if (map.getCharTile(tempX1/50, PositionY/50) != " "){
+		if (manager.map.getCharTile(tempX1/50, PositionY/50) != " " && manager.map.getCharTile(tempX1/50, PositionY/50) != "1" && manager.map.getCharTile(tempX1/50, PositionY/50) != "2"){
 			PositionY = tempY1;
 		}
-		if (map.getCharTile(PositionX/50, tempY1/50) != " "){
+		if (manager.map.getCharTile(PositionX/50, tempY1/50) != " " && manager.map.getCharTile(PositionX/50, tempY1/50) != "1" && manager.map.getCharTile(tempX1/50, PositionY/50) != "2"){
 			PositionX = tempX1;
 		}
+		
 		
 	}
 	public abstract void Movement(long time);
@@ -218,10 +222,10 @@ public abstract class Sprite {
 		if ( checkx == PositionX && PositionY == getY()){
 			checkRadius = radius;
 		}
-			for  (int i =0; i < map.SpriteList.size(); i++){
-				if ( Math.abs(map.SpriteList.get(i).getX() - checkx) < (checkRadius + map.SpriteList.get(i).radius)){
-					if ( Math.abs(map.SpriteList.get(i).getY() - checky) < (checkRadius + map.SpriteList.get(i).radius)){
-						return map.SpriteList.get(i);
+			for  (int i =0; i < manager.map.SpriteList.size(); i++){
+				if ( Math.abs(manager.map.SpriteList.get(i).getX() - checkx) < (checkRadius + manager.map.SpriteList.get(i).radius)){
+					if ( Math.abs(manager.map.SpriteList.get(i).getY() - checky) < (checkRadius + manager.map.SpriteList.get(i).radius)){
+						return manager.map.SpriteList.get(i);
 					}
 				}
 			}

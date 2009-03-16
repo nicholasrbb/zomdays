@@ -15,8 +15,8 @@ public class Player extends Sprite{
 	int currentWeapon = 0;
 	
 	
-	public Player(Image playerImage, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map) {
-		super(health, width, height, x, y, dx, dy, Map);
+	public Player(Image playerImage, int health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager) {
+		super(health, width, height, x, y, dx, dy, Manager);
 		this.image = playerImage;
 		playerOrientation = new AffineTransform();
 		WeaponList = new ArrayList <Weapon>();
@@ -115,10 +115,10 @@ public class Player extends Sprite{
 			if (attackingWeapon.magAmmo() < 0){
 				System.out.println("Using Melee Weapon");
 			}else{
-				System.out.println("Mag: " + attackingWeapon.magAmmo() + " Ammo: " + attackingWeapon.getAmmo());
+				//System.out.println("Mag: " + attackingWeapon.magAmmo() + " Ammo: " + attackingWeapon.getAmmo());
 			}
 			for ( int r = 0; r <= range; r++){
-				String tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/50),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/50));
+				String tileShoot = manager.map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/50),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/50));
 				//System.out.println("Angle: " + (angle) + "gun hitting x: " +(PositionX + r*Math.sin(Math.toRadians(angle)))  + " y: " + (PositionY - r*Math.cos(Math.toRadians(angle))));
 				Sprite target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle)));
 				

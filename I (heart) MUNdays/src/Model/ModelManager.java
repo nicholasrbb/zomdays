@@ -4,28 +4,54 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.Random;
 
+import Main.GameFrame;
+
 public class ModelManager{
 	
-	TileMap map;
+	public TileMap map;
 	Image zombieImage = Toolkit.getDefaultToolkit().createImage("zombie.jpg");
 	Random generator = new Random();
 	public int killed = 0;
+	Player traveller;
 	
 	public ModelManager(TileMap Map){
 		map = Map;
 	}
 	
 	public void manageSprites(){
-		while(map.SpriteList.size() < 25){
+		while(map.SpriteList.size() < 10){
 			int x = Math.abs(generator.nextInt(3300)) + 50;
 			int y = Math.abs(generator.nextInt(1500)) + 50;
 			for (int i = 0; i < map.PlayerList.size(); i++){
 				if (map.getCharTile(x/50, y/50) == " " && Math.abs(map.PlayerList.get(i).getX() - x) > 450 && Math.abs(map.PlayerList.get(i).getY() - y) > 550){
-					Zombie zombay = new Zombie(zombieImage, 50, 10, 10, x, y, 0.1, 0.1, map);
+					Zombie zombay = new Zombie(zombieImage, 50, 10, 10, x, y, 0.1, 0.1, this);
 					map.addSprite(zombay);
 				}
 			}
 		}
+	}
+	
+	public void switchMap(){
+		for( int i = 0; i < map.PlayerList.size(); i++){
+			if (map.getCharTile(map.PlayerList.get(i).getX()/50, map.PlayerList.get(i).getY()/50) == "1"){
+				Sprite traveller = map.PlayerList.get(i);
+				map.PlayerList.remove(i);
+				map = GameFrame.getMap(1);
+				System.out.println("switching map");
+				map.addPlayer(traveller);
+			}else{
+				if (map.getCharTile(map.PlayerList.get(i).getX()/50, map.PlayerList.get(i).getY()/50) == "2"){
+					
+					Sprite traveller = map.PlayerList.get(i);
+					map.PlayerList.remove(i);
+					map = GameFrame.getMap(0);
+					System.out.println("switching map");
+					map.addPlayer(traveller);
+					
+				}
+			}
+		}
+		
 	}
 	
 	public void updateSprites(long timeSpent){
