@@ -34,10 +34,7 @@ public class ZombieAnimationManager{
 		
 		startTime = System.currentTimeMillis();
 		
-		System.out.println("State Changed To " + nextState);
-		System.out.println(startTime + "  " + timeChanged);
 
-		System.out.println("State Changed To " + nextState);
 
 
 		if(startTime - timeChanged <= 100){
@@ -48,7 +45,6 @@ public class ZombieAnimationManager{
 		else{
 			nextState = currentState;
 		
-		System.out.println("State Changed To " + nextState);
 
 			switch(nextState){
 		

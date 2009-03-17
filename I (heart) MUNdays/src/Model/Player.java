@@ -33,9 +33,8 @@ public class Player extends Sprite{
 		
 		//PlayerAnimationManager Controls for Animating Walking and staying still
 		if (up || down || right || left)
-			pAnim.setState(PlayerAnimationStates.Walking);
-		else
-			pAnim.setState(PlayerAnimationStates.Still);
+			pAnim.getCurrentAnimation().update(time);
+		
 
 		
 		
@@ -130,7 +129,6 @@ public class Player extends Sprite{
 		int damage = attackingWeapon.getDamage();
 		
 		if ( attackingWeapon.magAmmo() != 0){
-			pAnim.setState(PlayerAnimationStates.Shooting);	
 			attackingWeapon.updateAmmo(-1);
 			
 			for ( int r = 0; r <= range; r++){

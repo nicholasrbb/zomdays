@@ -8,10 +8,13 @@ import Model.Player;
 
 public class PlayerAnimationManager{
 	
-	Player player;
-	Image stillImage;
-	Image walkImage;
-	Image shootImage;
+	private Player player;
+	private Image stillImage;
+	private Image walkImage;
+	private Image shootImage;
+	
+	private PlayerAnimations playerWalking;
+	private PlayerAnimations currentAnimation;
 	public enum PlayerAnimationStates {Shooting, Walking, Still};
 	PlayerAnimationStates currentState , nextState;
 	long startTime;
@@ -20,6 +23,38 @@ public class PlayerAnimationManager{
 	
 	public PlayerAnimationManager(Player player){
 		this.player = player;
+		playerWalking = new PlayerAnimations(player);
+		Image walk0 = Toolkit.getDefaultToolkit().createImage("PlayerStill.jpg");
+		Image walk1 = Toolkit.getDefaultToolkit().createImage("PlayerWalk1.jpg");
+		Image walk2 = Toolkit.getDefaultToolkit().createImage("PlayerWalk2.jpg");
+		Image walk3 = Toolkit.getDefaultToolkit().createImage("PlayerWalk1.jpg");
+		Image walk4 = Toolkit.getDefaultToolkit().createImage("PlayerStill.jpg");
+		Image walk5 = Toolkit.getDefaultToolkit().createImage("PlayerWalk3.jpg");
+		Image walk6 = Toolkit.getDefaultToolkit().createImage("PlayerWalk4.jpg");
+		Image walk7 = Toolkit.getDefaultToolkit().createImage("PlayerWalk3.jpg");
+		
+		playerWalking.addFrame(walk0);
+		playerWalking.addFrame(walk1);
+		playerWalking.addFrame(walk2);
+		playerWalking.addFrame(walk3);
+		playerWalking.addFrame(walk4);
+		playerWalking.addFrame(walk5);
+		playerWalking.addFrame(walk6);
+		playerWalking.addFrame(walk7);
+		
+		currentAnimation = playerWalking;
+		
+	}
+	public PlayerAnimations getCurrentAnimation(){
+		return currentAnimation;
+	}
+}
+		
+		
+		
+		
+		
+		/*
 		currentState = PlayerAnimationStates.Still;
 		nextState = PlayerAnimationStates.Still;
 		stillImage = Toolkit.getDefaultToolkit().getImage("newPlayer.jpg");
@@ -28,6 +63,8 @@ public class PlayerAnimationManager{
 		startTime = System.currentTimeMillis();
 		timeChanged = System.currentTimeMillis();
 	}
+	
+	
 
 	public void setImage(){
 		startTime = System.currentTimeMillis();
@@ -74,3 +111,4 @@ public class PlayerAnimationManager{
 		setImage();
 	}
 }
+*/

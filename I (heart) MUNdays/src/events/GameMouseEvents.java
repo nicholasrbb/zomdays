@@ -60,7 +60,6 @@ public class GameMouseEvents implements MouseListenerInterface {
 	@Override
 	public void mousePressed(int worldX, int worldY, int button) {
 		// set player animation
-		player.pAnim.setState(PlayerAnimationStates.Shooting);		
 		
 		int targetX = worldX + d.cornerX1;
 		int targetY = worldY + d.cornerY1;
