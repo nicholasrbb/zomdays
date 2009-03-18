@@ -33,14 +33,14 @@ public class ModelManager{
 	
 	public void switchMap(){
 		for( int i = 0; i < map.PlayerList.size(); i++){
-			if (map.getCharTile(map.PlayerList.get(i).getX()/50, map.PlayerList.get(i).getY()/50) == "1"){
+			if (map.getCharTile(map.PlayerList.get(i).getX()/25, map.PlayerList.get(i).getY()/25) == "1"){
 				Sprite traveller = map.PlayerList.get(i);
 				map.PlayerList.remove(i);
 				map = GameFrame.getMap(1);
 				System.out.println("switching map");
 				map.addPlayer(traveller);
 			}else{
-				if (map.getCharTile(map.PlayerList.get(i).getX()/50, map.PlayerList.get(i).getY()/50) == "2"){
+				if (map.getCharTile(map.PlayerList.get(i).getX()/25, map.PlayerList.get(i).getY()/25) == "2"){
 					
 					Sprite traveller = map.PlayerList.get(i);
 					map.PlayerList.remove(i);

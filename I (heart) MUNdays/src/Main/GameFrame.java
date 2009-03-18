@@ -156,7 +156,7 @@ public class GameFrame extends JFrame {
 				final ModelManager manager = new ModelManager(map1);
 				
 			//Create Player and Zombie.
-				final Player playa = new Player(playerImage, 50, 10, 10, DEFAULT_WIDTH/2-5, DEFAULT_HEIGHT/2-5, 0.2, 0.2, manager);
+				final Player playa = new Player(playerImage, 50, 10, 10, DEFAULT_WIDTH/4-5, DEFAULT_HEIGHT/4-5, 0.2, 0.2, manager);
 				final Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
 				playa.addWeapon(Gun);

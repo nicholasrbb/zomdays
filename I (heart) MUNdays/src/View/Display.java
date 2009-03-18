@@ -82,13 +82,13 @@ public class Display extends JPanel{
 			cornerY2 = screenHeight;
 		}
 		
-		if ( cornerX2 >= 50*manager.map.getWidth() ){
-			cornerX1 = 50*manager.map.getWidth() - screenWidth; 
-			cornerX2 = 50*manager.map.getWidth();
+		if ( cornerX2 >= 25*manager.map.getWidth() ){
+			cornerX1 = 25*manager.map.getWidth() - screenWidth; 
+			cornerX2 = 25*manager.map.getWidth();
 		}
-		if ( cornerY2 >= 50*manager.map.getHeight() ){
-			cornerY1 = 50*manager.map.getHeight() - screenHeight; 
-			cornerY2 = 50*manager.map.getHeight();
+		if ( cornerY2 >= 25*manager.map.getHeight() ){
+			cornerY1 = 25*manager.map.getHeight() - screenHeight; 
+			cornerY2 = 25*manager.map.getHeight();
 		}
 		
 		dcornerX1 = dcornerX1-cornerX1;
@@ -98,8 +98,8 @@ public class Display extends JPanel{
 		
 		//System.out.println("cornerX2:  " + cornerX2 + "   cornerY2:  " + cornerY2);
 		
-		offsetX = cornerX1%50;
-		offsetY = cornerY1%50;
+		offsetX = cornerX1%25;
+		offsetY = cornerY1%25;
 		
 		
 		// setting tile view parameters
@@ -116,9 +116,9 @@ public class Display extends JPanel{
 			for(int x = firstTileX; x < lastTileX; x++ ){
 				Image image = manager.map.getTile(x, y);
 				g2d.drawImage(image,dx - offsetX,dy - offsetY, null);
-				dx = dx+50;
+				dx = dx+25;
 			}
-			dy = dy+50;
+			dy = dy+25;
 		}
 		
 		// Print Player 
@@ -132,7 +132,7 @@ public class Display extends JPanel{
 			if(manager.map.PlayerList.get(i) != player)
 				g2d.drawImage(manager.map.PlayerList.get(i).getSpriteImage(),playerOrientation, null);
 				Player playdizzle = (Player) manager.map.PlayerList.get(i);
-        		g2d.drawString("Health: " + manager.map.PlayerList.get(i).getHealth(),50,400);
+        		g2d.drawString("Health: " + manager.map.PlayerList.get(i).getHealth(),25,400);
         		g2d.drawString("Zombies Killed: " + manager.killed,50,415);
         		g2d.drawString("Mag: " + playdizzle.WeaponList.get(0).magAmmo(),50,430); 
         		g2d.drawString("Ammo: " + playdizzle.WeaponList.get(0).getAmmo(),50,445);
@@ -150,11 +150,11 @@ public class Display extends JPanel{
 		
 	}
 	public int pixelsToTiles(int x){
-		return (x/50);
+		return (x/25);
 		
 	}
 	public int tilesToPixels(int x){
-		return (50*x);
+		return (25*x);
 		
 	}
 	public int getCornerX1(){
