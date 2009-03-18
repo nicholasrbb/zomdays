@@ -37,7 +37,6 @@ public class PlayerAnimations {
 	
 	 public synchronized void update(long elapsedTime) {
 		 
-		 System.out.println(player.getSpriteImage() + "  " + currentFrame);
 
 	        if (frames.size() > 1) {
 	        	currentAnimationTime += elapsedTime;

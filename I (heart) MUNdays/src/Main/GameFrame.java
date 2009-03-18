@@ -130,7 +130,7 @@ public class GameFrame extends JFrame {
 			//Create Map of Engineering Building Second Floor.
 				TileMap map1 = null;
 				try {
-					map1 = new TileMap(66,31, "EngSecondFloor.txt");
+					map1 = new TileMap(2000,2000, "Engr3rdFloor.txt");
 					MapList.add(map1);
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -139,7 +139,7 @@ public class GameFrame extends JFrame {
 				
 				TileMap map2 = null;
 				try {
-					map2 = new TileMap(66,31, "EngFirstFloor.txt");
+					map2 = new TileMap(2000,2000, "Engr3rdFloor.txt");
 					MapList.add(map2);
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -165,6 +165,7 @@ public class GameFrame extends JFrame {
 
 			//Add player to map SpriteList.
 				map1.addPlayer(playa);
+				map1.setPlayerOnePosition();
 				
 				
 			//Initialise the panel.

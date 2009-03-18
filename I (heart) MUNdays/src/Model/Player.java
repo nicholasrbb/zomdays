@@ -78,9 +78,7 @@ public class Player extends Sprite{
 
 
 	@Override
-	public void setPlayerSpriteOrientation(int xPos, int yPos) {
-		
-		
+	public void setPlayerSpriteOrientation(int xPos, int yPos) {	
 		
 		solveAngle(mouseX, mouseY);
 		
@@ -90,6 +88,11 @@ public class Player extends Sprite{
 			
 	}
 
+	public void setPlayerStartPosition(int x, int y){
+		PositionX = x;
+		PositionY = y;
+	}
+	
 	public int getCurrentWeapon(){
 		return currentWeapon;}
 	

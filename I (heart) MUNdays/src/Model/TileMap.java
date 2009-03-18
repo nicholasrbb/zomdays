@@ -15,7 +15,7 @@ public class TileMap {
 	private String[][] charMap;
     public ArrayList <Sprite> SpriteList;
     public ArrayList <Sprite> PlayerList;
-    public ArrayList < Sprite> [][] Grid;
+    public ArrayList <Sprite> [][] Grid;
     public int width;
     public int height;
     
@@ -164,6 +164,17 @@ public class TileMap {
                 	this.setTile(x, y, toolkit.getImage("innerwall_BL.jpg") );
                 	this.setCharTile(x, y, "x");
                 }
+                
+                if (ch == '*') {
+                	this.setTile(x, y, toolkit.getImage("white.jpg") );
+                	this.setCharTile(x, y, "*");
+                }
+                if (ch == 'Z') {
+                	System.out.print("Z");
+                	this.setTile(x, y, toolkit.getImage("black.jpg") );
+                	this.setCharTile(x, y, "Z");
+                }
+                           
                 if (ch == '1') {
                 	this.setTile(x, y, toolkit.getImage("black.jpg") );
                 	this.setCharTile(x, y, "1");
@@ -187,6 +198,18 @@ public class TileMap {
         	return charMap[x][y];
         }
 	}
+	
+	public void setPlayerOnePosition(){
+		for ( int x = 0; x<=getWidth(); x++)
+			for (int y = 0; y<=getHeight(); y++){
+				if (getCharTile(x,y) == "*"){
+					System.out.println(x + "  " + y);
+					((Player) PlayerList.get(0)).setPlayerStartPosition(x*25,y*25);
+					return;}
+								
+			}
+	}
+	
     
 
 
