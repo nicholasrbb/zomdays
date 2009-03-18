@@ -8,6 +8,7 @@ import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
 
+import Interface.Buttons;
 import Model.ModelManager;
 import Model.Player;
 import Model.TileMap;
@@ -29,15 +30,16 @@ public class Display extends JPanel{
 	public int dcornerX1;
 	public int dcornerY1;
 	
-	final Canvas canvas ;
+	
 	
 	public Display(ModelManager Manager, Player playa, int SW, int SH){
+		Buttons Button = new Buttons(playa);
+		this.addKeyListener( Button);
+
 		manager = Manager;
 		player = playa;	
-		setPreferredSize( new Dimension(500, 500) ) ;
 		screenWidth = SW;
 		screenHeight = SH;
-		canvas  = new Canvas(500, 500, 10) ;
 		cornerX1 = player.getX()- screenWidth/2;
 		cornerY1 = player.getY()- screenHeight/2;
 		cornerX2 = player.getX()+ screenWidth/2;
@@ -52,22 +54,22 @@ public class Display extends JPanel{
 		dcornerX1 = cornerX1;
 		dcornerY1 = cornerY1;
 		
-		if ( cornerX1 > (player.getX() - 100) ){
-			cornerX1 = player.getX() - 100; 
-			cornerX2 = (player.getX() - 100) + screenWidth;
+		if ( cornerX1 > (player.getX() - 200) ){
+			cornerX1 = player.getX() - 200; 
+			cornerX2 = (player.getX() - 200) + screenWidth;
 			
 		}
-		if ( cornerY1 > player.getY() - 100 ){
-			cornerY1 = player.getY() - 100; 
-			cornerY2 = (player.getY() - 100) + screenHeight;
+		if ( cornerY1 > player.getY() - 200 ){
+			cornerY1 = player.getY() - 200; 
+			cornerY2 = (player.getY() - 200) + screenHeight;
 		}
-		if ( cornerX2 < (player.getX() + 100) ){
-			cornerX1 = (player.getX() + 100) - screenWidth; 
-			cornerX2 = player.getX() + 100;
+		if ( cornerX2 < (player.getX() + 200) ){
+			cornerX1 = (player.getX() + 200) - screenWidth; 
+			cornerX2 = player.getX() + 200;
 		}
-		if ( cornerY2 < (player.getY() + 100) ){
-			cornerY1 = (player.getY() + 100) - screenHeight; 
-			cornerY2 = player.getY() + 100;
+		if ( cornerY2 < (player.getY() + 200) ){
+			cornerY1 = (player.getY() + 200) - screenHeight; 
+			cornerY2 = player.getY() + 200;
 		}
 		
 		//Correcting the position of the display relative to the map size.
@@ -94,7 +96,7 @@ public class Display extends JPanel{
 		player.mouseX = player.mouseX - dcornerX1;
 		player.mouseY = player.mouseY - dcornerY1;
 		
-		
+		//System.out.println("cornerX2:  " + cornerX2 + "   cornerY2:  " + cornerY2);
 		
 		offsetX = cornerX1%50;
 		offsetY = cornerY1%50;

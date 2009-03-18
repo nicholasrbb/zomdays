@@ -1,6 +1,6 @@
 BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC
 L                                                                H
-L                                         1                      H
+L2                                                              2H
 L                                                                H
 L                                                                H
 L                                                                H
@@ -26,4 +26,6 @@ L        A            A A     A       A                    A     H
 L        A            A A     A       A                    A     H
 L        A            A A     A       A                    A     H
 L        NJJJJJJJJJJJJM NJJJJJM       NJJJJ    JJJJJJJJJJJJM     H
+L2                                                              2H
 L                                                                H
+DGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGE

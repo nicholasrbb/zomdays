@@ -19,7 +19,7 @@ public class ModelManager{
 	}
 	
 	public void manageSprites(){
-		while(map.SpriteList.size() < 10){
+		while(map.SpriteList.size() < 1){
 			int x = Math.abs(generator.nextInt(3300)) + 50;
 			int y = Math.abs(generator.nextInt(1500)) + 50;
 			for (int i = 0; i < map.PlayerList.size(); i++){
@@ -61,7 +61,9 @@ public class ModelManager{
 			map.PlayerList.get(i).Movement(timeSpent);
 			map.PlayerList.get(i).setSpriteOrientation();
 			if (map.PlayerList.get(i).isAlive == false){
-				map.removePlayer(map.PlayerList.get(i));}
+				System.exit(0);
+				//map.removePlayer(map.PlayerList.get(i));
+			}
 		}
 		
 		//Update position and orientation of all sprites.

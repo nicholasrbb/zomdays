@@ -6,7 +6,6 @@ import java.awt.geom.AffineTransform;
 import ZombieAnimations.ZombieAnimationManager;
 import ZombieAnimations.ZombieAnimationManager.ZombieAnimationStates;
 
-import PlayerAnimations.PlayerAnimationManager;
 
 
 public class Zombie extends Sprite{

@@ -14,18 +14,22 @@ public class Buttons implements KeyListener{
 	Player player;
 		
 	public Buttons(Player p){
+		
 		player = p;
 	}
 	
 	
 	
 		public void keyTyped(KeyEvent ke) {
-			
+	    	
+
 		}
 	
 	
 	@Override
 	public void keyPressed(KeyEvent ke) {
+		
+
 		switch (ke.getKeyCode()) {
 	    case KeyEvent.VK_W:  
 	    	player.up = true;
@@ -44,6 +48,9 @@ public class Buttons implements KeyListener{
 	    	break;
 	    case KeyEvent.VK_R: 
 	    	player.reloadWeapon();
+	    	break;
+	    case KeyEvent.VK_ESCAPE: 
+	    	
 	    	break;
 		}
 		

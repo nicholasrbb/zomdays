@@ -3,9 +3,7 @@ package Model;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
-
 import PlayerAnimations.PlayerAnimationManager;
-import PlayerAnimations.PlayerAnimationManager.PlayerAnimationStates;
 
 
 public class Player extends Sprite{

@@ -3,8 +3,6 @@ package Model;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 
-import View.Display;
-
 public abstract class Sprite {
 	protected Image image;
 	double Health;

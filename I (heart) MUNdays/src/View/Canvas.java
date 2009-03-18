@@ -29,6 +29,6 @@ public class Canvas extends JPanel {
 		
 		
 		setOpaque(true) ;
-		setBackground(Color.white) ;
+		setBackground(Color.black) ;
 	}
 }
