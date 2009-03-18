@@ -50,46 +50,54 @@ public class Zombie extends Sprite{
 		
 		zAnim.setState(ZombieAnimationStates.Walking);
 		
-		if ( (target.getX() - 35) > getX()){
-			right = true;
+		double x = (this.getX() - target.getX())*(this.getX() - target.getX());
+		double y = (this.getY() - target.getY())*(this.getY() - target.getY());
+		
+		if (Math.sqrt(x+y) <= 600){
+			
+		
+		
+			if ( (target.getX() - 35) > getX()){
+				right = true;
+			}
+			if ( (target.getX() + 35) < getX()){
+				left = true;
+			}
+			if ( (target.getY() + 35) < getY()){
+				up = true;
+			}
+			if ( (target.getY() - 35) > getY()){
+				down = true;
+			}
+			if (up && !right && !left && !down){
+				makeMovement(Direction.UP, time);
+			}
+			if (!up && right && !left && !down){
+				makeMovement(Direction.RIGHT, time);
+			}
+			if (!up && !right && left && !down){
+				makeMovement(Direction.LEFT, time);
+			}
+			if (!up && !right && !left && down){
+				makeMovement(Direction.DOWN, time);
+			}
+			if (up && right && !left && !down){
+				makeMovement(Direction.UPRIGHT, time);
+			}
+			if (up && !right && left && !down){
+				makeMovement(Direction.UPLEFT, time);
+			}
+			if (!up && right && !left && down){
+				makeMovement(Direction.DOWNRIGHT, time);
+			}
+			if (!up && !right && left && down){
+				makeMovement(Direction.DOWNLEFT, time);
+			}
+			up = false;
+			right = false;
+			left = false;
+			down = false;
 		}
-		if ( (target.getX() + 35) < getX()){
-			left = true;
-		}
-		if ( (target.getY() + 35) < getY()){
-			up = true;
-		}
-		if ( (target.getY() - 35) > getY()){
-			down = true;
-		}
-		if (up && !right && !left && !down){
-			makeMovement(Direction.UP, time);
-		}
-		if (!up && right && !left && !down){
-			makeMovement(Direction.RIGHT, time);
-		}
-		if (!up && !right && left && !down){
-			makeMovement(Direction.LEFT, time);
-		}
-		if (!up && !right && !left && down){
-			makeMovement(Direction.DOWN, time);
-		}
-		if (up && right && !left && !down){
-			makeMovement(Direction.UPRIGHT, time);
-		}
-		if (up && !right && left && !down){
-			makeMovement(Direction.UPLEFT, time);
-		}
-		if (!up && right && !left && down){
-			makeMovement(Direction.DOWNRIGHT, time);
-		}
-		if (!up && !right && left && down){
-			makeMovement(Direction.DOWNLEFT, time);
-		}
-		up = false;
-		right = false;
-		left = false;
-		down = false;
 	}
 	
 	public synchronized void setSpriteOrientation(){

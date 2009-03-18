@@ -15,6 +15,7 @@ public class MenuButtons {
 	public JButton NewGame;
 	public JButton Exit;
 	public JButton MainMenu;
+	public JButton Resume;
 	GameFrame game;
 	
 	public MenuButtons(GameFrame gameframe){
@@ -41,6 +42,14 @@ public class MenuButtons {
 		MainMenu.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				game.showMainMenu();
+				
+				
+			}});
+		
+		Resume = new JButton("Return to Game");
+		Resume.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.resumeGame();
 				
 				
 			}});

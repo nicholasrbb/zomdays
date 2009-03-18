@@ -4,6 +4,7 @@ package Interface;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import Main.GameFrame;
 import Model.Player;
 
 
@@ -12,9 +13,10 @@ import Model.Player;
 public class Buttons implements KeyListener{
 	
 	Player player;
-		
-	public Buttons(Player p){
-		
+	GameFrame game;
+	
+	public Buttons(Player p, GameFrame game){
+		this.game = game;
 		player = p;
 	}
 	
@@ -50,7 +52,8 @@ public class Buttons implements KeyListener{
 	    	player.reloadWeapon();
 	    	break;
 	    case KeyEvent.VK_ESCAPE: 
-	    	
+	    	game.showInGameMenu();
+	    	//System.exit(0);
 	    	break;
 		}
 		

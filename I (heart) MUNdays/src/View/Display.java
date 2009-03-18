@@ -33,8 +33,8 @@ public class Display extends JPanel{
 	
 	
 	public Display(ModelManager Manager, Player playa, int SW, int SH){
-		Buttons Button = new Buttons(playa);
-		this.addKeyListener( Button);
+		//Buttons Button = new Buttons(playa);
+		//this.addKeyListener( Button);
 
 		manager = Manager;
 		player = playa;	
@@ -104,9 +104,9 @@ public class Display extends JPanel{
 		
 		// setting tile view parameters
 		int firstTileX = pixelsToTiles(cornerX1-offsetX);
-		int lastTileX = pixelsToTiles(cornerX2 + offsetX);
+		int lastTileX = pixelsToTiles(cornerX2 + offsetX) + 1;
 		int firstTileY  = pixelsToTiles(cornerY1-offsetY);
-		int lastTileY = pixelsToTiles(cornerY2 + offsetY);	
+		int lastTileY = pixelsToTiles(cornerY2 + offsetY) + 1;	
 		
 		
 		// Print all the visible Tiles

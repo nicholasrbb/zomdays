@@ -25,7 +25,6 @@ import Model.ModelManager;
 import Model.Player;
 import Model.TileMap;
 import Model.Weapon;
-import View.Canvas;
 import View.Display;
 
 @SuppressWarnings("serial")
@@ -39,6 +38,7 @@ public class GameFrame extends JFrame {
 	public Display display;
 	public boolean makeGame = false;
 	public boolean mainmenu = false;
+	public boolean pause = false;
 		
 		public GameFrame(){
 			//MainMenu = new Canvas(500,  500, 1);
@@ -82,13 +82,13 @@ public class GameFrame extends JFrame {
 			inGameMenu.setOpaque(true) ;
 			inGameMenu.setBackground(Color.black) ;
 			inGameMenu.add(ingamemenuButtons.MainMenu);
+			inGameMenu.add(ingamemenuButtons.Resume);
 			inGameMenu.add(ingamemenuButtons.Exit);
 			
 			
 			
-			//showInGameMenu();
-			//showMainMenu();
-			CreateGame();
+			showMainMenu();
+			
 			
 			
 		}
@@ -96,23 +96,34 @@ public class GameFrame extends JFrame {
 		
 		// Create a Menu.
 		public void showMainMenu(){
-			System.out.println("this is called");
+			inGameMenu.setVisible(false);
 			this.setContentPane(MainMenu);
-			MainMenu.setFocusable(true);
+			MainMenu.grabFocus();
 			MainMenu.setVisible(true);
 		}
 		
 		public void showInGameMenu(){
-			//inGameMenu.setVisible(false);
+			pause = true;
+			display.setVisible(false);
+			MainMenu.setVisible(false);
 			this.setContentPane(inGameMenu);
-
+			inGameMenu.setVisible(true);
+			inGameMenu.grabFocus();
+		}
+		
+		public void resumeGame(){
+			pause = false;
+			MainMenu.setVisible(false);
+			display.setVisible(true);
+			this.setContentPane(display);
+			display.grabFocus();
 		}
 		
 		
 		//Creating a game.
 		public void CreateGame(){
 			
-			MainMenu.setFocusable(false);
+			//MainMenu.setFocusable(false);
 			MainMenu.setVisible(false);
 			System.out.println("game being created");
 
@@ -146,7 +157,7 @@ public class GameFrame extends JFrame {
 				
 			//Create Player and Zombie.
 				final Player playa = new Player(playerImage, 50, 10, 10, DEFAULT_WIDTH/2-5, DEFAULT_HEIGHT/2-5, 0.2, 0.2, manager);
-				final Weapon Gun = new Weapon(npcImage,500,10,1000,15, "Hand Gun");
+				final Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
 				playa.addWeapon(Gun);
 				playa.addWeapon(Knife);	
@@ -181,13 +192,20 @@ public class GameFrame extends JFrame {
 				display.addMouseListener(mouseListener);
 				display.addMouseMotionListener(mouseListener);
 				
+				
 				System.out.println("showing display");
+				
 				this.setContentPane(display);
+				display.grabFocus();
+				Buttons Button = new Buttons(playa, this);
+				display.addKeyListener( Button);
+				
 				
 				
 			//Start Game Thread 1.
 				new Thread() {
 				    public void run() {
+				    	
 				    	long startTime = System.currentTimeMillis();
 				    	long currentTime = startTime;
 				    	while(true){
@@ -201,10 +219,13 @@ public class GameFrame extends JFrame {
 					                Thread.sleep(10);}
 						        	catch (InterruptedException ex) { } 
 						    }
-				        	manager.manageSprites();
-				        	manager.updateSprites(loopTime);
-				        	manager.switchMap();
-				        	display.repaint();
+				        	if (pause != true){
+				        		manager.manageSprites();
+					        	manager.updateSprites(loopTime);
+					        	manager.switchMap();
+					        	display.repaint();
+				        	}
+				        	
 				        	
 				        	
 				        }
