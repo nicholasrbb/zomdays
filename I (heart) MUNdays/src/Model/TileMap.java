@@ -7,27 +7,39 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 
 public class TileMap {
 	private Image[][] Map;
 	private String[][] charMap;
+	
+	// Coins
+	
     public ArrayList <Sprite> SpriteList;
     public ArrayList <Sprite> PlayerList;
     public ArrayList <Sprite> [][] Grid;
+    public ArrayList <Item> ItemList;
     public int width;
     public int height;
+    Random generator  = new Random();
+    
+    Image ammo = Toolkit.getDefaultToolkit().createImage("innerwall_BL.jpg");
+    Image health = Toolkit.getDefaultToolkit().createImage("innerwall_BL.jpg");
     
     public TileMap(int width, int height, String file) throws IOException {
         Map = new Image[width][height];
         SpriteList = new ArrayList <Sprite>();
         PlayerList = new ArrayList <Sprite>();
+        ItemList = new ArrayList <Item>();
         //Grid = new ArrayList [width][height];
         charMap = new String[width][height];
         loadMap(file);
         this.width = width;
         this.height = height;
+        
+        
     }
     
     public int getWidth() {
@@ -113,23 +125,23 @@ public class TileMap {
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'A') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_TB.jpg") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_LR.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'B') {
-                	this.setTile(x, y, toolkit.getImage("cornerTL.jpg") );
+                	this.setTile(x, y, toolkit.getImage("cornerTL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'C') {
-                	this.setTile(x, y, toolkit.getImage("cornerTR.jpg") );
+                	this.setTile(x, y, toolkit.getImage("cornerTR.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'D') {
-                	this.setTile(x, y, toolkit.getImage("cornerBL.jpg") );
+                	this.setTile(x, y, toolkit.getImage("cornerBL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'E') {
-                	this.setTile(x, y, toolkit.getImage("cornerBR.jpg") );
+                	this.setTile(x, y, toolkit.getImage("cornerBR.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'F') {
@@ -149,7 +161,7 @@ public class TileMap {
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'J') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_LR.jpg") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_TB.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'K') {
@@ -173,7 +185,23 @@ public class TileMap {
                 	this.setTile(x, y, toolkit.getImage("white.jpg") );
                 	this.setCharTile(x, y, "*");
                 }
-                        
+                 // create Tiles to contain Items
+                if (ch == '0') {
+                	this.setTile(x, y, toolkit.getImage("white.jpg") );
+                	this.setCharTile(x, y, " ");
+                	int type = Math.abs(generator.nextInt(2));
+                	System.out.println(type);
+                	if (type == 0){
+                		Item item = new Item(ammo, "ammo", 50,x*25, y*25);
+                		ItemList.add(item);
+                	}
+                	if (type == 1){
+                		Item item = new Item(health,"health", 10,x*25, y*25);
+                		ItemList.add(item);
+                	}	
+                }
+                
+                            
                 if (ch == '1') {
                 	this.setTile(x, y, toolkit.getImage("black.jpg") );
                 	this.setCharTile(x, y, "1");

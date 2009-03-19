@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
@@ -26,11 +27,16 @@ public class Player extends Sprite{
 	//public ArrayList <Weapon> WeaponList;
 	//int currentWeapon = 0;
 	private File gun;
+	private File voice1;
 	private Clip gunFired;
 	private File gunReload;
 	public boolean attack = false;
 	Clip gunShotOrig;
 	Clip gunReloadOrig;
+	Clip voice1Orig;
+	
+	public int coinCount;
+	
 	
 	public Player(Image playerImage, int health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager) {
 		super(health, width, height, x, y, dx, dy, Manager);
@@ -41,6 +47,10 @@ public class Player extends Sprite{
 		
 		gun = new File("gunshot.wav");
 		gunReload = new File("reload.wav");
+		
+		
+		
+
 		
 		try {
 			AudioInputStream handgunShot = AudioSystem.getAudioInputStream(gun);
@@ -65,6 +75,8 @@ public class Player extends Sprite{
 		} catch (LineUnavailableException e) {
 				e.printStackTrace();}
 		
+		
+		
 
 		
 	
@@ -83,6 +95,27 @@ public class Player extends Sprite{
 		}else{
 			currentAnimation = 0;
 		}
+		
+		//Paint all the Items
+		for ( int i = 0; i < manager.map.ItemList.size(); i++){
+			if ( Math.abs(PositionX - manager.map.ItemList.get(i).getX()) < 25 && Math.abs(PositionY - manager.map.ItemList.get(i).getY()) < 25){
+				if ( manager.map.ItemList.get(i).getType()  == "ammo"){
+					WeaponList.get(currentWeapon).ammo += manager.map.ItemList.get(i).getAmount();
+				}
+				if ( manager.map.ItemList.get(i).getType()  == "health"){
+					Health += manager.map.ItemList.get(i).getAmount();
+				}
+				
+				manager.map.ItemList.remove(i);
+			}
+			
+		
+		}
+		
+		
+		
+		
+		
 		
 		
 		if (up && !right && !left && !down){

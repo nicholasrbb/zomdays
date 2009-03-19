@@ -2,6 +2,14 @@ package Model;
 
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import ZombieAnimations.ZombieAnimationManager;
 import ZombieAnimations.ZombieAnimationManager.ZombieAnimationStates;
@@ -19,12 +27,28 @@ public class Zombie extends Sprite{
 	public boolean down = false;
 	private Sprite targetPlayer;
 	private double damage = 0.05;
+	private File voice1;
+	private Clip voice1Orig;
 		
 	public Zombie(Image npcImage, int health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager) {
 		super(health, width, height, x, y, dx, dy, Manager);
 		this.image = npcImage;
 		npcOrientation = new AffineTransform();
 		zAnim =  new ZombieAnimationManager(this);
+		
+		voice1 = new File("creep.wav");
+
+		
+		try {
+			AudioInputStream voice01 = AudioSystem.getAudioInputStream(voice1);
+			voice1Orig = AudioSystem.getClip();
+			voice1Orig.open(voice01);
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+				e.printStackTrace();}
 	}
 	
 	public Sprite whichPlayer(){
@@ -128,6 +152,9 @@ public class Zombie extends Sprite{
 
 		Health = Health + change;
 		if (Health <= 0){
+			if (!voice1Orig.isActive()){
+			voice1Orig.setFramePosition(0);
+			voice1Orig.start();}
 			isAlive = false;
 		}
 	}

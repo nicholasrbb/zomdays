@@ -1,6 +1,5 @@
 package View;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -126,8 +125,18 @@ public class Display extends JPanel{
 		g2d.drawImage(player.getSpriteImage(),player.getSpriteOrientation(), null);
 		g2d.drawImage(player.WeaponList.get(player.getCurrentWeapon()).getImage(),player.getSpriteOrientation(), null);
     	
-    	
+		
+		
+		//Paint all the Items
+		for ( int i = 0; i < manager.map.ItemList.size(); i++){
+    		System.out.println("playerX: " + player.getX() + "PlayerY: " + player.getY() + " Item type: " +manager.map.ItemList.get(i).getType() +  " Item Image = " + manager.map.ItemList.get(i).getImage() + " " + manager.map.ItemList.get(i).getX()+ " " + manager.map.ItemList.get(i).getY());
+    		g2d.drawImage(manager.map.ItemList.get(i).getImage(),manager.map.ItemList.get(i).getX() - cornerX1 -12, manager.map.ItemList.get(i).getY() - cornerY1 -12, null);
+		}
+		
+
 			
+		
+		
 		// Paint all other Players	
 		for ( int i = 0; i < manager.map.PlayerList.size(); i++){	
 			if(manager.map.PlayerList.get(i) != player)
@@ -135,9 +144,10 @@ public class Display extends JPanel{
 				Player playdizzle = (Player) manager.map.PlayerList.get(i);
         		g2d.drawString("Health: " + manager.map.PlayerList.get(i).getHealth(),50,400);
         		g2d.drawString("Zombies Killed: " + manager.killed,50,415);
-        		g2d.drawString("Mag: " + playdizzle.WeaponList.get(0).magAmmo(),50,430); 
-        		g2d.drawString("Ammo: " + playdizzle.WeaponList.get(0).getAmmo(),50,445);
-        		g2d.drawString("Current Weapon: " + playdizzle.WeaponList.get(playdizzle.getCurrentWeapon()).getWeaponName() , 50, 460);
+        		g2d.drawString("Coins Collected: " + playdizzle.coinCount,50,430);
+        		g2d.drawString("Mag: " + playdizzle.WeaponList.get(0).magAmmo(),50,445); 
+        		g2d.drawString("Ammo: " + playdizzle.WeaponList.get(0).getAmmo(),50,460);
+        		g2d.drawString("Current Weapon: " + playdizzle.WeaponList.get(playdizzle.getCurrentWeapon()).getWeaponName() , 50, 475);
         		
 		}
 		
@@ -148,6 +158,8 @@ public class Display extends JPanel{
     		npcTransform.rotate(Math.toRadians(manager.map.SpriteList.get(i).angle),manager.map.SpriteList.get(i).getSpriteImage().getWidth(null)/2, manager.map.SpriteList.get(i).getSpriteImage().getHeight(null)/2);    	
     		g2d.drawImage(manager.map.SpriteList.get(i).getSpriteImage(),npcTransform, null);
     	}
+    	
+    	
 		
 	}
 	public int pixelsToTiles(int x){
