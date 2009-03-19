@@ -154,19 +154,42 @@ public abstract class Sprite {
 				
 		}
 		
-		if (manager.map.getCharTile(tempX1/25, (PositionY+25)/25) != " " && manager.map.getCharTile(tempX1/25, (PositionY+25)/25) != "1" && manager.map.getCharTile(tempX1/25, (PositionY+25)/25) != "2"){
+		if (manager.map.getCharTile(tempX1/25, (PositionY+25)/25) != " " 
+			|| manager.map.getCharTile((tempX1+25)/25, (PositionY+25)/25) != " "
+			|| manager.map.getCharTile((tempX1-25)/25, (PositionY+25)/25) != " "
+			&& manager.map.getCharTile(tempX1/25, (PositionY+25)/25) != "1" 
+			&& manager.map.getCharTile(tempX1/25, (PositionY+25)/25) != "2"){
 			PositionY = tempY1;
-		}
-		if (manager.map.getCharTile(tempX1/25, (PositionY-25)/25) != " " && manager.map.getCharTile(tempX1/25, (PositionY-25)/25) != "1" && manager.map.getCharTile(tempX1/25, (PositionY-25)/25) != "2"){
-			PositionY = tempY1;
+			
 		}
 		
-		if (manager.map.getCharTile((PositionX-25)/25, tempY1/25) != " " && manager.map.getCharTile((PositionX-25)/25, tempY1/25) != "1" && manager.map.getCharTile((PositionX-25)/25,tempY1/25 ) != "2"){
+
+		if (manager.map.getCharTile(tempX1/25, (PositionY-25)/25) != " " 
+			|| manager.map.getCharTile((tempX1+25)/25, (PositionY-25)/25) != " "
+			|| manager.map.getCharTile((tempX1-25)/25, (PositionY-25)/25) != " "
+			&& manager.map.getCharTile(tempX1/25, (PositionY-25)/25) != "1" 
+			&& manager.map.getCharTile(tempX1/25, (PositionY-25)/25) != "2"){
+			PositionY = tempY1;
+
+		}
+		
+		if (manager.map.getCharTile((PositionX-25)/25, tempY1/25) != " " 
+			|| manager.map.getCharTile((PositionX-25)/25, (tempY1+25)/25) != " "
+			|| manager.map.getCharTile((PositionX-25)/25, (tempY1-25)/25) != " "
+			&& manager.map.getCharTile((PositionX-25)/25, tempY1/25) != "1" 
+			&& manager.map.getCharTile((PositionX-25)/25,tempY1/25 ) != "2"){
 			PositionX = tempX1;
 		}
-		if (manager.map.getCharTile((PositionX+25)/25, tempY1/25) != " " && manager.map.getCharTile((PositionX+25)/25, tempY1/25) != "1" && manager.map.getCharTile((PositionX+25)/25,tempY1/25 ) != "2"){
+		if (manager.map.getCharTile((PositionX+25)/25, tempY1/25) != " " 
+			|| manager.map.getCharTile((PositionX+25)/25, (tempY1+25)/25) != " "
+			|| manager.map.getCharTile((PositionX+25)/25, (tempY1-25)/25) != " "
+			&& manager.map.getCharTile((PositionX+25)/25, tempY1/25) != "1" 
+			&& manager.map.getCharTile((PositionX+25)/25,tempY1/25 ) != "2"){
 			PositionX = tempX1;
 		}
+		
+		System.out.println(" Players Current Positon: " + PositionX + " , " + PositionY);
+
 		
 		
 	}

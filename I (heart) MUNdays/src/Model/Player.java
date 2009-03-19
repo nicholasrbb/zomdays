@@ -2,7 +2,16 @@ package Model;
 
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import PlayerAnimations.PlayerAnimationManager;
 
 
@@ -16,6 +25,8 @@ public class Player extends Sprite{
 	public boolean down = false;
 	public ArrayList <Weapon> WeaponList;
 	int currentWeapon = 0;
+	private File gun;
+	private File gunReload;
 	
 	
 	public Player(Image playerImage, int health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager) {
@@ -23,7 +34,17 @@ public class Player extends Sprite{
 		this.image = playerImage;
 		playerOrientation = new AffineTransform();
 		WeaponList = new ArrayList <Weapon>();
-		pAnim = new PlayerAnimationManager(this);}
+		pAnim = new PlayerAnimationManager(this);
+		
+		gun = new File("gunshot.wav");
+		gunReload = new File("reload.wav");
+		
+	
+		
+
+		
+	
+	}
 
 	
 	
@@ -118,18 +139,44 @@ public class Player extends Sprite{
 	
 	public void reloadWeapon(){
 		if (WeaponList.get(currentWeapon).getAmmo() >=0){
+			try {
+				AudioInputStream handgunReload = AudioSystem.getAudioInputStream(gunReload);
+				Clip gunShotOrig = AudioSystem.getClip();
+				gunShotOrig.open(handgunReload);
+				gunShotOrig.start();
+			} catch (UnsupportedAudioFileException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (LineUnavailableException e) {
+					e.printStackTrace();}
 			WeaponList.get(currentWeapon).reload();
 		}
 	}
 
 	@Override
 	public void attack() {
+
+		
 		
 		Weapon attackingWeapon = WeaponList.get(currentWeapon);
 		int range = attackingWeapon.getRange();
 		int damage = attackingWeapon.getDamage();
 		
 		if ( attackingWeapon.magAmmo() != 0){
+
+			try {
+				AudioInputStream handgunShot = AudioSystem.getAudioInputStream(gun);
+				Clip gunShotOrig = AudioSystem.getClip();
+				gunShotOrig.open(handgunShot);
+				gunShotOrig.start();
+			} catch (UnsupportedAudioFileException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (LineUnavailableException e) {
+					e.printStackTrace();}		
+			
 			attackingWeapon.updateAmmo(-1);
 			
 			for ( int r = 0; r <= range; r++){
