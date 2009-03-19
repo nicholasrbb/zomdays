@@ -25,23 +25,16 @@ public class PlayerAnimationManager{
 	public PlayerAnimationManager(Player player){
 		this.player = player;
 		playerWalking = new PlayerAnimations(player);
-		Image walk0 = Toolkit.getDefaultToolkit().createImage("PlayerStill.jpg");
-		Image walk1 = Toolkit.getDefaultToolkit().createImage("PlayerWalk1.jpg");
-		Image walk2 = Toolkit.getDefaultToolkit().createImage("PlayerWalk2.jpg");
-		Image walk3 = Toolkit.getDefaultToolkit().createImage("PlayerWalk1.jpg");
-		Image walk4 = Toolkit.getDefaultToolkit().createImage("PlayerStill.jpg");
-		Image walk5 = Toolkit.getDefaultToolkit().createImage("PlayerWalk3.jpg");
-		Image walk6 = Toolkit.getDefaultToolkit().createImage("PlayerWalk4.jpg");
-		Image walk7 = Toolkit.getDefaultToolkit().createImage("PlayerWalk3.jpg");
+		Image walk0 = Toolkit.getDefaultToolkit().createImage("Player1.png");
+		Image walk1 = Toolkit.getDefaultToolkit().createImage("newplayerwalk1.png");
+		Image walk2 = Toolkit.getDefaultToolkit().createImage("Player1.png");
+		Image walk3 = Toolkit.getDefaultToolkit().createImage("newplayerwalk2.png");
+		
 		
 		playerWalking.addFrame(walk0);
 		playerWalking.addFrame(walk1);
 		playerWalking.addFrame(walk2);
 		playerWalking.addFrame(walk3);
-		playerWalking.addFrame(walk4);
-		playerWalking.addFrame(walk5);
-		playerWalking.addFrame(walk6);
-		playerWalking.addFrame(walk7);
 		
 		currentAnimation = playerWalking;
 		

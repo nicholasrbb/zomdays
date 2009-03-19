@@ -18,12 +18,24 @@ public class ModelManager{
 		map = Map;
 	}
 	
+	public void updateAnimations(){
+		map.PlayerList.get(0).image = map.PlayerList.get(0).animations.get(map.PlayerList.get(0).currentAnimation).getAnimationImage();
+		map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).image = map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).animations.get(map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).currentAnimation).getAnimationImage();
+		System.out.println( map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).currentAnimation );
+	}
+	
 	public void manageSprites(){
 		while(map.SpriteList.size() < 100){
 			int x = Math.abs(generator.nextInt(15000)) + 50;
 			int y = Math.abs(generator.nextInt(15000)) + 50;
 			for (int i = 0; i < map.PlayerList.size(); i++){
-				if (map.getCharTile(x/25, y/25) == " " && Math.abs(map.PlayerList.get(i).getX() - x) > 450 && Math.abs(map.PlayerList.get(i).getY() - y) > 550){
+				if (map.getCharTile(x/25, y/25) == " " && 
+					map.getCharTile((x+25)/25, y/25) == " " && 
+					map.getCharTile((x-25)/25, y/25) == " " &&
+					map.getCharTile(x/25, (y+25)/25) == " " &&
+					map.getCharTile(x/25, (y-25)/25) == " " &&
+					Math.abs(map.PlayerList.get(i).getX() - x) > 450 && Math.abs(map.PlayerList.get(i).getY() - y) > 550){
+					
 					Zombie zombay = new Zombie(zombieImage, 50, 10, 10, x, y, 0.1, 0.1, this);
 					map.addSprite(zombay);
 				}
@@ -57,6 +69,7 @@ public class ModelManager{
 		
 		//Update position and orientation of players.
 		for (int i = 0; i < map.PlayerList.size(); i++){
+			map.PlayerList.get(i).attack();
 			map.PlayerList.get(i).Movement(timeSpent);
 			map.PlayerList.get(i).setSpriteOrientation();
 			if (map.PlayerList.get(i).isAlive == false){

@@ -43,7 +43,7 @@ public class PlayerAnimations {
 
 
 
-	            if (currentAnimationTime >= animationDuration || currentFrame == 8 ) {
+	            if (currentAnimationTime >= animationDuration || currentFrame == 4 ) {
 	            	//System.out.println("resetting");
 
 	            	currentAnimationTime = currentAnimationTime % animationDuration;

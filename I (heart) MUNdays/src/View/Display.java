@@ -124,7 +124,8 @@ public class Display extends JPanel{
 		// Print Player 
 		player.setPlayerSpriteOrientation(cornerX1,cornerY1);
 		g2d.drawImage(player.getSpriteImage(),player.getSpriteOrientation(), null);
-		
+		g2d.drawImage(player.WeaponList.get(player.getCurrentWeapon()).getImage(),player.getSpriteOrientation(), null);
+    	
     	
 			
 		// Paint all other Players	

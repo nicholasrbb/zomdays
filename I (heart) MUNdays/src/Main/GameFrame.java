@@ -1,6 +1,5 @@
 package Main;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
 
 import events.GameMouseEvents;
 import Interface.Buttons;
@@ -25,6 +23,8 @@ import Model.ModelManager;
 import Model.Player;
 import Model.TileMap;
 import Model.Weapon;
+import View.Animation;
+import View.AnimationFrame;
 import View.Display;
 
 @SuppressWarnings("serial")
@@ -152,15 +152,77 @@ public class GameFrame extends JFrame {
 				Image playerImage = Toolkit.getDefaultToolkit().createImage("newPlayer.jpg");
 				Image npcImage = Toolkit.getDefaultToolkit().createImage("zombie.jpg");
 				
+				//Testing new animations
+				Image walk0 = Toolkit.getDefaultToolkit().createImage("Player1.png");
+				Image walk1 = Toolkit.getDefaultToolkit().createImage("newplayerwalk1.png");
+				Image walk2 = Toolkit.getDefaultToolkit().createImage("newplayerwalk2.png");
+				//Image walk3 = Toolkit.getDefaultToolkit().createImage("PlayerWalk1.jpg");
+				//Image walk4 = Toolkit.getDefaultToolkit().createImage("PlayerStill.jpg");
+				//Image walk5 = Toolkit.getDefaultToolkit().createImage("PlayerWalk3.jpg");
+				//Image walk6 = Toolkit.getDefaultToolkit().createImage("PlayerWalk4.jpg");
+				//Image walk7 = Toolkit.getDefaultToolkit().createImage("PlayerWalk3.jpg");
+				
+				
+				AnimationFrame playaFrame1 = new AnimationFrame(walk0, 125000000L);
+				AnimationFrame playaFrame2 = new AnimationFrame(walk1, 125000000L);
+				AnimationFrame playaFrame3 = new AnimationFrame(walk2, 125000000L);
+				//AnimationFrame playaFrame4 = new AnimationFrame(walk3, 125000000L);
+				//AnimationFrame playaFrame5 = new AnimationFrame(walk4, 125000000L);
+				//AnimationFrame playaFrame6 = new AnimationFrame(walk5, 125000000L);
+				//AnimationFrame playaFrame7 = new AnimationFrame(walk6, 125000000L);
+				//AnimationFrame playaFrame8 = new AnimationFrame(walk7, 125000000L);
+				
+				ArrayList <AnimationFrame> frames1 = new ArrayList <AnimationFrame>();
+				frames1.add(playaFrame1);
+				
+				ArrayList <AnimationFrame> frames2 = new ArrayList <AnimationFrame>();
+				frames2.add(playaFrame1);
+				frames2.add(playaFrame2);
+				frames2.add(playaFrame3);
+				//frames2.add(playaFrame4);
+				//frames2.add(playaFrame5);
+				//frames2.add(playaFrame6);
+				//frames2.add(playaFrame7);
+				//frames2.add(playaFrame8);
+				
+				Animation playerAnimation1 = new Animation(frames1);
+				Animation playerAnimation2 = new Animation(frames2);
+				
+				
+				
+				
+				
 			//Initialise the Model Manager.
 				final ModelManager manager = new ModelManager(map1);
 				
 			//Create Player and Zombie.
+				Image gun = Toolkit.getDefaultToolkit().createImage("gun.png");
+				Image gunFire = Toolkit.getDefaultToolkit().createImage("gunFire.png");
 				final Player playa = new Player(playerImage, 50, 10, 10, 500, 2500, 0.4, 0.4, manager);
 				final Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
 				playa.addWeapon(Gun);
 				playa.addWeapon(Knife);	
+				
+				AnimationFrame gunFrame1 = new AnimationFrame(gun, 125000000L);
+				AnimationFrame gunFrame2 = new AnimationFrame(gunFire, 325000000L);
+				
+				ArrayList <AnimationFrame> gunFrames = new ArrayList <AnimationFrame>();
+				gunFrames.add(gunFrame2);
+				
+				ArrayList <AnimationFrame> gunFrames1 = new ArrayList <AnimationFrame>();
+				gunFrames1.add(gunFrame1);
+				
+				Animation gunAnimation = new Animation(gunFrames);
+				Animation gunStill = new Animation(gunFrames1);
+				Gun.animations.add(gunStill);
+				Gun.animations.add(gunAnimation);
+				Knife.animations.add(gunStill);
+				Knife.animations.add(gunAnimation);
+				
+				playa.animations.add(playerAnimation1);
+				playa.animations.add(playerAnimation2);
+				
 				
 
 			//Add player to map SpriteList.
@@ -221,6 +283,7 @@ public class GameFrame extends JFrame {
 						        	catch (InterruptedException ex) { } 
 						    }
 				        	if (pause != true){
+				        		manager.updateAnimations();
 				        		manager.manageSprites();
 					        	manager.updateSprites(loopTime);
 					        	manager.switchMap();

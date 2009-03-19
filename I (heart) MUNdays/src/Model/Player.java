@@ -23,23 +23,47 @@ public class Player extends Sprite{
 	public boolean right = false;
 	public boolean left = false;
 	public boolean down = false;
-	public ArrayList <Weapon> WeaponList;
-	int currentWeapon = 0;
+	//public ArrayList <Weapon> WeaponList;
+	//int currentWeapon = 0;
 	private File gun;
+	private Clip gunFired;
 	private File gunReload;
-	
+	public boolean attack = false;
+	Clip gunShotOrig;
+	Clip gunReloadOrig;
 	
 	public Player(Image playerImage, int health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager) {
 		super(health, width, height, x, y, dx, dy, Manager);
 		this.image = playerImage;
 		playerOrientation = new AffineTransform();
 		WeaponList = new ArrayList <Weapon>();
-		pAnim = new PlayerAnimationManager(this);
+		//pAnim = new PlayerAnimationManager(this);
 		
 		gun = new File("gunshot.wav");
 		gunReload = new File("reload.wav");
 		
-	
+		try {
+			AudioInputStream handgunShot = AudioSystem.getAudioInputStream(gun);
+			gunShotOrig = AudioSystem.getClip();
+			gunShotOrig.open(handgunShot);
+								
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+				e.printStackTrace();}	
+		
+		try {
+			AudioInputStream handgunReload = AudioSystem.getAudioInputStream(gunReload);
+			gunReloadOrig = AudioSystem.getClip();
+			gunReloadOrig.open(handgunReload);
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+				e.printStackTrace();}
 		
 
 		
@@ -49,12 +73,16 @@ public class Player extends Sprite{
 	
 	
 	public void Movement(long time){
-		
+		/*
 		//PlayerAnimationManager Controls for Animating Walking and staying still
 		if (up || down || right || left)
 			pAnim.getCurrentAnimation().update(time);
-		
-
+		*/
+		if (up || down || right || left){
+			currentAnimation = 1;
+		}else{
+			currentAnimation = 0;
+		}
 		
 		
 		if (up && !right && !left && !down){
@@ -134,64 +162,62 @@ public class Player extends Sprite{
 	}
 	
 	public void removeWeapon(Weapon weapon){
+		
 		WeaponList.remove(weapon);
 	}
 	
 	public void reloadWeapon(){
+		
 		if (WeaponList.get(currentWeapon).getAmmo() >=0){
-			try {
-				AudioInputStream handgunReload = AudioSystem.getAudioInputStream(gunReload);
-				Clip gunShotOrig = AudioSystem.getClip();
-				gunShotOrig.open(handgunReload);
-				gunShotOrig.start();
-			} catch (UnsupportedAudioFileException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (LineUnavailableException e) {
-					e.printStackTrace();}
+			gunReloadOrig.setFramePosition(0);
+			gunReloadOrig.start();
 			WeaponList.get(currentWeapon).reload();
 		}
 	}
 
 	@Override
 	public void attack() {
-
-		
-		
-		Weapon attackingWeapon = WeaponList.get(currentWeapon);
-		int range = attackingWeapon.getRange();
-		int damage = attackingWeapon.getDamage();
-		
-		if ( attackingWeapon.magAmmo() != 0){
-
-			try {
-				AudioInputStream handgunShot = AudioSystem.getAudioInputStream(gun);
-				Clip gunShotOrig = AudioSystem.getClip();
-				gunShotOrig.open(handgunShot);
-				gunShotOrig.start();
-			} catch (UnsupportedAudioFileException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (LineUnavailableException e) {
-					e.printStackTrace();}		
+		if (attack == true){
+			//currentAnimation = 1;
 			
-			attackingWeapon.updateAmmo(-1);
+			attack = false;
 			
-			for ( int r = 0; r <= range; r++){
-				String tileShoot = manager.map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
-				//System.out.println("Angle: " + (angle) + "gun hitting x: " +(PositionX + r*Math.sin(Math.toRadians(angle)))  + " y: " + (PositionY - r*Math.cos(Math.toRadians(angle))));
-				Sprite target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle)));
+			WeaponList.get(currentWeapon).currentAnimation = 1;
+			
+			
+			Weapon attackingWeapon = WeaponList.get(currentWeapon);
+			int range = attackingWeapon.getRange();
+			int damage = attackingWeapon.getDamage();
+			
+			if ( attackingWeapon.magAmmo() != 0){
+
+				gunShotOrig.setFramePosition(0);
 				
-				if (tileShoot != " ")
-					return;
-				if ( target != null){
-					target.updateHealth(-damage);
-					return;
+				gunShotOrig.start();
+
+				
+				attackingWeapon.updateAmmo(-1);
+				
+				for ( int r = 0; r <= range; r++){
+					String tileShoot = manager.map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
+					//System.out.println("Angle: " + (angle) + "gun hitting x: " +(PositionX + r*Math.sin(Math.toRadians(angle)))  + " y: " + (PositionY - r*Math.cos(Math.toRadians(angle))));
+					Sprite target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle)));
+					
+					if (tileShoot != " ")
+						return;
+					if ( target != null){
+						target.updateHealth(-damage);
+						return;
+					}
 				}
 			}
+			
+		}else{
+			System.out.println("gun not firing)");
+			WeaponList.get(currentWeapon).currentAnimation = 0;
+
 		}
+		
 		
 	}
 	

@@ -2,6 +2,9 @@ package Model;
 
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+
+import View.Animation;
 
 public abstract class Sprite {
 	protected Image image;
@@ -20,6 +23,11 @@ public abstract class Sprite {
 	public enum Direction{ UP, RIGHT, LEFT, DOWN, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT }
 	private Sprite CollidedSprite;
 	
+	public ArrayList <Animation> animations;
+	int currentAnimation;
+	public ArrayList <Weapon> WeaponList;
+	int currentWeapon = 0;
+	
 	
 	public Sprite(double health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager){
 		radius = 25;
@@ -32,6 +40,11 @@ public abstract class Sprite {
 		PositionX = x;
 		PositionY = y;
 		manager = Manager;
+		animations = new ArrayList <Animation>();
+	}
+	
+	public int getCurrentWeapon(){
+		return currentWeapon;
 	}
 	
 	public int getHeight(){
