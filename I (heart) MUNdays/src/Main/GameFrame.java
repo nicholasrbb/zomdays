@@ -130,7 +130,7 @@ public class GameFrame extends JFrame {
 			//Create Map of Engineering Building Second Floor.
 				TileMap map1 = null;
 				try {
-					map1 = new TileMap(2000,2000, "Engr3rdFloor.txt");
+					map1 = new TileMap(1000,1000, "Engr2ndFloor.txt");
 					MapList.add(map1);
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -156,7 +156,7 @@ public class GameFrame extends JFrame {
 				final ModelManager manager = new ModelManager(map1);
 				
 			//Create Player and Zombie.
-				final Player playa = new Player(playerImage, 50, 10, 10, DEFAULT_WIDTH/4-5, DEFAULT_HEIGHT/4-5, 0.2, 0.2, manager);
+				final Player playa = new Player(playerImage, 50, 10, 10, 500, 4000, 0.2, 0.2, manager);
 				final Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
 				playa.addWeapon(Gun);
@@ -165,7 +165,7 @@ public class GameFrame extends JFrame {
 
 			//Add player to map SpriteList.
 				map1.addPlayer(playa);
-				map1.setPlayerOnePosition();
+				//map1.setPlayerOnePosition();
 				
 				
 			//Initialise the panel.

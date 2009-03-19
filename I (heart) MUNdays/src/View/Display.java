@@ -132,7 +132,7 @@ public class Display extends JPanel{
 			if(manager.map.PlayerList.get(i) != player)
 				g2d.drawImage(manager.map.PlayerList.get(i).getSpriteImage(),playerOrientation, null);
 				Player playdizzle = (Player) manager.map.PlayerList.get(i);
-        		g2d.drawString("Health: " + manager.map.PlayerList.get(i).getHealth(),25,400);
+        		g2d.drawString("Health: " + manager.map.PlayerList.get(i).getHealth(),50,400);
         		g2d.drawString("Zombies Killed: " + manager.killed,50,415);
         		g2d.drawString("Mag: " + playdizzle.WeaponList.get(0).magAmmo(),50,430); 
         		g2d.drawString("Ammo: " + playdizzle.WeaponList.get(0).getAmmo(),50,445);

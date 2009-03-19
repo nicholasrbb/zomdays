@@ -19,11 +19,11 @@ public class ModelManager{
 	}
 	
 	public void manageSprites(){
-		while(map.SpriteList.size() < 25){
-			int x = Math.abs(generator.nextInt(3300)) + 50;
-			int y = Math.abs(generator.nextInt(1500)) + 50;
+		while(map.SpriteList.size() < 100){
+			int x = Math.abs(generator.nextInt(15000)) + 50;
+			int y = Math.abs(generator.nextInt(15000)) + 50;
 			for (int i = 0; i < map.PlayerList.size(); i++){
-				if (map.getCharTile(x/50, y/50) == " " && Math.abs(map.PlayerList.get(i).getX() - x) > 450 && Math.abs(map.PlayerList.get(i).getY() - y) > 550){
+				if (map.getCharTile(x/25, y/25) == " " && Math.abs(map.PlayerList.get(i).getX() - x) > 450 && Math.abs(map.PlayerList.get(i).getY() - y) > 550){
 					Zombie zombay = new Zombie(zombieImage, 50, 10, 10, x, y, 0.1, 0.1, this);
 					map.addSprite(zombay);
 				}
@@ -41,7 +41,6 @@ public class ModelManager{
 				map.addPlayer(traveller);
 			}else{
 				if (map.getCharTile(map.PlayerList.get(i).getX()/25, map.PlayerList.get(i).getY()/25) == "2"){
-					
 					Sprite traveller = map.PlayerList.get(i);
 					map.PlayerList.remove(i);
 					map = GameFrame.getMap(0);

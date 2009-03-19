@@ -173,11 +173,12 @@ public class TileMap {
                 	this.setTile(x, y, toolkit.getImage("white.jpg") );
                 	this.setCharTile(x, y, "*");
                 }
-                                           
+                        
                 if (ch == '1') {
                 	this.setTile(x, y, toolkit.getImage("black.jpg") );
                 	this.setCharTile(x, y, "1");
                 }
+                
                 if (ch == '2') {
                 	this.setTile(x, y, toolkit.getImage("black.jpg") );
                 	this.setCharTile(x, y, "2");
