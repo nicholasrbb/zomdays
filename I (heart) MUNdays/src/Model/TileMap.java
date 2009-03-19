@@ -108,6 +108,10 @@ public class TileMap {
             String line = (String)lines.get(y);
             for (int x=0; x<line.length(); x++) {
                 char ch = line.charAt(x);
+                if (ch == 'Z') {
+                	this.setTile(x, y, toolkit.getImage("black.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
                 if (ch == 'A') {
                 	this.setTile(x, y, toolkit.getImage("innerwall_TB.jpg") );
                 	this.setCharTile(x, y, "x");
@@ -169,12 +173,7 @@ public class TileMap {
                 	this.setTile(x, y, toolkit.getImage("white.jpg") );
                 	this.setCharTile(x, y, "*");
                 }
-                if (ch == 'Z') {
-                	System.out.print("Z");
-                	this.setTile(x, y, toolkit.getImage("black.jpg") );
-                	this.setCharTile(x, y, "Z");
-                }
-                           
+                                           
                 if (ch == '1') {
                 	this.setTile(x, y, toolkit.getImage("black.jpg") );
                 	this.setCharTile(x, y, "1");
@@ -186,8 +185,10 @@ public class TileMap {
                 if (ch == ' ') {
                     this.setTile(x, y, toolkit.getImage("white.jpg") );
                     this.setCharTile(x, y, " ");
+                    
+                  
+                    }
                 }
-            }
         }
     }
 

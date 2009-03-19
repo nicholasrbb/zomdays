@@ -139,7 +139,7 @@ public class GameFrame extends JFrame {
 				
 				TileMap map2 = null;
 				try {
-					map2 = new TileMap(2000,2000, "Engr3rdFloor.txt");
+					map2 = new TileMap(1000,1000, "Engr3rdFloor.txt");
 					MapList.add(map2);
 				} catch (IOException e1) {
 					e1.printStackTrace();
