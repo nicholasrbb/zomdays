@@ -130,7 +130,7 @@ public class GameFrame extends JFrame {
 			//Create Map of Engineering Building Second Floor.
 				TileMap map1 = null;
 				try {
-					map1 = new TileMap(1000,1000, "Engr2ndFloor.txt");
+					map1 = new TileMap(1000,1000, "Engr3rdFloor.txt");
 					MapList.add(map1);
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -139,7 +139,7 @@ public class GameFrame extends JFrame {
 				
 				TileMap map2 = null;
 				try {
-					map2 = new TileMap(1000,1000, "Engr3rdFloor.txt");
+					map2 = new TileMap(1000,1000, "Engr2ndFloor.txt");
 					MapList.add(map2);
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -156,7 +156,7 @@ public class GameFrame extends JFrame {
 				final ModelManager manager = new ModelManager(map1);
 				
 			//Create Player and Zombie.
-				final Player playa = new Player(playerImage, 50, 10, 10, 500, 4000, 0.2, 0.2, manager);
+				final Player playa = new Player(playerImage, 50, 10, 10, 500, 2500, 0.2, 0.2, manager);
 				final Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
 				playa.addWeapon(Gun);
