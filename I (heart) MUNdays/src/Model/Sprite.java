@@ -6,6 +6,11 @@ import java.util.ArrayList;
 
 import View.Animation;
 
+/**
+ * Class that controls and determines parameters of all sprites. Gets and sets speed and health 
+ * of all sprites, determines sprite movements and determines all collisions between sprites
+ * on a map.
+ */
 public abstract class Sprite {
 	protected Image image;
 	double Health;
@@ -43,42 +48,88 @@ public abstract class Sprite {
 		animations = new ArrayList <Animation>();
 	}
 	
+	/**
+	 * returns player current weapon
+	 * @return Int weapon
+	 */
 	public int getCurrentWeapon(){
 		return currentWeapon;
 	}
 	
+	/**
+	 * get sprite Height
+	 * @return Height
+	 */
 	public int getHeight(){
 		return Height;
 	}
-	
+	/**
+	 * get sprite Width
+	 * @return width
+	 */
 	public int getWidth(){
 		return Width;
 	}
 	
+	/**
+	 * get sprite x position
+	 * @return x
+	 */
 	public int getX(){
 		return PositionX;
 	}
+	/**
+	 * get sprite y Position
+	 * @return y
+	 */
 	public int getY(){
 		return PositionY;
 	}
+	/**
+	 * set sprite X speed
+	 */
+	
 	public void setXSpeed(int s){
 		dx = s;
 	}
+	
+	/**
+	 * set sprite Y speed
+	 */
 	public void setYSpeed(int s){
 		dy = s;
 	}
+	/**
+	 * get sprite X speed
+	 * @return dx
+	 */
 	public double getXSpeed(){
 		return dx;
 	}
+	/**
+	 * get sprite Y speed
+	 * @return dy
+	 */
 	public double getYSpeed(){
 		return dy;
 	}
+	
+	/**
+	 * update sprite health
+	 * @param change
+	 */
 	public void updateHealth(double change){
 		Health = Health + change;
 		if (Health <= 0){
 			isAlive = false;
 		}
 	}
+	
+	/**
+	 * update sprite position based on time 
+	 * and tests for collision
+	 */
+	
 	protected void makeMovement(Direction direction, long time){
 		int tempX1 = PositionX;
 		int tempY1 = PositionY;
@@ -167,38 +218,34 @@ public abstract class Sprite {
 				
 		}
 		
-		if (manager.map.getCharTile(tempX1/25, (PositionY+12)/25) != " " 
-			//|| manager.map.getCharTile((tempX1+15)/25, (PositionY+12)/25) != " "
-			//|| manager.map.getCharTile((tempX1-15)/25, (PositionY+12)/25) != " "
-			&& manager.map.getCharTile(tempX1/25, (PositionY+12)/25) != "1" 
-			&& manager.map.getCharTile(tempX1/25, (PositionY+12)/25) != "2"){
-			PositionY = tempY1;
+		if (manager.map.getCharTile(tempX1/25, (PositionY+13)/25) != " " 
+			&& manager.map.getCharTile(tempX1/25, (PositionY+13)/25) != "1" 
+			&& manager.map.getCharTile(tempX1/25, (PositionY+13)/25) != "2"){
+			if(PositionY > tempY1){
+			PositionY = tempY1;}			
 			
 		}
 		
 
-		if (manager.map.getCharTile(tempX1/25, (PositionY-12)/25) != " " 
-			//|| manager.map.getCharTile((tempX1+15)/25, (PositionY-12)/25) != " "
-			//|| manager.map.getCharTile((tempX1-15)/25, (PositionY-12)/25) != " "
-			&& manager.map.getCharTile(tempX1/25, (PositionY-12)/25) != "1" 
-			&& manager.map.getCharTile(tempX1/25, (PositionY-12)/25) != "2"){
-			PositionY = tempY1;
+		if (manager.map.getCharTile(tempX1/25, (PositionY-13)/25) != " " 
+			&& manager.map.getCharTile(tempX1/25, (PositionY-13)/25) != "1" 
+			&& manager.map.getCharTile(tempX1/25, (PositionY-13)/25) != "2"){
+			if(PositionY < tempY1){
+				PositionY = tempY1;}
 
 		}
 		
-		if (manager.map.getCharTile((PositionX-12)/25, tempY1/25) != " " 
-			//|| manager.map.getCharTile((PositionX-12)/25, (tempY1+25)/25) != " "
-			//|| manager.map.getCharTile((PositionX-12)/25, (tempY1-25)/25) != " "
-			&& manager.map.getCharTile((PositionX-12)/25, tempY1/25) != "1" 
-			&& manager.map.getCharTile((PositionX-12)/25,tempY1/25 ) != "2"){
-			PositionX = tempX1;
+		if (manager.map.getCharTile((PositionX-13)/25, tempY1/25) != " " 
+			&& manager.map.getCharTile((PositionX-13)/25, tempY1/25) != "1" 
+			&& manager.map.getCharTile((PositionX-13)/25,tempY1/25 ) != "2"){
+			if(PositionX < tempX1){
+			PositionX = tempX1;}
 		}
-		if (manager.map.getCharTile((PositionX+12)/25, tempY1/25) != " " 
-			//|| manager.map.getCharTile((PositionX+12)/25, (tempY1+25)/25) != " "
-			//|| manager.map.getCharTile((PositionX+12)/25, (tempY1-25)/25) != " "
-			&& manager.map.getCharTile((PositionX+12)/25, tempY1/25) != "1" 
-			&& manager.map.getCharTile((PositionX+12)/25,tempY1/25 ) != "2"){
-			PositionX = tempX1;
+		if (manager.map.getCharTile((PositionX+13)/25, tempY1/25) != " " 
+			&& manager.map.getCharTile((PositionX+13)/25, tempY1/25) != "1" 
+			&& manager.map.getCharTile((PositionX+13)/25,tempY1/25 ) != "2"){
+			if(PositionX > tempX1){
+				PositionX = tempX1;}
 		}
 		
 
@@ -213,14 +260,26 @@ public abstract class Sprite {
 	
 	public abstract AffineTransform getSpriteOrientation();
 	
+	/**
+	 * get sprite current Image
+	 * @return Image
+	 */
 	public Image getSpriteImage(){
 		return image;
 	}
 	
+	/**
+	 * set sprite Image
+	 *
+	 */
 	public void setSpriteImage(Image image){
 		this.image = image;
 	}
 	
+	/**
+	 * used to solve the angle between two points
+	 *
+	 */
 	public void solveAngle(int x, int y){
 		
 		if ( x >= getX() && y <= getY()){
@@ -237,6 +296,10 @@ public abstract class Sprite {
 		}
 	}
 	
+	/**
+	 * Return boolean if Sprite is in collision with another sprite
+	 * @return isCollsion
+	 */
 	public synchronized boolean isCollision(Sprite sprite2){
 		if ( sprite2 != this){
 			double x = (this.getX() - sprite2.getX())*(this.getX() - sprite2.getX());
@@ -254,12 +317,20 @@ public abstract class Sprite {
 		return false;	
 	}
 	
+	/**
+	 * get sprite Health
+	 * @return health
+	 */
 	public int getHealth(){
 		return (int) Health;
 	}
 	
-	public abstract void attack();
 	
+	public abstract void attack();
+	/**
+	 * get the Sprite that its in collision with
+	 * @return Sprite
+	 */
 	public synchronized Sprite getCollider(double checkx, double checky){
 		//Search for other sprite.
 		double checkRadius = 0;

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 
 import View.Animation;
 
+/**
+ * Class that holds all weapons, and determines range, damage and amount of ammo remaining for
+ *  each weapon.
+ */
 public class Weapon {
 	Image image;
 	int range;

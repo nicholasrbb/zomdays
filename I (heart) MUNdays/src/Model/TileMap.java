@@ -11,6 +11,10 @@ import java.util.Random;
 
 
 
+/**
+ * Class that loads all game maps, while being able to add and remove sprites to a particular
+ * map.
+ */
 public class TileMap {
 	private Image[][] Map;
 	private String[][] charMap;
@@ -33,7 +37,6 @@ public class TileMap {
         SpriteList = new ArrayList <Sprite>();
         PlayerList = new ArrayList <Sprite>();
         ItemList = new ArrayList <Item>();
-        //Grid = new ArrayList [width][height];
         charMap = new String[width][height];
         loadMap(file);
         this.width = width;
@@ -41,15 +44,26 @@ public class TileMap {
         
         
     }
-    
+    /**
+	 * get map Width
+	 * @return width
+	 */
     public int getWidth() {
         return width;
     }
     
+    /**
+	 * get map Height
+	 * @return health
+	 */
     public int getHeight() {
         return height;
     }
 
+    /**
+	 * get tile Image
+	 * @return width
+	 */
     public Image getTile(int x, int y) {
         if (x < 0 || x >= getWidth() || y < 0 || y >= getHeight()){
             return null;
@@ -78,7 +92,6 @@ public class TileMap {
         SpriteList.remove(sprite);
     }
     
-    
     public void addPlayer(Sprite sprite) {
         PlayerList.add(sprite);
     }
@@ -87,6 +100,10 @@ public class TileMap {
         PlayerList.remove(sprite);
     }
     
+    /**
+	 * read and load map from text file
+	 * 
+	 */
     @SuppressWarnings("unchecked")
 	private void loadMap(String filename) throws IOException {
 
@@ -125,63 +142,81 @@ public class TileMap {
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'A') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_TB.png") );
+                	//this.setTile(x, y, toolkit.getImage("innerwall_TB.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'B') {
-                	this.setTile(x, y, toolkit.getImage("cornerTL.png") );
+                	//this.setTile(x, y, toolkit.getImage("cornerTL.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'C') {
-                	this.setTile(x, y, toolkit.getImage("cornerTR.png") );
+                	//this.setTile(x, y, toolkit.getImage("cornerTR.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'D') {
-                	this.setTile(x, y, toolkit.getImage("cornerBL.png") );
+                	//this.setTile(x, y, toolkit.getImage("cornerBL.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'E') {
-                	this.setTile(x, y, toolkit.getImage("cornerBR.png") );
+                	//this.setTile(x, y, toolkit.getImage("cornerBR.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'F') {
-                	this.setTile(x, y, toolkit.getImage("wall_T.png") );
+                	//this.setTile(x, y, toolkit.getImage("wall_T.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'G') {
                 	//this.setTile(x, y, toolkit.getImage("wall_B.png") );
                 	//this.setCharTile(x, y, "x");
-                	this.setTile(x, y, toolkit.getImage("innerwall_LR.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'H') {
-                	this.setTile(x, y, toolkit.getImage("wall_R.png") );
+                	//this.setTile(x, y, toolkit.getImage("wall_R.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'I') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_TL.png") );
+                	//this.setTile(x, y, toolkit.getImage("innerwall_TL.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'J') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_LR.png") );
+                	//this.setTile(x, y, toolkit.getImage("innerwall_LR.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 	
                 }
                 if (ch == 'K') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_TR.png") );
+                	//this.setTile(x, y, toolkit.getImage("innerwall_TR.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'L') {
-                	this.setTile(x, y, toolkit.getImage("wall_L.png") );
+                	//this.setTile(x, y, toolkit.getImage("wall_L.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'M') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_BR.png") );
+                	//this.setTile(x, y, toolkit.getImage("innerwall_BR.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'N') {
+                	//this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
+                }
+                
+                if (ch == 'S') {
+                	this.setTile(x, y, toolkit.getImage("Stairs.png") );
+                	this.setCharTile(x, y, " ");
                 }
                 
                 if (ch == '*') {
@@ -206,18 +241,16 @@ public class TileMap {
                 
                             
                 if (ch == '1') {
-                	this.setTile(x, y, toolkit.getImage("black.jpg") );
+                	this.setTile(x, y, toolkit.getImage("Stairs.png") );
                 	this.setCharTile(x, y, "1");
                 }
                 
                 if (ch == '2') {
-                	this.setTile(x, y, toolkit.getImage("black.jpg") );
+                	this.setTile(x, y, toolkit.getImage("Stairs.png") );
                 	this.setCharTile(x, y, "2");
                 }
                 if (ch == ' ') {
-                   // this.setTile(x, y, toolkit.getImage("white.jpg") );
-                    this.setCharTile(x, y, " ");
-                    
+                    this.setCharTile(x, y, " ");                   
                   
                     }
                 }

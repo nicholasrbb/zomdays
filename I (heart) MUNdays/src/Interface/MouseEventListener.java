@@ -4,6 +4,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+/** 
+ * interface used to assign Mouse Event Listeners to the Game Display
+ *
+ */
 public class MouseEventListener implements MouseListener, MouseMotionListener{
 	
 	private MouseListenerInterface mouse;
@@ -13,6 +17,13 @@ public class MouseEventListener implements MouseListener, MouseMotionListener{
 		
 	}
 
+	/**
+	 * calls mouse clicked in GameMouseEvents, when a full press and release on a single pixel,
+	 * and send the x and y values of the location of the mouse in pixels on the GameFrame.	 * 
+	 * 
+	 * @param MouseEvent e;
+	 */
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
@@ -20,17 +31,36 @@ public class MouseEventListener implements MouseListener, MouseMotionListener{
 		mouse.mouseClick(x, y, 1, 0);
 		
 	}
+	
+	/**
+	 * calls mouse entered in GameMouseEvents, when mouse enters GameFrame,
+	 * and send the x and y values of the location of the mouse in pixels on the GameFrame.
+	 * 
+	 * @param MouseEvent e
+	 */
 
+	
 	public void mouseEntered(MouseEvent e) {
 		mouse.mouseEntered();
 	}
 
+	/**
+	 * calls mouse exited in GameMouseEvents, when mouse exits GameFrame.
+	 * 
+	 * @param MouseEvent e
+	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * calls mouse pressed in GameMouseEvents, when mouse button is pressed on GameFrame,
+	 * and send the x and y values of the location of the mouse in pixels on the GameFrame.
+	 * 
+	 * @param MouseEvent e
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		int x = e.getX();
@@ -39,6 +69,12 @@ public class MouseEventListener implements MouseListener, MouseMotionListener{
 		
 	}
 
+	/**
+	 * calls mouse released in GameMouseEvents, when mouse button is pressed on GameFrame,
+	 * and send the x and y values of the location of the mouse in pixels on the GameFrame.
+	 * 
+	 * @param MouseEvent e
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		int x = e.getX();
@@ -53,6 +89,12 @@ public class MouseEventListener implements MouseListener, MouseMotionListener{
 		
 	}
 
+	/**
+	 * calls mouse moved in GameMouseEvents, when mouse position changes on GameFrame,
+	 * and send the x and y values of the location of the mouse in pixels on the GameFrame.
+	 * 
+	 * @param MouseEvent e
+	 */
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		int x = e.getX();

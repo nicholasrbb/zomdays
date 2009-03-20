@@ -1,5 +1,9 @@
 package Interface;
 
+/**
+ * Interface for creating new mouse listener states 
+ *
+ */
 public interface MouseListenerInterface {
 
 	public abstract void mouseClick( int worldX, int worldY, int button, int clickCount ) ;

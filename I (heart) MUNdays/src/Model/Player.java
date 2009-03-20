@@ -4,7 +4,6 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
@@ -13,11 +12,15 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import PlayerAnimations.PlayerAnimationManager;
 
 
+/**
+ * Class that extends the Sprite class, and updates the movement, orientation, weapon and ammo
+ * of a player as well as controls attacking enemies.
+ * 
+ * @see Sprite
+ */
 public class Player extends Sprite{
-	public PlayerAnimationManager pAnim;
 	
 	private AffineTransform playerOrientation;
 	public boolean up = false;
@@ -38,6 +41,21 @@ public class Player extends Sprite{
 	public int coinCount;
 	
 	
+	/** 
+	 * Creates a Player Object with a given Image, Size, Position and Speed.
+	 * <p> Player also knows the ModelManager
+	 * @param playerImage
+	 * @param health
+	 * @param width
+	 * @param height
+	 * @param x
+	 * @param y
+	 * @param dx
+	 * @param dy
+	 * @param Manager
+	 * 
+	 * @see ModelManager
+	 */
 	public Player(Image playerImage, int health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager) {
 		super(health, width, height, x, y, dx, dy, Manager);
 		this.image = playerImage;
@@ -83,13 +101,17 @@ public class Player extends Sprite{
 	}
 
 	
+	/**
+	 * Calls Sprits Movement method based on keyListener
+	 * 
+	 * @param time
+	 * 
+	 * @see Sprite.Movement
+	 */
 	
 	public void Movement(long time){
-		/*
-		//PlayerAnimationManager Controls for Animating Walking and staying still
-		if (up || down || right || left)
-			pAnim.getCurrentAnimation().update(time);
-		*/
+		
+		
 		if (up || down || right || left){
 			currentAnimation = 1;
 		}else{
@@ -149,27 +171,35 @@ public class Player extends Sprite{
 	}
 
 	
+	/**
+	 * get the players AffineTransform
+	 * 
+	 * @return playerOrientation
+	 */
 	public AffineTransform getSpriteOrientation(){
 		return playerOrientation;
 	}
-
+	/**
+	 * set the players AffineTransform, Postion and angle
+	 * 
+	 */
 	@Override
 	public void setSpriteOrientation() {
 		
 	}
 
 
-
+	/**
+	 * set the players Angle based on mouseEvents
+	 * 
+	 */
 	@Override
 	public void setPlayerSpriteOrientation(int xPos, int yPos) {	
 		
 		solveAngle(mouseX, mouseY);
 		int printX = getX()-xPos-25;
 		int printY = getY()-yPos-25;
-		//System.out.println("x: " + printX + "  y: " + printY + "playerx: " + getX() + "  playery: " + getY());
-		//if (printX > 575){
-		//	printX = 575;
-		//}
+	
 		
 		playerOrientation.setToTranslation(printX, printY);	
 		playerOrientation.rotate(Math.toRadians(angle),image.getWidth(null)/2, (image.getHeight(null)/2));
@@ -177,17 +207,33 @@ public class Player extends Sprite{
 			
 	}
 
+	/**
+	 * set the players Position. 
+	 * 
+	 */
 	public void setPlayerStartPosition(int x, int y){
 		PositionX = x;
 		PositionY = y;
 	}
 	
+	/**
+	 * get the players current Weapon (int in Array)
+	 * 
+	 * @return weapon
+	 */
 	public int getCurrentWeapon(){
 		return currentWeapon;}
-	
+	/**
+	 * get the players current Weapon
+	 * 
+	 * @return weapon
+	 */
 	public Weapon playersWeapon(){
 		return WeaponList.get(currentWeapon);	}
-	
+	/**
+	 * change the players current Weapon
+	 * 
+	 */
 	public void changeWeapon(){
 		
 		if( currentWeapon < (WeaponList.size()-1)){
@@ -197,15 +243,25 @@ public class Player extends Sprite{
 		}
 	}
 	
+	/**
+	 * add the Weapon To array
+	 * 
+	 */
 	public void addWeapon(Weapon weapon){
 		WeaponList.add(weapon);
 	}
-	
+	/**
+	 * remove the Weapon To array
+	 * 
+	 */
 	public void removeWeapon(Weapon weapon){
 		
 		WeaponList.remove(weapon);
 	}
-	
+	/**
+	 * reload the current the Weapon
+	 * 
+	 */
 	public void reloadWeapon(){
 		
 		if (WeaponList.get(currentWeapon).getAmmo() >=0){
@@ -215,6 +271,10 @@ public class Player extends Sprite{
 		}
 	}
 
+	/**
+	 * player attack with current Weapon
+	 * 
+	 */
 	@Override
 	public void attack() {
 		if (attack == true){

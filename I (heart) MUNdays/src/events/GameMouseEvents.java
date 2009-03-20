@@ -4,27 +4,25 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-
-import javax.swing.JFrame;
-
 import View.Display;
-
-
 import Interface.MouseListenerInterface;
 import Model.Player;
-import Model.TileMap;
-import PlayerAnimations.PlayerAnimationManager.PlayerAnimationStates;
 
+/**
+ * This gets associated with a player and Display to control players
+ * actions and bullet collisions with enemey on a given map.
+ * 
+ * @see Player, Display, MouseEventListener
+ *
+ */
 public class GameMouseEvents implements MouseListenerInterface {
 	
 	private Display d;
 	private Player player;
-	private TileMap map;
 		
-	public GameMouseEvents(Display d, Player player, TileMap Map){
+	public GameMouseEvents(Display d, Player player){
 		this.d = d;
 		this.player = player;
-		this.map = Map;
 	}
 
 	@Override
@@ -59,10 +57,7 @@ public class GameMouseEvents implements MouseListenerInterface {
 
 	@Override
 	public void mousePressed(int worldX, int worldY, int button) {
-		// set player animation
 		
-		int targetX = worldX + d.cornerX1;
-		int targetY = worldY + d.cornerY1;
 		
 		if ( button == 1){
 			//player.attack();

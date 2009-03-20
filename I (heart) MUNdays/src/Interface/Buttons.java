@@ -8,7 +8,12 @@ import Main.GameFrame;
 import Model.Player;
 
 
-
+/**
+ * 
+ * This adds Keylisteners to the game controls
+ * <p> The buttons control the movements of the player.
+ *
+ */
 
 public class Buttons implements KeyListener{
 	

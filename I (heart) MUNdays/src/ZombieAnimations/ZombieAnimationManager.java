@@ -6,6 +6,10 @@ import java.awt.Toolkit;
 import Model.Sprite;
 
 
+/**
+ * Class that controls which image to displaying during a certain animation.
+ *
+ */
 public class ZombieAnimationManager{
 	
 	

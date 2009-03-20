@@ -5,8 +5,11 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Main.GameFrame;
 
+/**
+ * Manager that controls the updating of all sprites and animations for the game,
+ * respawns Zombies and controls the transition between different game Maps.
+ */
 public class ModelManager{
 	
 	public TileMap map;
@@ -17,16 +20,33 @@ public class ModelManager{
 	public ArrayList <TileMap> MapList;
 	int currentMap;
 	
+	/**
+	 * contains an ArrayList of tileMaps, and sets a default map
+	 * 
+	 * @param maplist
+	 */
 	public ModelManager(ArrayList <TileMap> maplist){
 		MapList = maplist;
 		map = maplist.get(0);
 		currentMap = 0;
 	}
 	
+	/**
+	 * updates the players animation
+	 * 
+	 * @see Animation, AnimationFrame
+	 * 
+	 */
+	
 	public void updateAnimations(){
 		map.PlayerList.get(0).image = map.PlayerList.get(0).animations.get(map.PlayerList.get(0).currentAnimation).getAnimationImage();
 		map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).image = map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).animations.get(map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).currentAnimation).getAnimationImage();
 	}
+	
+	/**
+	 * randomly places enemy sprites on the outside of the main view Area
+	 * and keep the number of enemies on map at a constant number.
+	 */
 	
 	public void manageSprites(){
 		while(map.SpriteList.size() < 100){
@@ -47,6 +67,11 @@ public class ModelManager{
 		}
 	}
 	
+	/**
+	 * 
+	 * Checks to see if player is located on stairs.
+	 * If player is on stairs, load the appropriate map 
+	 */
 	public void switchMap(){
 		for( int i = 0; i < map.PlayerList.size(); i++){
 			if (map.getCharTile(map.PlayerList.get(i).getX()/25, map.PlayerList.get(i).getY()/25) == "1"){
@@ -55,40 +80,37 @@ public class ModelManager{
 				if ( currentMap == 0){
 					map = MapList.get(1);
 					currentMap = 1;
+					traveller.PositionX = 5175;
+					traveller.PositionY = 4100;
 				}
-				if ( currentMap == 1){
+				
+				else if ( currentMap == 1){
 					map = MapList.get(0);
 					currentMap = 0;
+					traveller.PositionX = 4200;
+					traveller.PositionY = 3900;
 				}
+				
 				System.out.println("switching map");
 				traveller.PositionX = traveller.getX();
 				map.addPlayer(traveller);
 			}
-			/*
-			else{
-				if (map.getCharTile(map.PlayerList.get(i).getX()/25, map.PlayerList.get(i).getY()/25) == "2"){
-					Sprite traveller = map.PlayerList.get(i);
-					map.PlayerList.remove(i);
-					MapList.get(0);
-					System.out.println("switching map");
-					map.addPlayer(traveller);
-					
-				}
-			}
-			*/
+		
 		}
 		
 	}
 	
+	/** 
+	 * update sprite position based on game loop time (timeSpent).
+	 * <p> Checks for collision
+	 * @param timeSpent
+	 */
 	public void updateSprites(long timeSpent){
-		//System.out.println("updatesprites called");
-		//Update position and orientation of players.
 		for (int i = 0; i < map.PlayerList.size(); i++){
 			map.PlayerList.get(i).attack();
 			map.PlayerList.get(i).Movement(timeSpent);
 			if (map.PlayerList.get(i).isAlive == false){
 				System.exit(0);
-				//map.removePlayer(map.PlayerList.get(i));
 			}
 		}
 		
@@ -100,7 +122,6 @@ public class ModelManager{
 				killed = killed +1;
 				map.removeSprite(map.SpriteList.get(i));
 			}
-			//map.addToGrid(map.SpriteList.get(i).getX()/50,map.SpriteList.get(i).getY()/50, map.SpriteList.get(i));
 		}
 		
 		//Check if colliding with player, and attack if you are.

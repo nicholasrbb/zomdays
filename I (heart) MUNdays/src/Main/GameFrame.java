@@ -3,7 +3,6 @@ package Main;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
-import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
@@ -12,7 +11,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
@@ -34,12 +32,19 @@ import Model.Weapon;
 import View.Animation;
 import View.AnimationFrame;
 import View.Display;
-
+/**
+ * This class extends JFrame and will be used to contain the 
+ * Display class.
+ * <p> Various panel are created for menus, focus of the mouse
+ * and keyboard listeners are set to the appropriate panel and a given time
+ * 
+ * @param none
+ * 
+ *
+ */
 @SuppressWarnings("serial")
 public class GameFrame extends JFrame {
 	
-	private static final int DEFAULT_WIDTH = 500;
-	private static final int DEFAULT_HEIGHT = 500;
 	public ArrayList <TileMap> MapList;
 	public JPanel MainMenu;
 	public JPanel inGameMenu;
@@ -54,6 +59,10 @@ public class GameFrame extends JFrame {
 	private File Win;
 	private Clip winSound;
 	
+	
+	/**
+	 * 
+	 */
 		public GameFrame(){
 			
 			
@@ -63,12 +72,6 @@ public class GameFrame extends JFrame {
 			winMenu = new JPanel();
 			MapList = new ArrayList <TileMap>();
 			
-			//this.setFocusable(false);
-			//pack() ;
-			//this.setResizable(false);
-			//this.setBounds(240, 90, 800, 600);
-			//setVisible(true) ;
-			//setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ) ;
 			
 			DisplayMode dm = new DisplayMode (800,600,32,60);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -96,7 +99,6 @@ public class GameFrame extends JFrame {
 			inGameMenu.setPreferredSize(size) ;
 			inGameMenu.setOpaque(true) ;
 			inGameMenu.setBackground(Color.black) ;
-			//inGameMenu.add(ingamemenuButtons.MainMenu);
 			inGameMenu.add(ingamemenuButtons.Resume);
 			inGameMenu.add(ingamemenuButtons.Exit);
 			
@@ -104,7 +106,6 @@ public class GameFrame extends JFrame {
 			winMenu.setPreferredSize(size) ;
 			winMenu.setOpaque(true) ;
 			winMenu.setBackground(Color.blue) ;
-			//winMenu.add(winGameMenuButtons.NewGame);
 			winMenu.add(winGameMenuButtons.Exit);
 			
 			Win = new File("dark2.wav");
@@ -119,22 +120,21 @@ public class GameFrame extends JFrame {
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (LineUnavailableException e) {
-					e.printStackTrace();}
-			
-			
-			
-			
-			
-			
-			
+					e.printStackTrace();}			
 			showMainMenu();
 			
 			
 			
 		}
 		
+		/**
+		 * Switch focus to the MainMenu JPanel, setting all other JPanels visibility 
+		 * to false and its visibility to true. JButtons are added to the JPanel through
+		 * the MenuButtons class in the events package
+		 * 
+		 * @param none
+		 */
 		
-		// Create a Menu.
 		public void showMainMenu(){
 			inGameMenu.setVisible(false);
 			winMenu.setVisible(false);
@@ -143,6 +143,13 @@ public class GameFrame extends JFrame {
 			MainMenu.setVisible(true);
 		}
 		
+		/**
+		 * Switch focus to the InGameMenu JPanel, setting all other JPanels visibility 
+		 * to false and its visibility to true. JButtons are added to the JPanel through
+		 * the MenuButtons class in the events package
+		 * 
+		 * @param none
+		 */
 		public void showInGameMenu(){
 			pause = true;
 			display.setVisible(false);
@@ -153,6 +160,14 @@ public class GameFrame extends JFrame {
 			inGameMenu.grabFocus();
 		}
 		
+		/**
+		 * Switch focus to the WinGameMenu JPanel, setting all other JPanels visibility 
+		 * to false and its visibility to true. JButtons are added to the JPanel through
+		 * the MenuButtons class in the events package
+		 * <p> Play a .wav file when menu is set. 
+		 * 
+		 * @param none
+		 */
 		public void showWinGameMenu(){
 			pause = true;
 			display.setVisible(false);
@@ -166,6 +181,13 @@ public class GameFrame extends JFrame {
 			
 		}
 		
+		/**
+		 * This allows the user to resume the game from the ingame menu.
+		 * <p> This will set the display to visible and set the listener focus.
+		 * 
+		 * @param none
+		 */
+		
 		public void resumeGame(){
 			pause = false;
 			MainMenu.setVisible(false);
@@ -176,10 +198,14 @@ public class GameFrame extends JFrame {
 		}
 		
 		
-		//Creating a game.
+		/**
+		 * This sets up the game TileMaps, and load the images for for the player 
+		 * animations and starts the main game loop
+		 * 
+		 * @param none
+		 */
 		public void CreateGame(){
 			gameMade = true;
-			//MainMenu.setFocusable(false);
 			MainMenu.setVisible(false);
 			System.out.println("game being created");
 
@@ -195,7 +221,7 @@ public class GameFrame extends JFrame {
 				
 				TileMap map2 = null;
 				try {
-					map2 = new TileMap(1000,1000, "Engr3rdFloor.txt");
+					map2 = new TileMap(1000,1000, "Engr4thFloor.txt");
 					MapList.add(map2);
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -204,42 +230,24 @@ public class GameFrame extends JFrame {
 				
 				
 				
-			// Setting in Player Image.
+				//Setting in Player Image.
 				Image playerImage = Toolkit.getDefaultToolkit().createImage("player_nofire.png");
 				Image npcImage = Toolkit.getDefaultToolkit().createImage("zombie.png");
 				
-				//Testing new animations
+				//Player animations
 				Image walk0 = Toolkit.getDefaultToolkit().createImage("player_nofire.png");
-				Image walk1 = Toolkit.getDefaultToolkit().createImage("newplayerwalk1.png");
-				Image walk2 = Toolkit.getDefaultToolkit().createImage("newplayerwalk2.png");
-				//Image walk3 = Toolkit.getDefaultToolkit().createImage("PlayerWalk1.jpg");
-				//Image walk4 = Toolkit.getDefaultToolkit().createImage("PlayerStill.jpg");
-				//Image walk5 = Toolkit.getDefaultToolkit().createImage("PlayerWalk3.jpg");
-				//Image walk6 = Toolkit.getDefaultToolkit().createImage("PlayerWalk4.jpg");
-				//Image walk7 = Toolkit.getDefaultToolkit().createImage("PlayerWalk3.jpg");
+		
 				
 				
 				AnimationFrame playaFrame1 = new AnimationFrame(walk0, 125000000L);
-				AnimationFrame playaFrame2 = new AnimationFrame(walk1, 125000000L);
-				AnimationFrame playaFrame3 = new AnimationFrame(walk2, 125000000L);
-				//AnimationFrame playaFrame4 = new AnimationFrame(walk3, 125000000L);
-				//AnimationFrame playaFrame5 = new AnimationFrame(walk4, 125000000L);
-				//AnimationFrame playaFrame6 = new AnimationFrame(walk5, 125000000L);
-				//AnimationFrame playaFrame7 = new AnimationFrame(walk6, 125000000L);
-				//AnimationFrame playaFrame8 = new AnimationFrame(walk7, 125000000L);
+				
 				
 				ArrayList <AnimationFrame> frames1 = new ArrayList <AnimationFrame>();
 				frames1.add(playaFrame1);
 				
 				ArrayList <AnimationFrame> frames2 = new ArrayList <AnimationFrame>();
 				frames2.add(playaFrame1);
-				//frames2.add(playaFrame2);
-				//frames2.add(playaFrame3);
-				//frames2.add(playaFrame4);
-				//frames2.add(playaFrame5);
-				//frames2.add(playaFrame6);
-				//frames2.add(playaFrame7);
-				//frames2.add(playaFrame8);
+				
 				
 				Animation playerAnimation1 = new Animation(frames1);
 				Animation playerAnimation2 = new Animation(frames2);
@@ -286,7 +294,7 @@ public class GameFrame extends JFrame {
 				//map1.setPlayerOnePosition();
 				
 				
-			//Initialise the panel.
+				//Initialise the panel.
 				//final Display display = new Display(manager, playa, this.getWidth(), this.getHeight()) ;
 				display = new Display(manager, playa, this.getWidth(), this.getHeight()) ;
 				display.setBackground(Color.BLACK);
@@ -296,7 +304,7 @@ public class GameFrame extends JFrame {
 				
 				
 			//add mouseListener to display
-				GameMouseEvents mouse = new GameMouseEvents(display,playa, map1);
+				GameMouseEvents mouse = new GameMouseEvents(display,playa);
 				MouseEventListener mouseListener = new MouseEventListener(mouse);
 			//---------------------------------------------------------------
 				
@@ -349,13 +357,11 @@ public class GameFrame extends JFrame {
 				        		if (manager.killed >= 100){
 				        			showWinGameMenu();
 					        	}
+				        		manager.switchMap();
 				        		display.repaint();
-				        		//manager.updateSprites(loopTime);
 				        		manager.updateAnimations();
 				        		manager.manageSprites();
-					        	//manager.switchMap();
 					        	
-					        	//display.paintComponent(display.getGraphics());
 				        	}
 				        	
 				        	
@@ -364,16 +370,11 @@ public class GameFrame extends JFrame {
 				    }
 				}.start();
 	
-				//pack() ;
-				//setVisible(true) ;
-				//setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ) ;
 			}
 			
 		
 		
-		public void CreateNewGame(){
-			
-		}
+		
 		
 		
 		

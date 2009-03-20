@@ -9,12 +9,17 @@ import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
 
+
 import Interface.Buttons;
 import Model.ModelManager;
 import Model.Player;
 import Model.TileMap;
 
 
+/**
+ * Class that controls the updating of the game by calling paingComponent.
+ *
+ */
 @SuppressWarnings("serial")
 public class Display extends JPanel{
 	AffineTransform playerOrientation;

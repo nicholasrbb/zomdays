@@ -16,6 +16,10 @@ import ZombieAnimations.ZombieAnimationManager.ZombieAnimationStates;
 
 
 
+/**
+ * Class that holds orientation and health for each zombie sprite and controls there movement.
+ *
+ */
 public class Zombie extends Sprite{
 	public ZombieAnimationManager zAnim;
 
