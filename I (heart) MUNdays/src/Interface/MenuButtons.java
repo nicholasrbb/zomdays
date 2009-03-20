@@ -2,10 +2,12 @@ package Interface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 
 import Main.GameFrame;
+import Model.TileMap;
 
 public class MenuButtons {
 
@@ -25,8 +27,11 @@ public class MenuButtons {
 		NewGame.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("New Game Clicked");
-				game.CreateGame();
-				//game.makeGame = true;;
+				if ( game.gameMade == true){
+					game.CreateNewGame();
+				}else{
+					game.CreateGame();
+				}
 			}});
 		
 		Exit = new JButton("     Exit     ");

@@ -152,9 +152,9 @@ public class Zombie extends Sprite{
 
 		Health = Health + change;
 		if (Health <= 0){
-			if (!voice1Orig.isActive()){
-			voice1Orig.setFramePosition(0);
-			voice1Orig.start();}
+			//if (!voice1Orig.isActive()){
+			//voice1Orig.setFramePosition(0);
+			//voice1Orig.start();}
 			isAlive = false;
 		}
 	}

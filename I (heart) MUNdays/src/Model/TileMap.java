@@ -149,7 +149,9 @@ public class TileMap {
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'G') {
-                	this.setTile(x, y, toolkit.getImage("wall_B.png") );
+                	//this.setTile(x, y, toolkit.getImage("wall_B.png") );
+                	//this.setCharTile(x, y, "x");
+                	this.setTile(x, y, toolkit.getImage("innerwall_LR.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'H') {
@@ -163,6 +165,7 @@ public class TileMap {
                 if (ch == 'J') {
                 	this.setTile(x, y, toolkit.getImage("innerwall_LR.png") );
                 	this.setCharTile(x, y, "x");
+                	
                 }
                 if (ch == 'K') {
                 	this.setTile(x, y, toolkit.getImage("innerwall_TR.png") );

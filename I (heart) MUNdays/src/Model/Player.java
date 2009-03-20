@@ -96,7 +96,8 @@ public class Player extends Sprite{
 			currentAnimation = 0;
 		}
 		
-		//Paint all the Items
+		
+		//item effects
 		for ( int i = 0; i < manager.map.ItemList.size(); i++){
 			if ( Math.abs(PositionX - manager.map.ItemList.get(i).getX()) < 25 && Math.abs(PositionY - manager.map.ItemList.get(i).getY()) < 25){
 				if ( manager.map.ItemList.get(i).getType()  == "ammo"){
@@ -163,8 +164,14 @@ public class Player extends Sprite{
 	public void setPlayerSpriteOrientation(int xPos, int yPos) {	
 		
 		solveAngle(mouseX, mouseY);
+		int printX = getX()-xPos-25;
+		int printY = getY()-yPos-25;
+		//System.out.println("x: " + printX + "  y: " + printY + "playerx: " + getX() + "  playery: " + getY());
+		//if (printX > 575){
+		//	printX = 575;
+		//}
 		
-		playerOrientation.setToTranslation(getX()-xPos-25, getY()-yPos-25);	
+		playerOrientation.setToTranslation(printX, printY);	
 		playerOrientation.rotate(Math.toRadians(angle),image.getWidth(null)/2, (image.getHeight(null)/2));
 			
 			
@@ -223,10 +230,13 @@ public class Player extends Sprite{
 			int damage = attackingWeapon.getDamage();
 			
 			if ( attackingWeapon.magAmmo() != 0){
-				WeaponList.get(currentWeapon).currentAnimation = 1;
-				gunShotOrig.setFramePosition(0);
+				if (currentWeapon == 0){
+					WeaponList.get(currentWeapon).currentAnimation = 1;
+					gunShotOrig.setFramePosition(0);
+					
+					gunShotOrig.start();
+				}
 				
-				gunShotOrig.start();
 
 				
 				attackingWeapon.updateAmmo(-1);
@@ -246,7 +256,6 @@ public class Player extends Sprite{
 			}
 			
 		}else{
-			System.out.println("gun not firing)");
 			WeaponList.get(currentWeapon).currentAnimation = 0;
 
 		}

@@ -2,6 +2,7 @@ package Model;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.Random;
 
 import Main.GameFrame;
@@ -13,15 +14,18 @@ public class ModelManager{
 	Random generator = new Random();
 	public int killed = 0;
 	Player traveller;
+	public ArrayList <TileMap> MapList;
+	int currentMap;
 	
-	public ModelManager(TileMap Map){
-		map = Map;
+	public ModelManager(ArrayList <TileMap> maplist){
+		MapList = maplist;
+		map = maplist.get(0);
+		currentMap = 0;
 	}
 	
 	public void updateAnimations(){
 		map.PlayerList.get(0).image = map.PlayerList.get(0).animations.get(map.PlayerList.get(0).currentAnimation).getAnimationImage();
 		map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).image = map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).animations.get(map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).currentAnimation).getAnimationImage();
-		System.out.println( map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).currentAnimation );
 	}
 	
 	public void manageSprites(){
@@ -48,30 +52,40 @@ public class ModelManager{
 			if (map.getCharTile(map.PlayerList.get(i).getX()/25, map.PlayerList.get(i).getY()/25) == "1"){
 				Sprite traveller = map.PlayerList.get(i);
 				map.PlayerList.remove(i);
-				map = GameFrame.getMap(1);
+				if ( currentMap == 0){
+					map = MapList.get(1);
+					currentMap = 1;
+				}
+				if ( currentMap == 1){
+					map = MapList.get(0);
+					currentMap = 0;
+				}
 				System.out.println("switching map");
+				traveller.PositionX = traveller.getX();
 				map.addPlayer(traveller);
-			}else{
+			}
+			/*
+			else{
 				if (map.getCharTile(map.PlayerList.get(i).getX()/25, map.PlayerList.get(i).getY()/25) == "2"){
 					Sprite traveller = map.PlayerList.get(i);
 					map.PlayerList.remove(i);
-					map = GameFrame.getMap(0);
+					MapList.get(0);
 					System.out.println("switching map");
 					map.addPlayer(traveller);
 					
 				}
 			}
+			*/
 		}
 		
 	}
 	
 	public void updateSprites(long timeSpent){
-		
+		//System.out.println("updatesprites called");
 		//Update position and orientation of players.
 		for (int i = 0; i < map.PlayerList.size(); i++){
 			map.PlayerList.get(i).attack();
 			map.PlayerList.get(i).Movement(timeSpent);
-			map.PlayerList.get(i).setSpriteOrientation();
 			if (map.PlayerList.get(i).isAlive == false){
 				System.exit(0);
 				//map.removePlayer(map.PlayerList.get(i));

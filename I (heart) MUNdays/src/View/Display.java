@@ -18,7 +18,7 @@ import Model.TileMap;
 @SuppressWarnings("serial")
 public class Display extends JPanel{
 	AffineTransform playerOrientation;
-	ModelManager manager;
+	public ModelManager manager;
 	int offsetX, offsetY;
 	int screenWidth;
 	int screenHeight;
@@ -35,6 +35,7 @@ public class Display extends JPanel{
 	
 	
 	public Display(ModelManager Manager, Player playa, int SW, int SH){
+		super();
 		//Buttons Button = new Buttons(playa);
 		//this.addKeyListener( Button);
 
@@ -50,17 +51,16 @@ public class Display extends JPanel{
 		
 		
 	}
+	
+	
+	
 	@Override public void paintComponent(Graphics g){
-				
+		manager.updateSprites(20);
+		
 		Graphics2D g2d = (Graphics2D) g;
 		
-		g.drawImage(background, 0, 0, null);
-		// tile the image across the component
-		/*
-		 for (int i = 0; i * 40 <= getWidth(); i++)
-			 for (int j = 0; j * 40 <= getHeight(); j++)
-				 if (i + j > 0) g.copyArea(0, 0, 40, 40, i * 40, j * 40);
-		*/
+		//g.drawImage(background, 0, 0, null);
+		
 		
 		//Correction the position of the display relative to player.
 		dcornerX1 = cornerX1;
@@ -76,8 +76,8 @@ public class Display extends JPanel{
 			cornerY2 = (player.getY() - 200) + screenHeight;
 		}
 		if ( cornerX2 < (player.getX() + 200) ){
-			cornerX1 = (player.getX() + 200) - screenWidth; 
-			cornerX2 = player.getX() + 200;
+			cornerX1 = cornerX1 + Math.abs(cornerX2 - (player.getX() + 200)); 
+			cornerX2 = cornerX1 + screenWidth;
 		}
 		if ( cornerY2 < (player.getY() + 200) ){
 			cornerY1 = (player.getY() + 200) - screenHeight; 
@@ -108,10 +108,10 @@ public class Display extends JPanel{
 		player.mouseX = player.mouseX - dcornerX1;
 		player.mouseY = player.mouseY - dcornerY1;
 		
-		//System.out.println("cornerX2:  " + cornerX2 + "   cornerY2:  " + cornerY2);
 		
 		offsetX = cornerX1%25;
 		offsetY = cornerY1%25;
+		//System.out.println("offsetX:  " + offsetX + "   offsetY:  " + offsetY);
 		
 		
 		// setting tile view parameters
@@ -120,7 +120,7 @@ public class Display extends JPanel{
 		int firstTileY  = pixelsToTiles(cornerY1-offsetY);
 		int lastTileY = pixelsToTiles(cornerY2 + offsetY) + 1;	
 		
-		
+		//System.out.println("PlayerX:   " + manager.map.PlayerList.get(0).getX() + "lastTileX:  "  + lastTileX + "    lastTileY:    " + offsetY);
 	
 		// Print all the visible Tiles
 		int dy = 0;
@@ -136,7 +136,8 @@ public class Display extends JPanel{
 		}
 		
 		// Print Player 
-		player.setPlayerSpriteOrientation(cornerX1,cornerY1);
+		//System.out.println("cornerX1:  " + cornerX1 + "   cornerY1:  " + cornerY1 + "   cornerX2:  " + cornerX2 + "   cornerY2:  " + cornerY2);
+		player.setPlayerSpriteOrientation(cornerX1, cornerY1);
 		g2d.drawImage(player.getSpriteImage(),player.getSpriteOrientation(), null);
 		g2d.drawImage(player.WeaponList.get(player.getCurrentWeapon()).getImage(),player.getSpriteOrientation(), null);
     	
@@ -144,7 +145,7 @@ public class Display extends JPanel{
 		
 		//Paint all the Items
 		for ( int i = 0; i < manager.map.ItemList.size(); i++){
-    		System.out.println("playerX: " + player.getX() + "PlayerY: " + player.getY() + " Item type: " +manager.map.ItemList.get(i).getType() +  " Item Image = " + manager.map.ItemList.get(i).getImage() + " " + manager.map.ItemList.get(i).getX()+ " " + manager.map.ItemList.get(i).getY());
+    		//System.out.println("playerX: " + player.getX() + "PlayerY: " + player.getY() + " Item type: " +manager.map.ItemList.get(i).getType() +  " Item Image = " + manager.map.ItemList.get(i).getImage() + " " + manager.map.ItemList.get(i).getX()+ " " + manager.map.ItemList.get(i).getY());
     		g2d.drawImage(manager.map.ItemList.get(i).getImage(),manager.map.ItemList.get(i).getX() - cornerX1 -12, manager.map.ItemList.get(i).getY() - cornerY1 -12, null);
 		}
 		
@@ -159,11 +160,10 @@ public class Display extends JPanel{
 				Player playdizzle = (Player) manager.map.PlayerList.get(i);
         		g2d.drawString("Health: " + manager.map.PlayerList.get(i).getHealth(),50,400);
         		g2d.drawString("Zombies Killed: " + manager.killed,50,415);
-        		g2d.drawString("Coins Collected: " + playdizzle.coinCount,50,430);
-        		g2d.drawString("Mag: " + playdizzle.WeaponList.get(0).magAmmo(),50,445); 
-        		g2d.drawString("Ammo: " + playdizzle.WeaponList.get(0).getAmmo(),50,460);
-        		g2d.drawString("Current Weapon: " + playdizzle.WeaponList.get(playdizzle.getCurrentWeapon()).getWeaponName() , 50, 475);
-        		
+        		g2d.drawString("Mag: " + playdizzle.WeaponList.get(0).magAmmo(),50,430); 
+        		g2d.drawString("Ammo: " + playdizzle.WeaponList.get(0).getAmmo(),50,445);
+        		g2d.drawString("Current Weapon: " + playdizzle.WeaponList.get(playdizzle.getCurrentWeapon()).getWeaponName() , 50, 460);
+        		//g2d.drawString("Coins Collected: " + playdizzle.coinCount,50,475);
 		}
 		
 		// Print all NPC's

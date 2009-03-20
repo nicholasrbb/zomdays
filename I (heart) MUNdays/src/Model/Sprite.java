@@ -201,7 +201,6 @@ public abstract class Sprite {
 			PositionX = tempX1;
 		}
 		
-		System.out.println(" Players Current Positon: " + PositionX + " , " + PositionY);
 
 		
 		

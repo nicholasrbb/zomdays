@@ -3,15 +3,23 @@ package Main;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
+import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
+import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -32,7 +40,7 @@ public class GameFrame extends JFrame {
 	
 	private static final int DEFAULT_WIDTH = 500;
 	private static final int DEFAULT_HEIGHT = 500;
-	public static ArrayList <TileMap> MapList;
+	public ArrayList <TileMap> MapList;
 	public JPanel MainMenu;
 	public JPanel inGameMenu;
 	public JPanel gameOverMenu;
@@ -41,9 +49,12 @@ public class GameFrame extends JFrame {
 	public boolean makeGame = false;
 	public boolean mainmenu = false;
 	public boolean pause = false;
+	public ModelManager manager;
+	public boolean gameMade = false;
+	private File Win;
+	private Clip winSound;
 	
 		public GameFrame(){
-			//MainMenu = new Canvas(500,  500, 1);
 			
 			
 			MainMenu = new JPanel();
@@ -85,16 +96,32 @@ public class GameFrame extends JFrame {
 			inGameMenu.setPreferredSize(size) ;
 			inGameMenu.setOpaque(true) ;
 			inGameMenu.setBackground(Color.black) ;
-			inGameMenu.add(ingamemenuButtons.MainMenu);
+			//inGameMenu.add(ingamemenuButtons.MainMenu);
 			inGameMenu.add(ingamemenuButtons.Resume);
 			inGameMenu.add(ingamemenuButtons.Exit);
 			
 			MenuButtons winGameMenuButtons = new MenuButtons(this);
 			winMenu.setPreferredSize(size) ;
 			winMenu.setOpaque(true) ;
-			winMenu.setBackground(Color.white) ;
-			winMenu.add(winGameMenuButtons.NewGame);
+			winMenu.setBackground(Color.blue) ;
+			//winMenu.add(winGameMenuButtons.NewGame);
 			winMenu.add(winGameMenuButtons.Exit);
+			
+			Win = new File("dark2.wav");
+
+			
+			try {
+				AudioInputStream winSound1 = AudioSystem.getAudioInputStream(Win);
+				winSound = AudioSystem.getClip();
+				winSound.open(winSound1);
+			} catch (UnsupportedAudioFileException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (LineUnavailableException e) {
+					e.printStackTrace();}
+			
+			
 			
 			
 			
@@ -135,6 +162,8 @@ public class GameFrame extends JFrame {
 			winMenu.setVisible(true);
 			winMenu.grabFocus();
 			
+			winSound.start();
+			
 		}
 		
 		public void resumeGame(){
@@ -149,7 +178,7 @@ public class GameFrame extends JFrame {
 		
 		//Creating a game.
 		public void CreateGame(){
-			
+			gameMade = true;
 			//MainMenu.setFocusable(false);
 			MainMenu.setVisible(false);
 			System.out.println("game being created");
@@ -157,7 +186,7 @@ public class GameFrame extends JFrame {
 			//Create Map of Engineering Building Second Floor.
 				TileMap map1 = null;
 				try {
-					map1 = new TileMap(1000,1000, "Engr3rdFloor.txt");
+					map1 = new TileMap(400,500, "Engr3rdFloor.txt");
 					MapList.add(map1);
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -166,7 +195,7 @@ public class GameFrame extends JFrame {
 				
 				TileMap map2 = null;
 				try {
-					map2 = new TileMap(1000,1000, "Engr2ndFloor.txt");
+					map2 = new TileMap(1000,1000, "Engr3rdFloor.txt");
 					MapList.add(map2);
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -220,12 +249,12 @@ public class GameFrame extends JFrame {
 				
 				
 			//Initialise the Model Manager.
-				final ModelManager manager = new ModelManager(map1);
+				manager = new ModelManager(MapList);
 				
 			//Create Player and Zombie.
 				Image gun = Toolkit.getDefaultToolkit().createImage("player_nofire.png");
 				Image gunFire = Toolkit.getDefaultToolkit().createImage("player_fire.png");
-				final Player playa = new Player(playerImage, 50, 10, 10, 500, 2500, 0.4, 0.4, manager);
+				final Player playa = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager);
 				final Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
 				playa.addWeapon(Gun);
@@ -291,6 +320,7 @@ public class GameFrame extends JFrame {
 				display.grabFocus();
 				Buttons Button = new Buttons(playa, this);
 				display.addKeyListener( Button);
+				//DoubleBuffer buffer = new DoubleBuffer();
 				
 				
 				
@@ -319,13 +349,13 @@ public class GameFrame extends JFrame {
 				        		if (manager.killed >= 100){
 				        			showWinGameMenu();
 					        	}
-				        		
-				        		
+				        		display.repaint();
+				        		//manager.updateSprites(loopTime);
 				        		manager.updateAnimations();
 				        		manager.manageSprites();
-					        	manager.updateSprites(loopTime);
-					        	manager.switchMap();
-					        	display.repaint();
+					        	//manager.switchMap();
+					        	
+					        	//display.paintComponent(display.getGraphics());
 				        	}
 				        	
 				        	
@@ -339,11 +369,14 @@ public class GameFrame extends JFrame {
 				//setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ) ;
 			}
 			
+		
+		
+		public void CreateNewGame(){
 			
-			public static TileMap getMap(int mapInt){
-				return MapList.get(mapInt);
-			}
-	
+		}
+		
+		
+		
 			
 
 }
