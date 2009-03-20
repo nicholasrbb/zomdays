@@ -19,7 +19,7 @@ public class TileMap {
 	private Image[][] Map;
 	private String[][] charMap;
 	
-	// Coins
+	
 	
     public ArrayList <Sprite> SpriteList;
     public ArrayList <Sprite> PlayerList;
@@ -71,38 +71,57 @@ public class TileMap {
         	return Map[x][y];
         }
     }
-
+    /**
+	 * sets the Image for a Tile
+	 */
     public void setTile(int x, int y, Image tile) {
         Map[x][y] = tile;
     }
 
+    /**
+	 * Adds sprite to grid at position X, Y
+	 */
     public void addToGrid(int x, int y, Sprite sprite) {
     	Grid[x][y].add(sprite);
     }
     
+    /**
+	 * Removes sprite at grid position X, Y
+	 */
     public void removeFromGrid(int x, int y, Sprite sprite) {
         Grid[x][y].remove(sprite);
     }
     
+    /**
+	 * Adds target sprite to SpriteList
+	 */
     public void addSprite(Sprite sprite) {
         SpriteList.add(sprite);
     }
 
+    /**
+	 * Removes target sprite from SpriteList
+	 */
     public void removeSprite(Sprite sprite) {
         SpriteList.remove(sprite);
     }
     
+    /**
+	 * Adds target player to PlayerList
+	 */
     public void addPlayer(Sprite sprite) {
         PlayerList.add(sprite);
     }
 
+    /**
+	 * Removes target player from PlayerList
+	 */
     public void removePlayer(Sprite sprite) {
         PlayerList.remove(sprite);
     }
     
     /**
 	 * read and load map from text file
-	 * 
 	 */
     @SuppressWarnings("unchecked")
 	private void loadMap(String filename) throws IOException {
@@ -257,6 +276,10 @@ public class TileMap {
         }
     }
 
+    /**
+	 * Gets the character for a Character Tile
+	 * @return charMap[x][y]
+	 */
 	public String getCharTile(int x, int y) {
 		if (x < 0 || x >= getWidth() || y < 0 || y >= getHeight()){
             return "x";
@@ -265,6 +288,9 @@ public class TileMap {
         }
 	}
 	
+	/**
+	 * Sets the Player Position on the Map based on the tile map
+	 */
 	public void setPlayerOnePosition(){
 		for ( int x = 0; x<=getWidth(); x++)
 			for (int y = 0; y<=getHeight(); y++){
@@ -278,7 +304,10 @@ public class TileMap {
 	
     
 
-
+	/**
+	 * Sets the character for a Character Tile
+	 * 
+	 */
 	public void setCharTile(int x, int y, String string) {
 		charMap[x][y] = string;
 	}

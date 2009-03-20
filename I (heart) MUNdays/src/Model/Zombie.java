@@ -11,8 +11,6 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import ZombieAnimations.ZombieAnimationManager;
-import ZombieAnimations.ZombieAnimationManager.ZombieAnimationStates;
 
 
 
@@ -21,7 +19,6 @@ import ZombieAnimations.ZombieAnimationManager.ZombieAnimationStates;
  *
  */
 public class Zombie extends Sprite{
-	public ZombieAnimationManager zAnim;
 
 	
 	private AffineTransform npcOrientation;
@@ -38,7 +35,6 @@ public class Zombie extends Sprite{
 		super(health, width, height, x, y, dx, dy, Manager);
 		this.image = npcImage;
 		npcOrientation = new AffineTransform();
-		zAnim =  new ZombieAnimationManager(this);
 		
 		voice1 = new File("creep.wav");
 
@@ -55,6 +51,10 @@ public class Zombie extends Sprite{
 				e.printStackTrace();}
 	}
 	
+	/**
+	 * Returns the player closest to the zombie.
+	 * @return sprite
+	 */
 	public Sprite whichPlayer(){
 		int closestX = manager.map.PlayerList.get(0).getX();
 		int closestY = manager.map.PlayerList.get(0).getY();
@@ -72,6 +72,13 @@ public class Zombie extends Sprite{
 		return player;
 	}
 	
+	/**
+	 * Calls Sprite's Movement method based player's position
+	 * 
+	 * @param time
+	 * 
+	 * @see Sprite.Movement
+	 */
 	public void Movement(long time){
 		Sprite target = whichPlayer();
 		targetPlayer = target;
@@ -128,6 +135,11 @@ public class Zombie extends Sprite{
 		}
 	}
 	
+	
+	/**
+	 * set the Zombie's AffineTransform, Postion and angle
+	 * 
+	 */
 	public synchronized void setSpriteOrientation(){
 		int x = targetPlayer.getX();
 		int y = targetPlayer.getY();
@@ -137,19 +149,38 @@ public class Zombie extends Sprite{
 		npcOrientation.rotate(Math.toRadians(angle), image.getWidth(null)/2, image.getHeight(null)/2);	
 	}
 	
+	
+	/**
+	 * get the Zombie's AffineTransform
+	 * 
+	 * @return playerOrientation
+	 */
 	public AffineTransform getSpriteOrientation(){
 		return npcOrientation;
 	}
 
+	/**
+	 * Does nothing for Zombie
+	 */
 	@Override
 	public void setPlayerSpriteOrientation(int x, int y) {
 		
 	}
+	
+	/**
+	 * Zombie attack current target
+	 * 
+	 */
 	public void attack(){
 		//zAnim.setState(ZombieAnimationStates.Attacking);
 
 		targetPlayer.updateHealth(-damage);
 	}
+	
+	/**
+	 * update sprite health
+	 * @param change
+	 */
 	@Override
 	public void updateHealth(double change){
 		//zAnim.setState(ZombieAnimationStates.Damage);

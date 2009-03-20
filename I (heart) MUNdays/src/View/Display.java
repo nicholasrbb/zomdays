@@ -17,7 +17,7 @@ import Model.TileMap;
 
 
 /**
- * Class that controls the updating of the game by calling paingComponent.
+ * Class that controls the updating of the game screen.
  *
  */
 @SuppressWarnings("serial")
@@ -58,7 +58,9 @@ public class Display extends JPanel{
 	}
 	
 	
-	
+	/**
+	 * Paints all appropriate Tiles, and Sprites to the panel
+	 */
 	@Override public void paintComponent(Graphics g){
 		manager.updateSprites(20);
 		
@@ -182,17 +184,38 @@ public class Display extends JPanel{
     	
 		
 	}
+	
+	
+	/**
+	 * Converts world position to tile position 
+	 * @return tile position
+	 */
 	public int pixelsToTiles(int x){
 		return (x/25);
 		
 	}
+	
+	/**
+	 * Converts tile position to world position  
+	 * @return world position
+	 */
 	public int tilesToPixels(int x){
 		return (25*x);
 		
 	}
+	
+	/**
+	 * Gets the X position of the top left corner of the screen   
+	 * @return cornerX1
+	 */
 	public int getCornerX1(){
 		return cornerX1;
 	}
+	
+	/**
+	 * Gets the Y position of the top left corner of the screen   
+	 * @return cornerY1
+	 */
 	public int getCornerY1(){
 		return cornerY1;
 	}
