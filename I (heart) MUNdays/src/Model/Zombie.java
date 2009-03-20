@@ -72,7 +72,7 @@ public class Zombie extends Sprite{
 		Sprite target = whichPlayer();
 		targetPlayer = target;
 		
-		zAnim.setState(ZombieAnimationStates.Walking);
+		//zAnim.setState(ZombieAnimationStates.Walking);
 		
 		double x = (this.getX() - target.getX())*(this.getX() - target.getX());
 		double y = (this.getY() - target.getY())*(this.getY() - target.getY());
@@ -142,13 +142,13 @@ public class Zombie extends Sprite{
 		
 	}
 	public void attack(){
-		zAnim.setState(ZombieAnimationStates.Attacking);
+		//zAnim.setState(ZombieAnimationStates.Attacking);
 
 		targetPlayer.updateHealth(-damage);
 	}
 	@Override
 	public void updateHealth(double change){
-		zAnim.setState(ZombieAnimationStates.Damage);
+		//zAnim.setState(ZombieAnimationStates.Damage);
 
 		Health = Health + change;
 		if (Health <= 0){

@@ -40,7 +40,7 @@ public class GameMouseEvents implements MouseListenerInterface {
 	@Override
 	public void mouseEntered() {
 				
-		Image image = Toolkit.getDefaultToolkit().createImage("crosshair.jpg");
+		Image image = Toolkit.getDefaultToolkit().createImage("crosshair.png");
 		
 		Cursor aimer = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(15,15), "crosshairCursor");
 		d.setCursor(aimer);

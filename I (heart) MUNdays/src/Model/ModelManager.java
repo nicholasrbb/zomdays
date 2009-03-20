@@ -9,7 +9,7 @@ import Main.GameFrame;
 public class ModelManager{
 	
 	public TileMap map;
-	Image zombieImage = Toolkit.getDefaultToolkit().createImage("zombie.jpg");
+	Image zombieImage = Toolkit.getDefaultToolkit().createImage("zombie.png");
 	Random generator = new Random();
 	public int killed = 0;
 	Player traveller;

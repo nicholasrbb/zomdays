@@ -153,31 +153,31 @@ public class TileMap {
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'H') {
-                	this.setTile(x, y, toolkit.getImage("wall_R.jpg") );
+                	this.setTile(x, y, toolkit.getImage("wall_R.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'I') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_TL.jpg") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_TL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'J') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_RL.png") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_LR.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'K') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_TR.jpg") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_TR.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'L') {
-                	this.setTile(x, y, toolkit.getImage("wall_L.jpg") );
+                	this.setTile(x, y, toolkit.getImage("wall_L.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'M') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_BR.jpg") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BR.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'N') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_BL.jpg") );
+                	this.setTile(x, y, toolkit.getImage("innerwall_BL.png") );
                 	this.setCharTile(x, y, "x");
                 }
                 

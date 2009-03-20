@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
@@ -22,6 +23,7 @@ public class Display extends JPanel{
 	int screenWidth;
 	int screenHeight;
 	Player player;
+	Image background;
 	public int cornerX1;
 	public int cornerY1;
 	public int cornerX2;
@@ -44,6 +46,7 @@ public class Display extends JPanel{
 		cornerY1 = player.getY()- screenHeight/2;
 		cornerX2 = player.getX()+ screenWidth/2;
 		cornerY2 = player.getY()+ screenHeight/2;
+		background = Toolkit.getDefaultToolkit().createImage("floor.jpg");
 		
 		
 	}
@@ -51,9 +54,14 @@ public class Display extends JPanel{
 				
 		Graphics2D g2d = (Graphics2D) g;
 		
-		g.setColor(Color.black);
-	    g.fillRect(0, 0, screenWidth, screenHeight);
-	    		
+		g.drawImage(background, 0, 0, null);
+		// tile the image across the component
+		/*
+		 for (int i = 0; i * 40 <= getWidth(); i++)
+			 for (int j = 0; j * 40 <= getHeight(); j++)
+				 if (i + j > 0) g.copyArea(0, 0, 40, 40, i * 40, j * 40);
+		*/
+		
 		//Correction the position of the display relative to player.
 		dcornerX1 = cornerX1;
 		dcornerY1 = cornerY1;
@@ -120,6 +128,7 @@ public class Display extends JPanel{
 			int dx = 0;
 			for(int x = firstTileX; x < lastTileX; x++ ){
 				Image image = manager.map.getTile(x, y);
+				g2d.drawImage(background,dx - offsetX,dy - offsetY, null);
 				g2d.drawImage(image,dx - offsetX,dy - offsetY, null);
 				dx = dx+25;
 			}

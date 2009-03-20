@@ -41,7 +41,7 @@ public class GameFrame extends JFrame {
 	public boolean makeGame = false;
 	public boolean mainmenu = false;
 	public boolean pause = false;
-		
+	
 		public GameFrame(){
 			//MainMenu = new Canvas(500,  500, 1);
 			
@@ -74,7 +74,7 @@ public class GameFrame extends JFrame {
 			Dimension size = new Dimension( 1200, 800) ;
 			MainMenu.setPreferredSize(size) ;
 			MainMenu.setOpaque(true) ;
-			MainMenu.setBackground(Color.white) ;
+			MainMenu.setBackground(Color.black) ;
 			MenuButtons menuButtons = new MenuButtons(this);
 			MainMenu.add(menuButtons.NewGame);
 			MainMenu.add(menuButtons.Exit);
@@ -92,8 +92,8 @@ public class GameFrame extends JFrame {
 			MenuButtons winGameMenuButtons = new MenuButtons(this);
 			winMenu.setPreferredSize(size) ;
 			winMenu.setOpaque(true) ;
-			winMenu.setBackground(Color.black) ;
-			winMenu.add(winGameMenuButtons.MainMenu);
+			winMenu.setBackground(Color.white) ;
+			winMenu.add(winGameMenuButtons.NewGame);
 			winMenu.add(winGameMenuButtons.Exit);
 			
 			
@@ -134,6 +134,7 @@ public class GameFrame extends JFrame {
 			this.setContentPane(winMenu);
 			winMenu.setVisible(true);
 			winMenu.grabFocus();
+			
 		}
 		
 		public void resumeGame(){
@@ -156,7 +157,7 @@ public class GameFrame extends JFrame {
 			//Create Map of Engineering Building Second Floor.
 				TileMap map1 = null;
 				try {
-					map1 = new TileMap(1000,1000, "Engr4thFloor.txt");
+					map1 = new TileMap(1000,1000, "Engr3rdFloor.txt");
 					MapList.add(map1);
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -175,11 +176,11 @@ public class GameFrame extends JFrame {
 				
 				
 			// Setting in Player Image.
-				Image playerImage = Toolkit.getDefaultToolkit().createImage("newPlayer.jpg");
-				Image npcImage = Toolkit.getDefaultToolkit().createImage("zombie.jpg");
+				Image playerImage = Toolkit.getDefaultToolkit().createImage("player_nofire.png");
+				Image npcImage = Toolkit.getDefaultToolkit().createImage("zombie.png");
 				
 				//Testing new animations
-				Image walk0 = Toolkit.getDefaultToolkit().createImage("Player1.png");
+				Image walk0 = Toolkit.getDefaultToolkit().createImage("player_nofire.png");
 				Image walk1 = Toolkit.getDefaultToolkit().createImage("newplayerwalk1.png");
 				Image walk2 = Toolkit.getDefaultToolkit().createImage("newplayerwalk2.png");
 				//Image walk3 = Toolkit.getDefaultToolkit().createImage("PlayerWalk1.jpg");
@@ -203,8 +204,8 @@ public class GameFrame extends JFrame {
 				
 				ArrayList <AnimationFrame> frames2 = new ArrayList <AnimationFrame>();
 				frames2.add(playaFrame1);
-				frames2.add(playaFrame2);
-				frames2.add(playaFrame3);
+				//frames2.add(playaFrame2);
+				//frames2.add(playaFrame3);
 				//frames2.add(playaFrame4);
 				//frames2.add(playaFrame5);
 				//frames2.add(playaFrame6);
@@ -222,8 +223,8 @@ public class GameFrame extends JFrame {
 				final ModelManager manager = new ModelManager(map1);
 				
 			//Create Player and Zombie.
-				Image gun = Toolkit.getDefaultToolkit().createImage("gun.png");
-				Image gunFire = Toolkit.getDefaultToolkit().createImage("gunFire.png");
+				Image gun = Toolkit.getDefaultToolkit().createImage("player_nofire.png");
+				Image gunFire = Toolkit.getDefaultToolkit().createImage("player_fire.png");
 				final Player playa = new Player(playerImage, 50, 10, 10, 500, 2500, 0.4, 0.4, manager);
 				final Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
@@ -315,8 +316,9 @@ public class GameFrame extends JFrame {
 				        	
 				        	if (pause != true){
 				        		
-				        		if (manager.killed >= 1){
-					        		showWinGameMenu();}
+				        		if (manager.killed >= 100){
+				        			showWinGameMenu();
+					        	}
 				        		
 				        		
 				        		manager.updateAnimations();

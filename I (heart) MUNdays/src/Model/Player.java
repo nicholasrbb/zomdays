@@ -165,7 +165,7 @@ public class Player extends Sprite{
 		solveAngle(mouseX, mouseY);
 		
 		playerOrientation.setToTranslation(getX()-xPos-25, getY()-yPos-25);	
-		playerOrientation.rotate(Math.toRadians(angle),image.getWidth(null)/2, image.getHeight(null)/2);
+		playerOrientation.rotate(Math.toRadians(angle),image.getWidth(null)/2, (image.getHeight(null)/2));
 			
 			
 	}
@@ -215,7 +215,7 @@ public class Player extends Sprite{
 			
 			attack = false;
 			
-			WeaponList.get(currentWeapon).currentAnimation = 1;
+			
 			
 			
 			Weapon attackingWeapon = WeaponList.get(currentWeapon);
@@ -223,7 +223,7 @@ public class Player extends Sprite{
 			int damage = attackingWeapon.getDamage();
 			
 			if ( attackingWeapon.magAmmo() != 0){
-
+				WeaponList.get(currentWeapon).currentAnimation = 1;
 				gunShotOrig.setFramePosition(0);
 				
 				gunShotOrig.start();
@@ -231,7 +231,7 @@ public class Player extends Sprite{
 				
 				attackingWeapon.updateAmmo(-1);
 				
-				for ( int r = 0; r <= range; r++){
+				for ( int r = 20; r <= range; r++){
 					String tileShoot = manager.map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
 					//System.out.println("Angle: " + (angle) + "gun hitting x: " +(PositionX + r*Math.sin(Math.toRadians(angle)))  + " y: " + (PositionY - r*Math.cos(Math.toRadians(angle))));
 					Sprite target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle)));
