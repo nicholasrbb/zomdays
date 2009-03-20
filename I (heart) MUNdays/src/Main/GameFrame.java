@@ -35,6 +35,8 @@ public class GameFrame extends JFrame {
 	public static ArrayList <TileMap> MapList;
 	public JPanel MainMenu;
 	public JPanel inGameMenu;
+	public JPanel gameOverMenu;
+	public JPanel winMenu;
 	public Display display;
 	public boolean makeGame = false;
 	public boolean mainmenu = false;
@@ -46,6 +48,8 @@ public class GameFrame extends JFrame {
 			
 			MainMenu = new JPanel();
 			inGameMenu = new JPanel();
+			gameOverMenu = new JPanel();
+			winMenu = new JPanel();
 			MapList = new ArrayList <TileMap>();
 			
 			//this.setFocusable(false);
@@ -70,7 +74,7 @@ public class GameFrame extends JFrame {
 			Dimension size = new Dimension( 1200, 800) ;
 			MainMenu.setPreferredSize(size) ;
 			MainMenu.setOpaque(true) ;
-			MainMenu.setBackground(Color.black) ;
+			MainMenu.setBackground(Color.white) ;
 			MenuButtons menuButtons = new MenuButtons(this);
 			MainMenu.add(menuButtons.NewGame);
 			MainMenu.add(menuButtons.Exit);
@@ -85,6 +89,15 @@ public class GameFrame extends JFrame {
 			inGameMenu.add(ingamemenuButtons.Resume);
 			inGameMenu.add(ingamemenuButtons.Exit);
 			
+			MenuButtons winGameMenuButtons = new MenuButtons(this);
+			winMenu.setPreferredSize(size) ;
+			winMenu.setOpaque(true) ;
+			winMenu.setBackground(Color.black) ;
+			winMenu.add(winGameMenuButtons.MainMenu);
+			winMenu.add(winGameMenuButtons.Exit);
+			
+			
+			
 			
 			
 			showMainMenu();
@@ -97,6 +110,7 @@ public class GameFrame extends JFrame {
 		// Create a Menu.
 		public void showMainMenu(){
 			inGameMenu.setVisible(false);
+			winMenu.setVisible(false);
 			this.setContentPane(MainMenu);
 			MainMenu.grabFocus();
 			MainMenu.setVisible(true);
@@ -105,15 +119,27 @@ public class GameFrame extends JFrame {
 		public void showInGameMenu(){
 			pause = true;
 			display.setVisible(false);
+			winMenu.setVisible(false);
 			MainMenu.setVisible(false);
 			this.setContentPane(inGameMenu);
 			inGameMenu.setVisible(true);
 			inGameMenu.grabFocus();
 		}
 		
+		public void showWinGameMenu(){
+			pause = true;
+			display.setVisible(false);
+			MainMenu.setVisible(false);
+			inGameMenu.setVisible(false);
+			this.setContentPane(winMenu);
+			winMenu.setVisible(true);
+			winMenu.grabFocus();
+		}
+		
 		public void resumeGame(){
 			pause = false;
 			MainMenu.setVisible(false);
+			winMenu.setVisible(false);
 			display.setVisible(true);
 			this.setContentPane(display);
 			display.grabFocus();
@@ -233,6 +259,9 @@ public class GameFrame extends JFrame {
 			//Initialise the panel.
 				//final Display display = new Display(manager, playa, this.getWidth(), this.getHeight()) ;
 				display = new Display(manager, playa, this.getWidth(), this.getHeight()) ;
+				display.setBackground(Color.BLACK);
+				
+
 			
 				
 				
@@ -246,7 +275,6 @@ public class GameFrame extends JFrame {
 						display.requestFocusInWindow();
 					}
 				});
-				
 				display.setFocusable(true);
 				System.out.println(display.isFocusOwner());
 				
@@ -282,7 +310,15 @@ public class GameFrame extends JFrame {
 					                Thread.sleep(20);}
 						        	catch (InterruptedException ex) { } 
 						    }
+				        	
+				        	
+				        	
 				        	if (pause != true){
+				        		
+				        		if (manager.killed >= 1){
+					        		showWinGameMenu();}
+				        		
+				        		
 				        		manager.updateAnimations();
 				        		manager.manageSprites();
 					        	manager.updateSprites(loopTime);

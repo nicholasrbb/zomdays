@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -44,11 +45,15 @@ public class Display extends JPanel{
 		cornerX2 = player.getX()+ screenWidth/2;
 		cornerY2 = player.getY()+ screenHeight/2;
 		
+		
 	}
 	@Override public void paintComponent(Graphics g){
 				
 		Graphics2D g2d = (Graphics2D) g;
 		
+		g.setColor(Color.black);
+	    g.fillRect(0, 0, screenWidth, screenHeight);
+	    		
 		//Correction the position of the display relative to player.
 		dcornerX1 = cornerX1;
 		dcornerY1 = cornerY1;
@@ -108,6 +113,7 @@ public class Display extends JPanel{
 		int lastTileY = pixelsToTiles(cornerY2 + offsetY) + 1;	
 		
 		
+	
 		// Print all the visible Tiles
 		int dy = 0;
 		for(int y = firstTileY; y < lastTileY; y++ ){
