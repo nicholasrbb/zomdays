@@ -197,6 +197,7 @@ public class myXboxControllerListener implements XboxControllerListener{
 	@Override
 	public void rightThumbMagnitude(double arg0) {
 		RTmag = arg0;
+		System.out.println("arg0: " + arg0);
 	}
 
 	@Override
