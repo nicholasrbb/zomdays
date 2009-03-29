@@ -21,7 +21,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import ch.aplu.xboxcontroller.XboxController;
 
 import Interface.Buttons;
 import Interface.MenuButtons;
@@ -218,9 +217,9 @@ public class GameFrame extends JFrame {
 			secondFrame.MainMenu.setVisible(false);
 			secondFrame.display = new Display(this.game.manager, game.player2, this.getWidth(), this.getHeight(), xboxGame) ;
 			
-			XboxController xc = new XboxController();
-			myXboxControllerListener xboxListener = new myXboxControllerListener(game.player2,secondFrame,xc);
-			xc.addXboxControllerListener(xboxListener);
+			//boxController xc = new XboxController();
+			//myXboxControllerListener xboxListener = new myXboxControllerListener(game.player2,secondFrame,xc);
+			//xc.addXboxControllerListener(xboxListener);
 			
 			secondFrame.setContentPane(secondFrame.display);
 			secondFrame.display.grabFocus();
@@ -248,9 +247,10 @@ public class GameFrame extends JFrame {
 			//Xbox Controller Listener
 			
 			if(xboxGame){
-				XboxController xc = new XboxController();
-				myXboxControllerListener xboxListener = new myXboxControllerListener(game.player1,this,xc);
-				xc.addXboxControllerListener(xboxListener);}
+				//XboxController xc = new XboxController();
+				//myXboxControllerListener xboxListener = new myXboxControllerListener(game.player1,this,xc);
+				//xc.addXboxControllerListener(xboxListener);
+				}
 			
 			else{
 				GameMouseEvents mouse = new GameMouseEvents(display,game.player1);

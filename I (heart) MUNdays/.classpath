@@ -2,7 +2,5 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="X:/I (heart) MUNdays/I (heart) MUNdays/XboxController/lib/jaw.jar" sourcepath=""/>
-	<classpathentry exported="true" kind="lib" path="X:/I (heart) MUNdays/I (heart) MUNdays/XboxController/lib/XboxController.jar" sourcepath=""/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
