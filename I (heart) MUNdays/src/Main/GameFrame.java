@@ -57,13 +57,12 @@ public class GameFrame extends JFrame {
 	public boolean makeGame = false;
 	public boolean mainmenu = false;
 	public boolean pause = false;
-	public ModelManager manager;
 	public boolean gameMade = false;
 	private File Win;
 	private Clip winSound;
-	
+	Game game;
 	public boolean xboxGame = false;
-	
+	GameFrame secondFrame;
 	
 	/**
 	 * 
@@ -78,6 +77,13 @@ public class GameFrame extends JFrame {
 			MapList = new ArrayList <TileMap>();
 			
 			
+			this.setPreferredSize(new Dimension(600,400));
+			pack() ;
+			setVisible(true) ;
+			setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ) ;
+			
+			
+			/*
 			DisplayMode dm = new DisplayMode (1280,800,32,60);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice gd = ge.getDefaultScreenDevice();
@@ -85,7 +91,7 @@ public class GameFrame extends JFrame {
 			this.setResizable(false);
 			gd.setFullScreenWindow(this);
 			gd.setDisplayMode(dm);
-			
+			*/
 			
 			
 			
@@ -96,6 +102,7 @@ public class GameFrame extends JFrame {
 			MainMenu.setBackground(Color.black) ;
 			MenuButtons menuButtons = new MenuButtons(this);
 			MainMenu.add(menuButtons.NewGame);
+			MainMenu.add(menuButtons.NewMultiplayerGame);
 			MainMenu.add(menuButtons.Exit);
 			MainMenu.add(menuButtons.NewXboxGame);
 			
@@ -204,12 +211,122 @@ public class GameFrame extends JFrame {
 		}
 		
 		
+		public void NewMultiplayerGame(){
+			
+			secondFrame = new GameFrame();
+			
+			secondFrame.MainMenu.setVisible(false);
+			secondFrame.display = new Display(this.game.manager, game.player2, this.getWidth(), this.getHeight(), xboxGame) ;
+			
+			XboxController xc = new XboxController();
+			myXboxControllerListener xboxListener = new myXboxControllerListener(game.player2,secondFrame,xc);
+			xc.addXboxControllerListener(xboxListener);
+			
+			secondFrame.setContentPane(secondFrame.display);
+			secondFrame.display.grabFocus();
+			
+			
+			
+		}
+		public void newGame(){
+			gameMade = true;
+			MainMenu.setVisible(false);
+			game = new Game();
+			
+			//Initialise the panel.
+			//final Display display = new Display(manager, playa, this.getWidth(), this.getHeight()) ;
+			display = new Display(game.manager, game.player1, this.getWidth(), this.getHeight(), xboxGame) ;
+			display.setBackground(Color.BLACK);
+			
+
+		
+			
+			
+		//add mouseListener to display
+			
+			
+			//Xbox Controller Listener
+			
+			if(xboxGame){
+				XboxController xc = new XboxController();
+				myXboxControllerListener xboxListener = new myXboxControllerListener(game.player1,this,xc);
+				xc.addXboxControllerListener(xboxListener);}
+			
+			else{
+				GameMouseEvents mouse = new GameMouseEvents(display,game.player1);
+				MouseEventListener mouseListener = new MouseEventListener(mouse);
+				display.addMouseListener(mouseListener);
+				display.addMouseMotionListener(mouseListener);
+				
+				
+			}
+			//---------------------------------------------------------------
+			
+			this.addWindowFocusListener(new WindowAdapter() {
+				public void windowGainedFocus(WindowEvent e) {
+					display.requestFocusInWindow();
+				}
+			});
+			display.setFocusable(true);
+			System.out.println(display.isFocusOwner());
+			
+			
+			//this.requestFocusInWindow(true);
+			
+			
+			System.out.println("showing display");
+			
+			this.setContentPane(display);
+			display.grabFocus();
+			Buttons Button = new Buttons(game.player1, this);
+			display.addKeyListener( Button);
+			
+			
+			new Thread() {
+			    public void run() {
+			    	
+			    	long startTime = System.currentTimeMillis();
+			    	long currentTime = startTime;
+			    	while(true){
+			        	long loopTime = System.currentTimeMillis() - currentTime;
+			        	currentTime += loopTime;
+			        	
+			        	
+			        	//if statement used because update has issues with loop taking less then 5ms
+			        	if (loopTime <= 20){
+			        		try {
+				                Thread.sleep(20);}
+					        	catch (InterruptedException ex) { } 
+					    }
+			        	
+			        	
+			        	
+			        	if (pause != true){
+			        		
+			        		game.manager.switchMap();
+			        		game.manager.updateAnimations();
+			        		game.manager.manageSprites();
+				        	display.repaint();
+				        	//secondFrame.display.repaint();
+			        	}
+			        	
+			        	
+			        	
+			        }
+			    }
+			}.start();
+			
+			
+		}
+		
+		
 		/**
 		 * This sets up the game TileMaps, and load the images for for the player 
 		 * animations and starts the main game loop
 		 * 
 		 * @param none
 		 */
+		/*
 		public void CreateGame(){
 			gameMade = true;
 			MainMenu.setVisible(false);
@@ -263,12 +380,12 @@ public class GameFrame extends JFrame {
 				
 				
 			//Initialise the Model Manager.
-				manager = new ModelManager(MapList);
+				//manager = new ModelManager(MapList);
 				
 			//Create Player and Zombie.
 				Image gun = Toolkit.getDefaultToolkit().createImage("player_nofire.png");
 				Image gunFire = Toolkit.getDefaultToolkit().createImage("player_fire.png");
-				final Player playa = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager);
+				final Player playa = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, game.manager);
 				final Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
 				playa.addWeapon(Gun);
@@ -302,7 +419,7 @@ public class GameFrame extends JFrame {
 				
 				//Initialise the panel.
 				//final Display display = new Display(manager, playa, this.getWidth(), this.getHeight()) ;
-				display = new Display(manager, playa, this.getWidth(), this.getHeight(), xboxGame) ;
+				display = new Display(game.manager, playa, this.getWidth(), this.getHeight(), xboxGame) ;
 				display.setBackground(Color.BLACK);
 				
 
@@ -392,7 +509,7 @@ public class GameFrame extends JFrame {
 	
 			}
 			
-		
+		*/
 		
 		
 		

@@ -215,10 +215,10 @@ public class myXboxControllerListener implements XboxControllerListener{
 	@Override
 	public void start(boolean arg0) {
 		if (arg0 == true){
-			if (game.MainMenu.isVisible())
-				game.CreateGame();
-			else 
-				game.showInGameMenu();
+			//if (game.MainMenu.isVisible())
+				//game.CreateGame();
+			//else 
+				//game.showInGameMenu();
 		}
     
 	}

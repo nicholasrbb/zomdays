@@ -23,6 +23,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class Player extends Sprite{
 	
 	private AffineTransform playerOrientation;
+	private AffineTransform Orientation;
 	public boolean up = false;
 	public boolean right = false;
 	public boolean left = false;
@@ -62,6 +63,7 @@ public class Player extends Sprite{
 		super(health, width, height, x, y, dx, dy, Manager);
 		this.image = playerImage;
 		playerOrientation = new AffineTransform();
+		Orientation = new AffineTransform();
 		WeaponList = new ArrayList <Weapon>();
 		//pAnim = new PlayerAnimationManager(this);
 		
@@ -179,6 +181,10 @@ public class Player extends Sprite{
 	 * @return playerOrientation
 	 */
 	public AffineTransform getSpriteOrientation(){
+		return Orientation;
+	}
+	
+	public AffineTransform getPlayerSpriteOrientation(){
 		return playerOrientation;
 	}
 	/**
@@ -187,6 +193,8 @@ public class Player extends Sprite{
 	 */
 	@Override
 	public void setSpriteOrientation() {
+		Orientation.setToTranslation(PositionX, PositionY);	
+		Orientation.rotate(Math.toRadians(angle),image.getWidth(null)/2, (image.getHeight(null)/2));
 		
 	}
 

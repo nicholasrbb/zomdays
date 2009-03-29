@@ -155,8 +155,8 @@ public class Display extends JPanel{
 		else
 			player.setPlayerSpriteOrientation(cornerX1, cornerY1);
 		
-		g2d.drawImage(player.getSpriteImage(),player.getSpriteOrientation(), null);
-		g2d.drawImage(player.WeaponList.get(player.getCurrentWeapon()).getImage(),player.getSpriteOrientation(), null);
+			g2d.drawImage(player.getSpriteImage(),player.getPlayerSpriteOrientation(), null);
+			g2d.drawImage(player.WeaponList.get(player.getCurrentWeapon()).getImage(),player.getPlayerSpriteOrientation(), null);
     	
 		
 		
@@ -171,14 +171,26 @@ public class Display extends JPanel{
 		
 		// Paint all other Players	
 		for ( int i = 0; i < manager.map.PlayerList.size(); i++){	
-			if(manager.map.PlayerList.get(i) != player)
-				g2d.drawImage(manager.map.PlayerList.get(i).getSpriteImage(),playerOrientation, null);
+			if(manager.map.PlayerList.get(i) != player){
+				
+				
+				AffineTransform otherTransform = new AffineTransform();
+				otherTransform.setToTranslation(manager.map.PlayerList.get(i).getX() - cornerX1 - 25, manager.map.PlayerList.get(i).getY() - cornerY1 - 25);	
+				otherTransform.rotate(Math.toRadians(manager.map.PlayerList.get(i).angle),manager.map.PlayerList.get(i).getSpriteImage().getWidth(null)/2, manager.map.PlayerList.get(i).getSpriteImage().getHeight(null)/2);   
+				g2d.drawImage(manager.map.PlayerList.get(i).getSpriteImage(),otherTransform, null);
+				/*
+				System.out.println("corner1: " + cornerX1 + "   " + cornerY1);
+				g2d.drawImage(manager.map.PlayerList.get(i).getSpriteImage(),manager.map.PlayerList.get(i).getSpriteOrientation(), null);
+				
+				
 				Player playdizzle = (Player) manager.map.PlayerList.get(i);
         		g2d.drawString("Health: " + manager.map.PlayerList.get(i).getHealth(),50,400);
         		g2d.drawString("Zombies Killed: " + manager.killed,50,415);
         		g2d.drawString("Mag: " + playdizzle.WeaponList.get(0).magAmmo(),50,430); 
         		g2d.drawString("Ammo: " + playdizzle.WeaponList.get(0).getAmmo(),50,445);
         		g2d.drawString("Current Weapon: " + playdizzle.WeaponList.get(playdizzle.getCurrentWeapon()).getWeaponName() , 50, 460);
+				*/
+			}
 		}
 		
 		// Print all NPC's

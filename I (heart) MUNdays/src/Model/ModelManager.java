@@ -109,6 +109,7 @@ public class ModelManager{
 		for (int i = 0; i < map.PlayerList.size(); i++){
 			map.PlayerList.get(i).attack();
 			map.PlayerList.get(i).Movement(timeSpent);
+			map.PlayerList.get(i).setSpriteOrientation();
 			if (map.PlayerList.get(i).isAlive == false){
 				System.exit(0);
 			}

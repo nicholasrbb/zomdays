@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import Main.Game;
 import Main.GameFrame;
 public class MenuButtons {
 
@@ -12,6 +13,7 @@ public class MenuButtons {
 	
 	
 	public JButton NewGame;
+	public JButton NewMultiplayerGame;
 	public JButton NewXboxGame;
 	public JButton Exit;
 	public JButton MainMenu;
@@ -31,7 +33,17 @@ public class MenuButtons {
 		NewGame.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("New Game Clicked");
-				game.CreateGame();
+				//game.CreateGame();
+				game.newGame();
+			}});
+		
+		NewMultiplayerGame = new JButton("New Multiplayer Game");
+		NewMultiplayerGame.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("New Game Clicked");
+				//game.CreateGame();
+				game.newGame();
+				game.NewMultiplayerGame();
 			}});
 		
 		NewXboxGame = new JButton("New Xbox Game");
@@ -39,7 +51,7 @@ public class MenuButtons {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("New Xbox Game Clicked");
 				game.xboxGame = true;
-				game.CreateGame();
+				game.newGame();
 			}});
 		
 		Exit = new JButton("     Exit     ");
