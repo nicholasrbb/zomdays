@@ -38,7 +38,9 @@ public class Player extends Sprite{
 	Clip gunReloadOrig;
 	Clip voice1Orig;
 	
-	public int coinCount;
+	public int TSangle = 0;
+	
+	private boolean xboxController = false;
 	
 	
 	/** 
@@ -203,10 +205,25 @@ public class Player extends Sprite{
 		
 		playerOrientation.setToTranslation(printX, printY);	
 		playerOrientation.rotate(Math.toRadians(angle),image.getWidth(null)/2, (image.getHeight(null)/2));
-			
+		xboxController = false;
 			
 	}
-
+	
+	public void setplayerSpriteOrientationXbox(int xPos, int yPos){
+		
+		int printX = getX()-xPos-25;
+		int printY = getY()-yPos-25;
+	
+		
+		playerOrientation.setToTranslation(printX, printY);	
+		playerOrientation.rotate(Math.toRadians(TSangle),image.getWidth(null)/2, (image.getHeight(null)/2));
+		xboxController = true;	
+	
+	}
+		
+		
+		
+		
 	/**
 	 * set the players Position. 
 	 * 
@@ -301,10 +318,20 @@ public class Player extends Sprite{
 				
 				attackingWeapon.updateAmmo(-1);
 				
+				
+				String tileShoot = null;
+				Sprite target = null;
 				for ( int r = 20; r <= range; r++){
-					String tileShoot = manager.map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
-					//System.out.println("Angle: " + (angle) + "gun hitting x: " +(PositionX + r*Math.sin(Math.toRadians(angle)))  + " y: " + (PositionY - r*Math.cos(Math.toRadians(angle))));
-					Sprite target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle)));
+					if (xboxController){
+						tileShoot = manager.map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(TSangle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(TSangle)))/25));
+						target = getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle)));
+						
+					}
+					else{
+						tileShoot = manager.map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
+						target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle)));
+						
+					}
 					
 					if (tileShoot != " ")
 						return;

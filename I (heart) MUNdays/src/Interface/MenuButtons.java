@@ -2,7 +2,9 @@ package Interface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
+
 import Main.GameFrame;
 public class MenuButtons {
 
@@ -10,6 +12,7 @@ public class MenuButtons {
 	
 	
 	public JButton NewGame;
+	public JButton NewXboxGame;
 	public JButton Exit;
 	public JButton MainMenu;
 	public JButton Resume;
@@ -28,6 +31,14 @@ public class MenuButtons {
 		NewGame.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("New Game Clicked");
+				game.CreateGame();
+			}});
+		
+		NewXboxGame = new JButton("New Xbox Game");
+		NewXboxGame.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("New Xbox Game Clicked");
+				game.xboxGame = true;
 				game.CreateGame();
 			}});
 		

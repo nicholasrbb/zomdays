@@ -89,14 +89,14 @@ public abstract class Sprite {
 	 * set sprite X speed
 	 */
 	
-	public void setXSpeed(int s){
+	public void setXSpeed(double s){
 		dx = s;
 	}
 	
 	/**
 	 * set sprite Y speed
 	 */
-	public void setYSpeed(int s){
+	public void setYSpeed(double s){
 		dy = s;
 	}
 	/**

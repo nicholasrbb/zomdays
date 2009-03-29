@@ -4,9 +4,10 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import View.Display;
+
 import Interface.MouseListenerInterface;
 import Model.Player;
+import View.Display;
 
 /**
  * This gets associated with a player and Display to control players

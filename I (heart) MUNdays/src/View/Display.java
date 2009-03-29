@@ -1,6 +1,5 @@
 package View;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -9,17 +8,15 @@ import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
 
-
-import Interface.Buttons;
 import Model.ModelManager;
 import Model.Player;
-import Model.TileMap;
 
 
 /**
- * Class that controls the updating of the game screen.
+ * Class that controls the updating of the game by calling paingComponent.
  *
  */
+
 @SuppressWarnings("serial")
 public class Display extends JPanel{
 	AffineTransform playerOrientation;
@@ -37,13 +34,16 @@ public class Display extends JPanel{
 	public int dcornerX1;
 	public int dcornerY1;
 	
+	public boolean xboxGame;
 	
 	
-	public Display(ModelManager Manager, Player playa, int SW, int SH){
+	
+	public Display(ModelManager Manager, Player playa, int SW, int SH, boolean xboxGame){
 		super();
 		//Buttons Button = new Buttons(playa);
 		//this.addKeyListener( Button);
 
+		this.xboxGame = xboxGame;
 		manager = Manager;
 		player = playa;	
 		screenWidth = SW;
@@ -58,9 +58,9 @@ public class Display extends JPanel{
 	}
 	
 	
-	/**
-	 * Paints all appropriate Tiles, and Sprites to the panel
-	 */
+	
+	
+	
 	@Override public void paintComponent(Graphics g){
 		manager.updateSprites(20);
 		
@@ -118,14 +118,17 @@ public class Display extends JPanel{
 		
 		offsetX = cornerX1%25;
 		offsetY = cornerY1%25;
-		//System.out.println("offsetX:  " + offsetX + "   offsetY:  " + offsetY);
 		
+
 		
 		// setting tile view parameters
 		int firstTileX = pixelsToTiles(cornerX1-offsetX);
 		int lastTileX = pixelsToTiles(cornerX2 + offsetX) + 1;
 		int firstTileY  = pixelsToTiles(cornerY1-offsetY);
 		int lastTileY = pixelsToTiles(cornerY2 + offsetY) + 1;	
+		
+	
+		
 		
 		//System.out.println("PlayerX:   " + manager.map.PlayerList.get(0).getX() + "lastTileX:  "  + lastTileX + "    lastTileY:    " + offsetY);
 	
@@ -143,8 +146,15 @@ public class Display extends JPanel{
 		}
 		
 		// Print Player 
-		//System.out.println("cornerX1:  " + cornerX1 + "   cornerY1:  " + cornerY1 + "   cornerX2:  " + cornerX2 + "   cornerY2:  " + cornerY2);
-		player.setPlayerSpriteOrientation(cornerX1, cornerY1);
+		if(xboxGame){
+			System.out.println("xbox Game");
+			player.setplayerSpriteOrientationXbox(cornerX1,cornerY1);
+		
+		}
+		
+		else
+			player.setPlayerSpriteOrientation(cornerX1, cornerY1);
+		
 		g2d.drawImage(player.getSpriteImage(),player.getSpriteOrientation(), null);
 		g2d.drawImage(player.WeaponList.get(player.getCurrentWeapon()).getImage(),player.getSpriteOrientation(), null);
     	
@@ -152,7 +162,6 @@ public class Display extends JPanel{
 		
 		//Paint all the Items
 		for ( int i = 0; i < manager.map.ItemList.size(); i++){
-    		//System.out.println("playerX: " + player.getX() + "PlayerY: " + player.getY() + " Item type: " +manager.map.ItemList.get(i).getType() +  " Item Image = " + manager.map.ItemList.get(i).getImage() + " " + manager.map.ItemList.get(i).getX()+ " " + manager.map.ItemList.get(i).getY());
     		g2d.drawImage(manager.map.ItemList.get(i).getImage(),manager.map.ItemList.get(i).getX() - cornerX1 -12, manager.map.ItemList.get(i).getY() - cornerY1 -12, null);
 		}
 		
@@ -170,7 +179,6 @@ public class Display extends JPanel{
         		g2d.drawString("Mag: " + playdizzle.WeaponList.get(0).magAmmo(),50,430); 
         		g2d.drawString("Ammo: " + playdizzle.WeaponList.get(0).getAmmo(),50,445);
         		g2d.drawString("Current Weapon: " + playdizzle.WeaponList.get(playdizzle.getCurrentWeapon()).getWeaponName() , 50, 460);
-        		//g2d.drawString("Coins Collected: " + playdizzle.coinCount,50,475);
 		}
 		
 		// Print all NPC's
@@ -184,38 +192,17 @@ public class Display extends JPanel{
     	
 		
 	}
-	
-	
-	/**
-	 * Converts world position to tile position 
-	 * @return tile position
-	 */
 	public int pixelsToTiles(int x){
 		return (x/25);
 		
 	}
-	
-	/**
-	 * Converts tile position to world position  
-	 * @return world position
-	 */
 	public int tilesToPixels(int x){
 		return (25*x);
 		
 	}
-	
-	/**
-	 * Gets the X position of the top left corner of the screen   
-	 * @return cornerX1
-	 */
 	public int getCornerX1(){
 		return cornerX1;
 	}
-	
-	/**
-	 * Gets the Y position of the top left corner of the screen   
-	 * @return cornerY1
-	 */
 	public int getCornerY1(){
 		return cornerY1;
 	}

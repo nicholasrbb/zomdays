@@ -1,7 +1,6 @@
 package Model;
 
 import java.awt.Image;
-import java.awt.Toolkit;
 
 /**
  *Used to create in-game Items 

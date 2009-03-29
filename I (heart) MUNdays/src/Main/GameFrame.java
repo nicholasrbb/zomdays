@@ -21,10 +21,12 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import events.GameMouseEvents;
+import ch.aplu.xboxcontroller.XboxController;
+
 import Interface.Buttons;
 import Interface.MenuButtons;
 import Interface.MouseEventListener;
+import Interface.myXboxControllerListener;
 import Model.ModelManager;
 import Model.Player;
 import Model.TileMap;
@@ -32,6 +34,7 @@ import Model.Weapon;
 import View.Animation;
 import View.AnimationFrame;
 import View.Display;
+import events.GameMouseEvents;
 /**
  * This class extends JFrame and will be used to contain the 
  * Display class.
@@ -59,6 +62,8 @@ public class GameFrame extends JFrame {
 	private File Win;
 	private Clip winSound;
 	
+	public boolean xboxGame = false;
+	
 	
 	/**
 	 * 
@@ -73,7 +78,7 @@ public class GameFrame extends JFrame {
 			MapList = new ArrayList <TileMap>();
 			
 			
-			DisplayMode dm = new DisplayMode (800,600,32,60);
+			DisplayMode dm = new DisplayMode (1280,800,32,60);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice gd = ge.getDefaultScreenDevice();
 			this.setUndecorated(true);
@@ -85,13 +90,14 @@ public class GameFrame extends JFrame {
 			
 			
 			
-			Dimension size = new Dimension( 1200, 800) ;
+			Dimension size = new Dimension( 800, 600) ;
 			MainMenu.setPreferredSize(size) ;
 			MainMenu.setOpaque(true) ;
 			MainMenu.setBackground(Color.black) ;
 			MenuButtons menuButtons = new MenuButtons(this);
 			MainMenu.add(menuButtons.NewGame);
 			MainMenu.add(menuButtons.Exit);
+			MainMenu.add(menuButtons.NewXboxGame);
 			
 			
 			
@@ -296,7 +302,7 @@ public class GameFrame extends JFrame {
 				
 				//Initialise the panel.
 				//final Display display = new Display(manager, playa, this.getWidth(), this.getHeight()) ;
-				display = new Display(manager, playa, this.getWidth(), this.getHeight()) ;
+				display = new Display(manager, playa, this.getWidth(), this.getHeight(), xboxGame) ;
 				display.setBackground(Color.BLACK);
 				
 
@@ -304,9 +310,24 @@ public class GameFrame extends JFrame {
 				
 				
 			//add mouseListener to display
-				GameMouseEvents mouse = new GameMouseEvents(display,playa);
-				MouseEventListener mouseListener = new MouseEventListener(mouse);
-			//---------------------------------------------------------------
+				
+				
+				//Xbox Controller Listener
+				
+				if(xboxGame){
+					XboxController xc = new XboxController();
+					myXboxControllerListener xboxListener = new myXboxControllerListener(playa,this,xc);
+					xc.addXboxControllerListener(xboxListener);}
+				
+				else{
+					GameMouseEvents mouse = new GameMouseEvents(display,playa);
+					MouseEventListener mouseListener = new MouseEventListener(mouse);
+					display.addMouseListener(mouseListener);
+					display.addMouseMotionListener(mouseListener);
+					
+					
+				}
+				//---------------------------------------------------------------
 				
 				this.addWindowFocusListener(new WindowAdapter() {
 					public void windowGainedFocus(WindowEvent e) {
@@ -318,8 +339,6 @@ public class GameFrame extends JFrame {
 				
 				
 				//this.requestFocusInWindow(true);
-				display.addMouseListener(mouseListener);
-				display.addMouseMotionListener(mouseListener);
 				
 				
 				System.out.println("showing display");
@@ -328,6 +347,7 @@ public class GameFrame extends JFrame {
 				display.grabFocus();
 				Buttons Button = new Buttons(playa, this);
 				display.addKeyListener( Button);
+				
 				//DoubleBuffer buffer = new DoubleBuffer();
 				
 				
@@ -344,9 +364,9 @@ public class GameFrame extends JFrame {
 				        	
 				        	
 				        	//if statement used because update has issues with loop taking less then 5ms
-				        	if (loopTime <= 20){
+				        	if (loopTime <= 14){
 				        		try {
-					                Thread.sleep(20);}
+					                Thread.sleep(14);}
 						        	catch (InterruptedException ex) { } 
 						    }
 				        	
