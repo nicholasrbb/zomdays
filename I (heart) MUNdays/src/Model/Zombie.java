@@ -30,9 +30,10 @@ public class Zombie extends Sprite{
 	private double damage = 0.05;
 	private File voice1;
 	private Clip voice1Orig;
+	
 		
-	public Zombie(Image npcImage, int health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager) {
-		super(health, width, height, x, y, dx, dy, Manager);
+	public Zombie(Image npcImage, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map) {
+		super(health, width, height, x, y, dx, dy, Map);
 		this.image = npcImage;
 		npcOrientation = new AffineTransform();
 		
@@ -56,20 +57,23 @@ public class Zombie extends Sprite{
 	 * @return sprite
 	 */
 	public Sprite whichPlayer(){
-		int closestX = manager.map.PlayerList.get(0).getX();
-		int closestY = manager.map.PlayerList.get(0).getY();
-		Sprite player = manager.map.PlayerList.get(0);
+		if ( map.PlayerList.size() >= 1){
+			int closestX = map.PlayerList.get(0).getX();
+			int closestY = map.PlayerList.get(0).getY();
+			Sprite player = map.PlayerList.get(0);
 		
-		for (int i = 1; i < manager.map.PlayerList.size(); i++){
-			if (manager.map.PlayerList.get(i).getX() != PositionX || manager.map.SpriteList.get(i).getY() != PositionY){
-				if ( (Math.abs(PositionX - manager.map.PlayerList.get(i).getX()) < Math.abs(PositionX - closestX)) && ((Math.abs(PositionY - manager.map.PlayerList.get(i).getY()) < Math.abs(PositionY - closestY)))){
-					closestX = manager.map.PlayerList.get(i).getX();	
-					closestY = manager.map.PlayerList.get(i).getY();
-					player = manager.map.PlayerList.get(i);
+			for (int i = 1; i < map.PlayerList.size(); i++){
+				if (map.PlayerList.get(i).getX() != PositionX || map.SpriteList.get(i).getY() != PositionY){
+					if ( (Math.abs(PositionX - map.PlayerList.get(i).getX()) < Math.abs(PositionX - closestX)) && ((Math.abs(PositionY - map.PlayerList.get(i).getY()) < Math.abs(PositionY - closestY)))){
+						closestX = map.PlayerList.get(i).getX();	
+						closestY = map.PlayerList.get(i).getY();
+						player = map.PlayerList.get(i);
+					}
 				}
 			}
+			return player;
 		}
-		return player;
+		return null;
 	}
 	
 	/**
@@ -83,55 +87,56 @@ public class Zombie extends Sprite{
 		Sprite target = whichPlayer();
 		targetPlayer = target;
 		
-		//zAnim.setState(ZombieAnimationStates.Walking);
+		if ( targetPlayer != null){
 		
-		double x = (this.getX() - target.getX())*(this.getX() - target.getX());
-		double y = (this.getY() - target.getY())*(this.getY() - target.getY());
-		
-		if (Math.sqrt(x+y) <= 600){
+			double x = (this.getX() - target.getX())*(this.getX() - target.getX());
+			double y = (this.getY() - target.getY())*(this.getY() - target.getY());
 			
-		
-		
-			if ( (target.getX() - 35) > getX()){
-				right = true;
+			if (Math.sqrt(x+y) <= 600){
+				
+			
+			
+				if ( (target.getX() - 35) > getX()){
+					right = true;
+				}
+				if ( (target.getX() + 35) < getX()){
+					left = true;
+				}
+				if ( (target.getY() + 35) < getY()){
+					up = true;
+				}
+				if ( (target.getY() - 35) > getY()){
+					down = true;
+				}
+				if (up && !right && !left && !down){
+					makeMovement(Direction.UP, time);
+				}
+				if (!up && right && !left && !down){
+					makeMovement(Direction.RIGHT, time);
+				}
+				if (!up && !right && left && !down){
+					makeMovement(Direction.LEFT, time);
+				}
+				if (!up && !right && !left && down){
+					makeMovement(Direction.DOWN, time);
+				}
+				if (up && right && !left && !down){
+					makeMovement(Direction.UPRIGHT, time);
+				}
+				if (up && !right && left && !down){
+					makeMovement(Direction.UPLEFT, time);
+				}
+				if (!up && right && !left && down){
+					makeMovement(Direction.DOWNRIGHT, time);
+				}
+				if (!up && !right && left && down){
+					makeMovement(Direction.DOWNLEFT, time);
+				}
+				up = false;
+				right = false;
+				left = false;
+				down = false;
 			}
-			if ( (target.getX() + 35) < getX()){
-				left = true;
-			}
-			if ( (target.getY() + 35) < getY()){
-				up = true;
-			}
-			if ( (target.getY() - 35) > getY()){
-				down = true;
-			}
-			if (up && !right && !left && !down){
-				makeMovement(Direction.UP, time);
-			}
-			if (!up && right && !left && !down){
-				makeMovement(Direction.RIGHT, time);
-			}
-			if (!up && !right && left && !down){
-				makeMovement(Direction.LEFT, time);
-			}
-			if (!up && !right && !left && down){
-				makeMovement(Direction.DOWN, time);
-			}
-			if (up && right && !left && !down){
-				makeMovement(Direction.UPRIGHT, time);
-			}
-			if (up && !right && left && !down){
-				makeMovement(Direction.UPLEFT, time);
-			}
-			if (!up && right && !left && down){
-				makeMovement(Direction.DOWNRIGHT, time);
-			}
-			if (!up && !right && left && down){
-				makeMovement(Direction.DOWNLEFT, time);
-			}
-			up = false;
-			right = false;
-			left = false;
-			down = false;
 		}
 	}
 	

@@ -20,7 +20,6 @@ import Model.Player;
 @SuppressWarnings("serial")
 public class Display extends JPanel{
 	AffineTransform playerOrientation;
-	public ModelManager manager;
 	int offsetX, offsetY;
 	int screenWidth;
 	int screenHeight;
@@ -38,13 +37,13 @@ public class Display extends JPanel{
 	
 	
 	
-	public Display(ModelManager Manager, Player playa, int SW, int SH, boolean xboxGame){
+	public Display(Player playa, int SW, int SH, boolean xboxGame){
 		super();
 		//Buttons Button = new Buttons(playa);
 		//this.addKeyListener( Button);
 
 		this.xboxGame = xboxGame;
-		manager = Manager;
+		
 		player = playa;	
 		screenWidth = SW;
 		screenHeight = SH;
@@ -62,8 +61,7 @@ public class Display extends JPanel{
 	
 	
 	@Override public void paintComponent(Graphics g){
-		manager.updateSprites(20);
-		
+		//manager.updateSprites(20);
 		Graphics2D g2d = (Graphics2D) g;
 		
 		//g.drawImage(background, 0, 0, null);
@@ -101,13 +99,13 @@ public class Display extends JPanel{
 			cornerY2 = screenHeight;
 		}
 		
-		if ( cornerX2 >= 25*manager.map.getWidth() ){
-			cornerX1 = 25*manager.map.getWidth() - screenWidth; 
-			cornerX2 = 25*manager.map.getWidth();
+		if ( cornerX2 >= 25*player.map.getWidth() ){
+			cornerX1 = 25*player.map.getWidth() - screenWidth; 
+			cornerX2 = 25*player.map.getWidth();
 		}
-		if ( cornerY2 >= 25*manager.map.getHeight() ){
-			cornerY1 = 25*manager.map.getHeight() - screenHeight; 
-			cornerY2 = 25*manager.map.getHeight();
+		if ( cornerY2 >= 25*player.map.getHeight() ){
+			cornerY1 = 25*player.map.getHeight() - screenHeight; 
+			cornerY2 = 25*player.map.getHeight();
 		}
 		
 		dcornerX1 = dcornerX1-cornerX1;
@@ -137,7 +135,7 @@ public class Display extends JPanel{
 		for(int y = firstTileY; y < lastTileY; y++ ){
 			int dx = 0;
 			for(int x = firstTileX; x < lastTileX; x++ ){
-				Image image = manager.map.getTile(x, y);
+				Image image = player.map.getTile(x, y);
 				g2d.drawImage(background,dx - offsetX,dy - offsetY, null);
 				g2d.drawImage(image,dx - offsetX,dy - offsetY, null);
 				dx = dx+25;
@@ -150,34 +148,30 @@ public class Display extends JPanel{
 			System.out.println("xbox Game");
 			player.setplayerSpriteOrientationXbox(cornerX1,cornerY1);
 		
-		}
-		
-		else
+		}else{
 			player.setPlayerSpriteOrientation(cornerX1, cornerY1);
-		
+		}
 			g2d.drawImage(player.getSpriteImage(),player.getPlayerSpriteOrientation(), null);
 			g2d.drawImage(player.WeaponList.get(player.getCurrentWeapon()).getImage(),player.getPlayerSpriteOrientation(), null);
     	
 		
-		
 		//Paint all the Items
-		for ( int i = 0; i < manager.map.ItemList.size(); i++){
-    		g2d.drawImage(manager.map.ItemList.get(i).getImage(),manager.map.ItemList.get(i).getX() - cornerX1 -12, manager.map.ItemList.get(i).getY() - cornerY1 -12, null);
+		for ( int i = 0; i < player.map.ItemList.size(); i++){
+    		g2d.drawImage(player.map.ItemList.get(i).getImage(),player.map.ItemList.get(i).getX() - cornerX1 -12, player.map.ItemList.get(i).getY() - cornerY1 -12, null);
 		}
 		
 
-			
 		
 		
 		// Paint all other Players	
-		for ( int i = 0; i < manager.map.PlayerList.size(); i++){	
-			if(manager.map.PlayerList.get(i) != player){
+		for ( int i = 0; i < player.map.PlayerList.size(); i++){	
+			if(player.map.PlayerList.get(i) != player){
 				
 				
 				AffineTransform otherTransform = new AffineTransform();
-				otherTransform.setToTranslation(manager.map.PlayerList.get(i).getX() - cornerX1 - 25, manager.map.PlayerList.get(i).getY() - cornerY1 - 25);	
-				otherTransform.rotate(Math.toRadians(manager.map.PlayerList.get(i).angle),manager.map.PlayerList.get(i).getSpriteImage().getWidth(null)/2, manager.map.PlayerList.get(i).getSpriteImage().getHeight(null)/2);   
-				g2d.drawImage(manager.map.PlayerList.get(i).getSpriteImage(),otherTransform, null);
+				otherTransform.setToTranslation(player.map.PlayerList.get(i).getX() - cornerX1 - 25, player.map.PlayerList.get(i).getY() - cornerY1 - 25);	
+				otherTransform.rotate(Math.toRadians(player.map.PlayerList.get(i).angle),player.map.PlayerList.get(i).getSpriteImage().getWidth(null)/2, player.map.PlayerList.get(i).getSpriteImage().getHeight(null)/2);   
+				g2d.drawImage(player.map.PlayerList.get(i).getSpriteImage(),otherTransform, null);
 				/*
 				System.out.println("corner1: " + cornerX1 + "   " + cornerY1);
 				g2d.drawImage(manager.map.PlayerList.get(i).getSpriteImage(),manager.map.PlayerList.get(i).getSpriteOrientation(), null);
@@ -192,15 +186,13 @@ public class Display extends JPanel{
 				*/
 			}
 		}
-		
 		// Print all NPC's
-    	for ( int i = 0; i < manager.map.SpriteList.size(); i++){
+    	for ( int i = 0; i < player.map.SpriteList.size(); i++){
     		AffineTransform npcTransform = new AffineTransform();
-    		npcTransform.setToTranslation(manager.map.SpriteList.get(i).getX() - cornerX1 - 25, manager.map.SpriteList.get(i).getY() - cornerY1 - 25);	
-    		npcTransform.rotate(Math.toRadians(manager.map.SpriteList.get(i).angle),manager.map.SpriteList.get(i).getSpriteImage().getWidth(null)/2, manager.map.SpriteList.get(i).getSpriteImage().getHeight(null)/2);    	
-    		g2d.drawImage(manager.map.SpriteList.get(i).getSpriteImage(),npcTransform, null);
+    		npcTransform.setToTranslation(player.map.SpriteList.get(i).getX() - cornerX1 - 25, player.map.SpriteList.get(i).getY() - cornerY1 - 25);	
+    		npcTransform.rotate(Math.toRadians(player.map.SpriteList.get(i).angle),player.map.SpriteList.get(i).getSpriteImage().getWidth(null)/2, player.map.SpriteList.get(i).getSpriteImage().getHeight(null)/2);    	
+    		g2d.drawImage(player.map.SpriteList.get(i).getSpriteImage(),npcTransform, null);
     	}
-    	
     	
 		
 	}

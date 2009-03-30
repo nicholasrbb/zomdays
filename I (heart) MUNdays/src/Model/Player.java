@@ -59,8 +59,8 @@ public class Player extends Sprite{
 	 * 
 	 * @see ModelManager
 	 */
-	public Player(Image playerImage, int health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager) {
-		super(health, width, height, x, y, dx, dy, Manager);
+	public Player(Image playerImage, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map) {
+		super(health, width, height, x, y, dx, dy, Map);
 		this.image = playerImage;
 		playerOrientation = new AffineTransform();
 		Orientation = new AffineTransform();
@@ -124,16 +124,16 @@ public class Player extends Sprite{
 		
 		
 		//item effects
-		for ( int i = 0; i < manager.map.ItemList.size(); i++){
-			if ( Math.abs(PositionX - manager.map.ItemList.get(i).getX()) < 25 && Math.abs(PositionY - manager.map.ItemList.get(i).getY()) < 25){
-				if ( manager.map.ItemList.get(i).getType()  == "ammo"){
-					WeaponList.get(currentWeapon).ammo += manager.map.ItemList.get(i).getAmount();
+		for ( int i = 0; i < map.ItemList.size(); i++){
+			if ( Math.abs(PositionX - map.ItemList.get(i).getX()) < 25 && Math.abs(PositionY - map.ItemList.get(i).getY()) < 25){
+				if ( map.ItemList.get(i).getType()  == "ammo"){
+					WeaponList.get(currentWeapon).ammo += map.ItemList.get(i).getAmount();
 				}
-				if ( manager.map.ItemList.get(i).getType()  == "health"){
-					Health += manager.map.ItemList.get(i).getAmount();
+				if ( map.ItemList.get(i).getType()  == "health"){
+					Health += map.ItemList.get(i).getAmount();
 				}
 				
-				manager.map.ItemList.remove(i);
+				map.ItemList.remove(i);
 			}
 			
 		
@@ -331,12 +331,12 @@ public class Player extends Sprite{
 				Sprite target = null;
 				for ( int r = 20; r <= range; r++){
 					if (xboxController){
-						tileShoot = manager.map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(TSangle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(TSangle)))/25));
+						tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(TSangle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(TSangle)))/25));
 						target = getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle)));
 						
 					}
 					else{
-						tileShoot = manager.map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
+						tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
 						target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle)));
 						
 					}

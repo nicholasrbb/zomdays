@@ -21,7 +21,7 @@ public class Game {
 	
 	public Game(){
 		MapList = new ArrayList <TileMap>();
-		System.out.println("game being created");
+		System.out.println("game being set up");
 
 			//Create Map of Engineering Building Second Floor.
 				TileMap map1 = null;
@@ -76,8 +76,8 @@ public class Game {
 			//Create Player and Zombie.
 				Image gun = Toolkit.getDefaultToolkit().createImage("player_nofire.png");
 				Image gunFire = Toolkit.getDefaultToolkit().createImage("player_fire.png");
-				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager);
-				player2 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager);
+				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager.MapList.get(0));
+				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(1));
 				final Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
 				player1.addWeapon(Gun);
@@ -111,7 +111,7 @@ public class Game {
 
 			//Add player to map SpriteList.
 				map1.addPlayer(player1);
-				map1.addPlayer(player2);
+				map2.addPlayer(player2);
 				//map1.setPlayerOnePosition();
 				
 				

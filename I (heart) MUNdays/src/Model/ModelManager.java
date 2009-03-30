@@ -39,8 +39,13 @@ public class ModelManager{
 	 */
 	
 	public void updateAnimations(){
-		map.PlayerList.get(0).image = map.PlayerList.get(0).animations.get(map.PlayerList.get(0).currentAnimation).getAnimationImage();
-		map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).image = map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).animations.get(map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).currentAnimation).getAnimationImage();
+		for (int Map = 0; Map < MapList.size(); Map++){
+			map = MapList.get(Map);
+			for (int i = 0; i < map.PlayerList.size(); i++){
+				map.PlayerList.get(i).image = map.PlayerList.get(0).animations.get(map.PlayerList.get(0).currentAnimation).getAnimationImage();
+				map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).image = map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).animations.get(map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).currentAnimation).getAnimationImage();
+			}
+		}
 	}
 	
 	/**
@@ -49,22 +54,29 @@ public class ModelManager{
 	 */
 	
 	public void manageSprites(){
-		while(map.SpriteList.size() < 100){
-			int x = Math.abs(generator.nextInt(15000)) + 50;
-			int y = Math.abs(generator.nextInt(15000)) + 50;
-			for (int i = 0; i < map.PlayerList.size(); i++){
-				if (map.getCharTile(x/25, y/25) == " " && 
-					map.getCharTile((x+25)/25, y/25) == " " && 
-					map.getCharTile((x-25)/25, y/25) == " " &&
-					map.getCharTile(x/25, (y+25)/25) == " " &&
-					map.getCharTile(x/25, (y-25)/25) == " " &&
-					Math.abs(map.PlayerList.get(i).getX() - x) > 450 && Math.abs(map.PlayerList.get(i).getY() - y) > 550){
-					
-					Zombie zombay = new Zombie(zombieImage, 50, 10, 10, x, y, 0.1, 0.1, this);
-					map.addSprite(zombay);
+		for (int Map = 0; Map < MapList.size(); Map++){
+			map = MapList.get(Map);
+			System.out.println("changing map");
+			System.out.println("map: "+ map);
+			while(map.SpriteList.size() < 100){
+				System.out.println("should add a zombie");
+				int x = Math.abs(generator.nextInt(15000)) + 50;
+				int y = Math.abs(generator.nextInt(15000)) + 50;
+				for (int i = 0; i < map.PlayerList.size(); i++){
+					if (map.getCharTile(x/25, y/25) == " " && 
+						map.getCharTile((x+25)/25, y/25) == " " && 
+						map.getCharTile((x-25)/25, y/25) == " " &&
+						map.getCharTile(x/25, (y+25)/25) == " " &&
+						map.getCharTile(x/25, (y-25)/25) == " " &&
+						Math.abs(map.PlayerList.get(i).getX() - x) > 450 && Math.abs(map.PlayerList.get(i).getY() - y) > 550){
+						System.out.println("Adding a Zombie");
+						Zombie zombay = new Zombie(zombieImage, 50, 10, 10, x, y, 0.1, 0.1, map);
+						map.addSprite(zombay);
+					}
 				}
 			}
 		}
+		System.out.println("finished adding zombies");
 	}
 	
 	/**
@@ -73,29 +85,31 @@ public class ModelManager{
 	 * If player is on stairs, load the appropriate map 
 	 */
 	public void switchMap(){
-		for( int i = 0; i < map.PlayerList.size(); i++){
-			if (map.getCharTile(map.PlayerList.get(i).getX()/25, map.PlayerList.get(i).getY()/25) == "1"){
-				Sprite traveller = map.PlayerList.get(i);
-				map.PlayerList.remove(i);
-				if ( currentMap == 0){
-					map = MapList.get(1);
-					currentMap = 1;
-					traveller.PositionX = 5175;
-					traveller.PositionY = 4100;
+		for (int Map = 0; Map < MapList.size(); Map++){
+			map = MapList.get(Map);
+			for( int i = 0; i < map.PlayerList.size(); i++){
+				if (map.getCharTile(map.PlayerList.get(i).getX()/25, map.PlayerList.get(i).getY()/25) == "1"){
+					Sprite traveller = map.PlayerList.get(i);
+					map.PlayerList.remove(i);
+					if ( currentMap == 0){
+						map = MapList.get(1);
+						currentMap = 1;
+						traveller.PositionX = 5175;
+						traveller.PositionY = 4100;
+					}else if ( currentMap == 1){
+						map = MapList.get(0);
+						currentMap = 0;
+						traveller.PositionX = 4200;
+						traveller.PositionY = 3900;
+					}
+					
+					System.out.println("switching map");
+					traveller.PositionX = traveller.getX();
+					traveller.map = map;
+					map.addPlayer(traveller);
 				}
-				
-				else if ( currentMap == 1){
-					map = MapList.get(0);
-					currentMap = 0;
-					traveller.PositionX = 4200;
-					traveller.PositionY = 3900;
-				}
-				
-				System.out.println("switching map");
-				traveller.PositionX = traveller.getX();
-				map.addPlayer(traveller);
+			
 			}
-		
 		}
 		
 	}
@@ -106,33 +120,38 @@ public class ModelManager{
 	 * @param timeSpent
 	 */
 	public void updateSprites(long timeSpent){
-		for (int i = 0; i < map.PlayerList.size(); i++){
-			map.PlayerList.get(i).attack();
-			map.PlayerList.get(i).Movement(timeSpent);
-			map.PlayerList.get(i).setSpriteOrientation();
-			if (map.PlayerList.get(i).isAlive == false){
-				System.exit(0);
+		for (int Map = 0; Map < MapList.size(); Map++){
+			map = MapList.get(Map);
+			for (int i = 0; i < map.PlayerList.size(); i++){
+				map.PlayerList.get(i).attack();
+				map.PlayerList.get(i).Movement(timeSpent);
+				map.PlayerList.get(i).setSpriteOrientation();
+				if (map.PlayerList.get(i).isAlive == false){
+					System.exit(0);
+				}
 			}
-		}
-		
-		//Update position and orientation of all sprites.
-		for (int i = 0; i < map.SpriteList.size(); i++){
-			map.SpriteList.get(i).Movement(timeSpent);
-			map.SpriteList.get(i).setSpriteOrientation();
-			if (map.SpriteList.get(i).isAlive == false){
-				killed = killed +1;
-				map.removeSprite(map.SpriteList.get(i));
-			}
-		}
-		
-		//Check if colliding with player, and attack if you are.
-		if ( map.SpriteList.size() > 1){
+			
+			//Update position and orientation of all sprites.
 			for (int i = 0; i < map.SpriteList.size(); i++){
-				for (int j = 0; j < map.PlayerList.size(); j++){
-					if (map.SpriteList.get(i).isCollision(map.PlayerList.get(j)) == true){
-						map.SpriteList.get(i).attack();
-					}
-				}	
+				if ( map.PlayerList.size() != 0){
+					map.SpriteList.get(i).Movement(timeSpent);
+					map.SpriteList.get(i).setSpriteOrientation();
+				}
+				if (map.SpriteList.get(i).isAlive == false){
+					killed = killed +1;
+					map.removeSprite(map.SpriteList.get(i));
+				}
+			}
+			
+			//Check if colliding with player, and attack if you are.
+			if ( map.SpriteList.size() > 1){
+				for (int i = 0; i < map.SpriteList.size(); i++){
+					for (int j = 0; j < map.PlayerList.size(); j++){
+						if (map.SpriteList.get(i).isCollision(map.PlayerList.get(j)) == true){
+							map.SpriteList.get(i).attack();
+						}
+					}	
+				}
 			}
 		}
 	}

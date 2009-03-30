@@ -21,7 +21,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import ch.aplu.xboxcontroller.XboxController;
 
 
 
@@ -222,11 +221,11 @@ public class GameFrame extends JFrame {
 			secondFrame.setBounds(650, 200, 600, 400);
 			
 			secondFrame.MainMenu.setVisible(false);
-			secondFrame.display = new Display(this.game.manager, game.player2, this.getWidth(), this.getHeight(), true) ;
+			secondFrame.display = new Display(game.player2, this.getWidth(), this.getHeight(), true) ;
 			
-			XboxController xc = new XboxController();
-			myXboxControllerListener xboxListener = new myXboxControllerListener(game.player2,secondFrame,xc);
-			xc.addXboxControllerListener(xboxListener);
+			//XboxController xc = new XboxController();
+			//myXboxControllerListener xboxListener = new myXboxControllerListener(game.player2,secondFrame,xc);
+			//xc.addXboxControllerListener(xboxListener);
 			
 			secondFrame.setContentPane(secondFrame.display);
 			secondFrame.display.grabFocus();
@@ -241,7 +240,7 @@ public class GameFrame extends JFrame {
 			
 			//Initialise the panel.
 			//final Display display = new Display(manager, playa, this.getWidth(), this.getHeight()) ;
-			display = new Display(game.manager, game.player1, this.getWidth(), this.getHeight(), xboxGame) ;
+			display = new Display(game.player1, this.getWidth(), this.getHeight(), xboxGame) ;
 			display.setBackground(Color.BLACK);
 			
 
@@ -254,9 +253,9 @@ public class GameFrame extends JFrame {
 			//Xbox Controller Listener
 			
 			if(xboxGame){
-				XboxController xc = new XboxController();
-				myXboxControllerListener xboxListener = new myXboxControllerListener(game.player1,this,xc);
-				xc.addXboxControllerListener(xboxListener);
+				//XboxController xc = new XboxController();
+				//myXboxControllerListener xboxListener = new myXboxControllerListener(game.player1,this,xc);
+				//xc.addXboxControllerListener(xboxListener);
 				}
 			
 			else{
@@ -275,13 +274,12 @@ public class GameFrame extends JFrame {
 				}
 			});
 			display.setFocusable(true);
-			System.out.println(display.isFocusOwner());
 			
 			
 			//this.requestFocusInWindow(true);
 			
 			
-			System.out.println("showing display");
+			
 			
 			this.setContentPane(display);
 			display.grabFocus();
@@ -306,17 +304,21 @@ public class GameFrame extends JFrame {
 					        	catch (InterruptedException ex) { } 
 					    }
 			        	
-			        	
-			        	
+			        	System.out.println("Pause: " + pause);
+			        	System.out.println("Gaming as well");
 			        	if (pause != true){
-			        		
+			        		System.out.println("Gaming");
+			        		game.manager.updateSprites(20);
 			        		game.manager.switchMap();
 			        		game.manager.updateAnimations();
 			        		game.manager.manageSprites();
+			        		
 				        	display.repaint();
 				        	if (multi){
 				        		secondFrame.display.repaint();
+				        		System.out.println("finished displaying second displlay");
 				        	}
+				        	System.out.println("done displaying");
 			        	}
 			        	
 			        	

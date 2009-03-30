@@ -21,7 +21,7 @@ public abstract class Sprite {
 	int Width;
 	double radius;
 	double dx,dy;
-	ModelManager manager;
+	public TileMap map;
 	public int mouseX;
 	public int mouseY;
 	public double angle;
@@ -34,7 +34,7 @@ public abstract class Sprite {
 	int currentWeapon = 0;
 	
 	
-	public Sprite(double health, int width, int height, int x, int y, double dx, double dy, ModelManager Manager){
+	public Sprite(double health, int width, int height, int x, int y, double dx, double dy, TileMap Map){
 		radius = 25;
 		Health = health;
 		isAlive = true;
@@ -44,7 +44,7 @@ public abstract class Sprite {
 		this.dy = dy;
 		PositionX = x;
 		PositionY = y;
-		manager = Manager;
+		map = Map;
 		animations = new ArrayList <Animation>();
 	}
 	
@@ -218,32 +218,32 @@ public abstract class Sprite {
 				
 		}
 		
-		if (manager.map.getCharTile(tempX1/25, (PositionY+13)/25) != " " 
-			&& manager.map.getCharTile(tempX1/25, (PositionY+13)/25) != "1" 
-			&& manager.map.getCharTile(tempX1/25, (PositionY+13)/25) != "2"){
+		if (map.getCharTile(tempX1/25, (PositionY+13)/25) != " " 
+			&& map.getCharTile(tempX1/25, (PositionY+13)/25) != "1" 
+			&& map.getCharTile(tempX1/25, (PositionY+13)/25) != "2"){
 			if(PositionY > tempY1){
 			PositionY = tempY1;}			
 			
 		}
 		
 
-		if (manager.map.getCharTile(tempX1/25, (PositionY-13)/25) != " " 
-			&& manager.map.getCharTile(tempX1/25, (PositionY-13)/25) != "1" 
-			&& manager.map.getCharTile(tempX1/25, (PositionY-13)/25) != "2"){
+		if (map.getCharTile(tempX1/25, (PositionY-13)/25) != " " 
+			&& map.getCharTile(tempX1/25, (PositionY-13)/25) != "1" 
+			&& map.getCharTile(tempX1/25, (PositionY-13)/25) != "2"){
 			if(PositionY < tempY1){
 				PositionY = tempY1;}
 
 		}
 		
-		if (manager.map.getCharTile((PositionX-13)/25, tempY1/25) != " " 
-			&& manager.map.getCharTile((PositionX-13)/25, tempY1/25) != "1" 
-			&& manager.map.getCharTile((PositionX-13)/25,tempY1/25 ) != "2"){
+		if (map.getCharTile((PositionX-13)/25, tempY1/25) != " " 
+			&& map.getCharTile((PositionX-13)/25, tempY1/25) != "1" 
+			&& map.getCharTile((PositionX-13)/25,tempY1/25 ) != "2"){
 			if(PositionX < tempX1){
 			PositionX = tempX1;}
 		}
-		if (manager.map.getCharTile((PositionX+13)/25, tempY1/25) != " " 
-			&& manager.map.getCharTile((PositionX+13)/25, tempY1/25) != "1" 
-			&& manager.map.getCharTile((PositionX+13)/25,tempY1/25 ) != "2"){
+		if (map.getCharTile((PositionX+13)/25, tempY1/25) != " " 
+			&& map.getCharTile((PositionX+13)/25, tempY1/25) != "1" 
+			&& map.getCharTile((PositionX+13)/25,tempY1/25 ) != "2"){
 			if(PositionX > tempX1){
 				PositionX = tempX1;}
 		}
@@ -337,10 +337,10 @@ public abstract class Sprite {
 		if ( checkx == PositionX && PositionY == getY()){
 			checkRadius = radius;
 		}
-			for  (int i =0; i < manager.map.SpriteList.size(); i++){
-				if ( Math.abs(manager.map.SpriteList.get(i).getX() - checkx) < (checkRadius + manager.map.SpriteList.get(i).radius)){
-					if ( Math.abs(manager.map.SpriteList.get(i).getY() - checky) < (checkRadius + manager.map.SpriteList.get(i).radius)){
-						return manager.map.SpriteList.get(i);
+			for  (int i =0; i < map.SpriteList.size(); i++){
+				if ( Math.abs(map.SpriteList.get(i).getX() - checkx) < (checkRadius + map.SpriteList.get(i).radius)){
+					if ( Math.abs(map.SpriteList.get(i).getY() - checky) < (checkRadius + map.SpriteList.get(i).radius)){
+						return map.SpriteList.get(i);
 					}
 				}
 			}
