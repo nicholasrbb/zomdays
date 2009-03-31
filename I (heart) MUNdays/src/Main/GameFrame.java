@@ -128,6 +128,7 @@ public class GameFrame extends JFrame {
 			JoinMenu.setPreferredSize(size) ;
 			JoinMenu.setOpaque(true) ;
 			JoinMenu.setBackground(Color.black) ;
+			JoinMenu.add(HostButtons.StartJoin);
 			JoinMenu.add(JoinButtons.Cancel);
 			
 			
@@ -298,7 +299,7 @@ public class GameFrame extends JFrame {
 		
 		public void JoinGame(){
 			try {
-				Socket socket = new Socket("Host", 8189);
+				Socket socket = new Socket("gino-laptop", 8189);
 				//out = new PrintWriter(echoSocket.getOutputStream(), true);
 				//in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
 
