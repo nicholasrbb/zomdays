@@ -120,6 +120,7 @@ public class GameFrame extends JFrame {
 			HostMenu.setPreferredSize(size) ;
 			HostMenu.setOpaque(true) ;
 			HostMenu.setBackground(Color.black) ;
+			HostMenu.add(HostButtons.StartHost);
 			HostMenu.add(HostButtons.Cancel);
 			
 			//Setting up Join Menu

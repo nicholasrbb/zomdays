@@ -15,6 +15,7 @@ public class MenuButtons {
 	public JButton NewGame;
 	public JButton NewMultiplayerGame;
 	public JButton HostMultiplayerGame;
+	public JButton StartHost;
 	public JButton JoinMultiplayerGame;
 	public JButton NewXboxGame;
 	public JButton Exit;
@@ -53,7 +54,14 @@ public class MenuButtons {
 		HostMultiplayerGame.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				game.showHostMenu();
-				
+			}});
+		
+		StartHost = new JButton("Start Hosting Multiplayer Game");
+		StartHost.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.HostGame();
+				game.newGame();
+				game.NewMultiplayerGame();
 			}});
 		
 		JoinMultiplayerGame = new JButton("Join Multiplayer Game");
