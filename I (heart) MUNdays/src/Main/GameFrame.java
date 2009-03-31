@@ -362,11 +362,8 @@ public class GameFrame extends JFrame {
 				                Thread.sleep(20);}
 					        	catch (InterruptedException ex) { } 
 					    }
-			        	
-			        	System.out.println("Pause: " + pause);
-			        	System.out.println("Gaming as well");
-			        	if (pause != true && secondFrame.pause !=  true){
-			        		System.out.println("Gaming");
+			        				        	
+			        	if (pause != true){
 			        		game.manager.updateSprites(20);
 			        		game.manager.switchMap();
 			        		game.manager.updateAnimations();
@@ -374,6 +371,11 @@ public class GameFrame extends JFrame {
 			        		
 				        	display.repaint();
 				        	if (multi){
+				        		if (secondFrame.pause ==  true){
+				        			pause = true;
+				        		}else{
+				        			pause = false;
+				        		}
 				        		secondFrame.display.repaint();
 				        		System.out.println("finished displaying second displlay");
 				        	}
