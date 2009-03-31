@@ -14,10 +14,13 @@ public class MenuButtons {
 	
 	public JButton NewGame;
 	public JButton NewMultiplayerGame;
+	public JButton HostMultiplayerGame;
+	public JButton JoinMultiplayerGame;
 	public JButton NewXboxGame;
 	public JButton Exit;
 	public JButton MainMenu;
 	public JButton Resume;
+	public JButton Cancel;
 	GameFrame game;
 	
 	
@@ -46,12 +49,34 @@ public class MenuButtons {
 				game.NewMultiplayerGame();
 			}});
 		
-		NewXboxGame = new JButton("New Xbox Game");
+		HostMultiplayerGame = new JButton("Host Multiplayer Game");
+		HostMultiplayerGame.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.showHostMenu();
+				
+			}});
+		
+		JoinMultiplayerGame = new JButton("Join Multiplayer Game");
+		JoinMultiplayerGame.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.showJoinMenu();
+			}});
+		
+		Cancel = new JButton("Cancel");
+		Cancel.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.showMainMenu();
+			}});
+		
+		NewXboxGame = new JButton("Change Controls");
 		NewXboxGame.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("New Xbox Game Clicked");
-				game.xboxGame = true;
-				game.newGame();
+				if (game.display.player.getXBox() == false){
+					game.display.player.setXBox(true);
+				}else{
+					game.display.player.setXBox(false);
+				}
+				
 			}});
 		
 		Exit = new JButton("     Exit     ");

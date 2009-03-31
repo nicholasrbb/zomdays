@@ -19,6 +19,16 @@ public class Game {
 	Player player1;
 	Player player2;
 	
+	
+	
+	
+	
+	/**
+	 * This sets up the game TileMaps, and load the images for for the player 
+	 * animations and starts the main game loop
+	 * 
+	 * @param none
+	 */
 	public Game(){
 		MapList = new ArrayList <TileMap>();
 		System.out.println("game being set up");
@@ -78,12 +88,14 @@ public class Game {
 				Image gunFire = Toolkit.getDefaultToolkit().createImage("player_fire.png");
 				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager.MapList.get(0));
 				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(1));
-				final Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
+				Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
+				Weapon player2Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
+				Weapon player2Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
 				player1.addWeapon(Gun);
 				player1.addWeapon(Knife);	
-				player2.addWeapon(Gun);
-				player2.addWeapon(Knife);
+				player2.addWeapon(player2Gun);
+				player2.addWeapon(player2Knife);
 				
 				
 				AnimationFrame gunFrame1 = new AnimationFrame(gun, 125000000L);
@@ -101,6 +113,10 @@ public class Game {
 				Gun.animations.add(gunAnimation);
 				Knife.animations.add(gunStill);
 				Knife.animations.add(gunAnimation);
+				player2Gun.animations.add(gunStill);
+				player2Gun.animations.add(gunAnimation);
+				player2Knife.animations.add(gunStill);
+				player2Knife.animations.add(gunAnimation);
 				
 				player1.animations.add(playerAnimation1);
 				player1.animations.add(playerAnimation2);

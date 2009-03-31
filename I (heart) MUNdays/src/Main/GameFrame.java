@@ -9,8 +9,13 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
@@ -28,7 +33,6 @@ import javax.swing.JPanel;
 import Interface.Buttons;
 import Interface.MenuButtons;
 import Interface.MouseEventListener;
-import Interface.myXboxControllerListener;
 import Model.ModelManager;
 import Model.Player;
 import Model.TileMap;
@@ -55,6 +59,8 @@ public class GameFrame extends JFrame {
 	public JPanel inGameMenu;
 	public JPanel gameOverMenu;
 	public JPanel winMenu;
+	public JPanel HostMenu;
+	public JPanel JoinMenu;
 	public Display display;
 	public boolean makeGame = false;
 	public boolean mainmenu = false;
@@ -62,8 +68,7 @@ public class GameFrame extends JFrame {
 	public boolean gameMade = false;
 	private File Win;
 	private Clip winSound;
-	Game game;
-	public boolean xboxGame = false;
+	public Game game;
 	GameFrame secondFrame;
 	boolean multi = false;
 	
@@ -71,9 +76,9 @@ public class GameFrame extends JFrame {
 	 * 
 	 */
 		public GameFrame(){
-			
-			
 			MainMenu = new JPanel();
+			HostMenu = new JPanel();
+			JoinMenu = new JPanel();
 			inGameMenu = new JPanel();
 			gameOverMenu = new JPanel();
 			winMenu = new JPanel();
@@ -81,6 +86,7 @@ public class GameFrame extends JFrame {
 			
 			this.setBounds(25, 200, 600, 400);
 			this.setPreferredSize(new Dimension(600,400));
+			this.setResizable(false);
 			pack() ;
 			setVisible(true) ;
 			setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ) ;
@@ -96,9 +102,7 @@ public class GameFrame extends JFrame {
 			gd.setDisplayMode(dm);
 			*/
 			
-			
-			
-			
+			//Setting up Main Menu
 			Dimension size = new Dimension( 800, 600) ;
 			MainMenu.setPreferredSize(size) ;
 			MainMenu.setOpaque(true) ;
@@ -106,27 +110,44 @@ public class GameFrame extends JFrame {
 			MenuButtons menuButtons = new MenuButtons(this);
 			MainMenu.add(menuButtons.NewGame);
 			MainMenu.add(menuButtons.NewMultiplayerGame);
+			MainMenu.add(menuButtons.HostMultiplayerGame);
+			MainMenu.add(menuButtons.JoinMultiplayerGame);
 			MainMenu.add(menuButtons.Exit);
-			MainMenu.add(menuButtons.NewXboxGame);
 			
 			
+			//Setting up Host Menu
+			MenuButtons HostButtons = new MenuButtons(this);
+			HostMenu.setPreferredSize(size) ;
+			HostMenu.setOpaque(true) ;
+			HostMenu.setBackground(Color.black) ;
+			HostMenu.add(HostButtons.Cancel);
 			
+			//Setting up Join Menu
+			MenuButtons JoinButtons = new MenuButtons(this);
+			JoinMenu.setPreferredSize(size) ;
+			JoinMenu.setOpaque(true) ;
+			JoinMenu.setBackground(Color.black) ;
+			JoinMenu.add(JoinButtons.Cancel);
+			
+			
+			//Adding Buttons to in game menu
 			MenuButtons ingamemenuButtons = new MenuButtons(this);
 			inGameMenu.setPreferredSize(size) ;
 			inGameMenu.setOpaque(true) ;
 			inGameMenu.setBackground(Color.black) ;
 			inGameMenu.add(ingamemenuButtons.Resume);
+			inGameMenu.add(ingamemenuButtons.NewXboxGame);
 			inGameMenu.add(ingamemenuButtons.Exit);
 			
+			//Adding Button to Win Menu
 			MenuButtons winGameMenuButtons = new MenuButtons(this);
 			winMenu.setPreferredSize(size) ;
 			winMenu.setOpaque(true) ;
 			winMenu.setBackground(Color.blue) ;
 			winMenu.add(winGameMenuButtons.Exit);
 			
+			//Setting up Win Sound
 			Win = new File("dark2.wav");
-
-			
 			try {
 				AudioInputStream winSound1 = AudioSystem.getAudioInputStream(Win);
 				winSound = AudioSystem.getClip();
@@ -138,9 +159,6 @@ public class GameFrame extends JFrame {
 			} catch (LineUnavailableException e) {
 					e.printStackTrace();}			
 			showMainMenu();
-			
-			
-			
 		}
 		
 		/**
@@ -159,6 +177,23 @@ public class GameFrame extends JFrame {
 			MainMenu.setVisible(true);
 		}
 		
+		public void showHostMenu(){
+			MainMenu.setVisible(false);
+			inGameMenu.setVisible(false);
+			winMenu.setVisible(false);
+			this.setContentPane(HostMenu);
+			HostMenu.grabFocus();
+			HostMenu.setVisible(true);
+		}
+		
+		public void showJoinMenu(){
+			MainMenu.setVisible(false);
+			inGameMenu.setVisible(false);
+			winMenu.setVisible(false);
+			this.setContentPane(JoinMenu);
+			JoinMenu.grabFocus();
+			JoinMenu.setVisible(true);
+		}
 		/**
 		 * Switch focus to the InGameMenu JPanel, setting all other JPanels visibility 
 		 * to false and its visibility to true. JButtons are added to the JPanel through
@@ -219,13 +254,17 @@ public class GameFrame extends JFrame {
 			
 			secondFrame = new GameFrame();
 			secondFrame.setBounds(650, 200, 600, 400);
-			
+			secondFrame.setResizable(false);
 			secondFrame.MainMenu.setVisible(false);
-			secondFrame.display = new Display(game.player2, this.getWidth(), this.getHeight(), true) ;
+			secondFrame.display = new Display(game.player2, this.getWidth(), this.getHeight()) ;
 			
-			//XboxController xc = new XboxController();
-			//myXboxControllerListener xboxListener = new myXboxControllerListener(game.player2,secondFrame,xc);
-			//xc.addXboxControllerListener(xboxListener);
+			GameMouseEvents mouse = new GameMouseEvents(secondFrame.display,game.player2);
+			MouseEventListener mouseListener = new MouseEventListener(mouse);
+			secondFrame.display.addMouseListener(mouseListener);
+			secondFrame.display.addMouseMotionListener(mouseListener);
+			
+			Buttons newButton = new Buttons(game.player2, secondFrame);
+			secondFrame.display.addKeyListener( newButton);
 			
 			secondFrame.setContentPane(secondFrame.display);
 			secondFrame.display.grabFocus();
@@ -233,14 +272,51 @@ public class GameFrame extends JFrame {
 			
 			
 		}
+		public void changeToXBox(){
+			
+			
+		}
+		
+		public void HostGame(){
+			ServerSocket serverSocket = null;
+			try {
+				serverSocket = new ServerSocket(8189);
+			} catch (IOException e) {
+			    System.out.println("Could not listen on port: 8189");
+			    System.exit(-1);
+			}
+			
+			Socket clientSocket = null;
+			try {
+			    clientSocket = serverSocket.accept();
+			} catch (IOException e) {
+			    System.out.println("Accept failed: 8189");
+			    System.exit(-1);
+			}
+		}
+		
+		public void JoinGame(){
+			try {
+				Socket socket = new Socket("Host", 8189);
+				//out = new PrintWriter(echoSocket.getOutputStream(), true);
+				//in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
+
+			} catch (UnknownHostException e1) {
+				System.out.println("shit is broke");
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				System.out.println("shit is broke");
+				e1.printStackTrace();
+			}
+		}
+		
 		public void newGame(){
 			gameMade = true;
 			MainMenu.setVisible(false);
 			game = new Game();
 			
-			//Initialise the panel.
-			//final Display display = new Display(manager, playa, this.getWidth(), this.getHeight()) ;
-			display = new Display(game.player1, this.getWidth(), this.getHeight(), xboxGame) ;
+		//Initialise the panel.
+			display = new Display(game.player1, this.getWidth(), this.getHeight()) ;
 			display.setBackground(Color.BLACK);
 			
 
@@ -249,53 +325,35 @@ public class GameFrame extends JFrame {
 			
 		//add mouseListener to display
 			
+			GameMouseEvents mouse = new GameMouseEvents(display,game.player1);
+			MouseEventListener mouseListener = new MouseEventListener(mouse);
+			display.addMouseListener(mouseListener);
+			display.addMouseMotionListener(mouseListener);
 			
-			//Xbox Controller Listener
 			
-			if(xboxGame){
-				//XboxController xc = new XboxController();
-				//myXboxControllerListener xboxListener = new myXboxControllerListener(game.player1,this,xc);
-				//xc.addXboxControllerListener(xboxListener);
-				}
 			
-			else{
-				GameMouseEvents mouse = new GameMouseEvents(display,game.player1);
-				MouseEventListener mouseListener = new MouseEventListener(mouse);
-				display.addMouseListener(mouseListener);
-				display.addMouseMotionListener(mouseListener);
-				
-				
-			}
 			//---------------------------------------------------------------
-			
 			this.addWindowFocusListener(new WindowAdapter() {
 				public void windowGainedFocus(WindowEvent e) {
 					display.requestFocusInWindow();
 				}
 			});
 			display.setFocusable(true);
-			
-			
-			//this.requestFocusInWindow(true);
-			
-			
-			
-			
 			this.setContentPane(display);
 			display.grabFocus();
 			Buttons Button = new Buttons(game.player1, this);
 			display.addKeyListener( Button);
 			
 			
+			
+			
 			new Thread() {
 			    public void run() {
-			    	
 			    	long startTime = System.currentTimeMillis();
 			    	long currentTime = startTime;
 			    	while(true){
 			        	long loopTime = System.currentTimeMillis() - currentTime;
 			        	currentTime += loopTime;
-			        	
 			        	
 			        	//if statement used because update has issues with loop taking less then 5ms
 			        	if (loopTime <= 20){
@@ -306,7 +364,7 @@ public class GameFrame extends JFrame {
 			        	
 			        	System.out.println("Pause: " + pause);
 			        	System.out.println("Gaming as well");
-			        	if (pause != true){
+			        	if (pause != true && secondFrame.pause !=  true){
 			        		System.out.println("Gaming");
 			        		game.manager.updateSprites(20);
 			        		game.manager.switchMap();
@@ -320,212 +378,9 @@ public class GameFrame extends JFrame {
 				        	}
 				        	System.out.println("done displaying");
 			        	}
-			        	
-			        	
-			        	
 			        }
 			    }
 			}.start();
-			
-			
 		}
 		
-		
-		/**
-		 * This sets up the game TileMaps, and load the images for for the player 
-		 * animations and starts the main game loop
-		 * 
-		 * @param none
-		 */
-		/*
-		public void CreateGame(){
-			gameMade = true;
-			MainMenu.setVisible(false);
-			System.out.println("game being created");
-
-			//Create Map of Engineering Building Second Floor.
-				TileMap map1 = null;
-				try {
-					map1 = new TileMap(400,500, "Engr3rdFloor.txt");
-					MapList.add(map1);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				
-				
-				TileMap map2 = null;
-				try {
-					map2 = new TileMap(1000,1000, "Engr4thFloor.txt");
-					MapList.add(map2);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				
-				
-				
-				
-				//Setting in Player Image.
-				Image playerImage = Toolkit.getDefaultToolkit().createImage("player_nofire.png");
-				Image npcImage = Toolkit.getDefaultToolkit().createImage("zombie.png");
-				
-				//Player animations
-				Image walk0 = Toolkit.getDefaultToolkit().createImage("player_nofire.png");
-		
-				
-				
-				AnimationFrame playaFrame1 = new AnimationFrame(walk0, 125000000L);
-				
-				
-				ArrayList <AnimationFrame> frames1 = new ArrayList <AnimationFrame>();
-				frames1.add(playaFrame1);
-				
-				ArrayList <AnimationFrame> frames2 = new ArrayList <AnimationFrame>();
-				frames2.add(playaFrame1);
-				
-				
-				Animation playerAnimation1 = new Animation(frames1);
-				Animation playerAnimation2 = new Animation(frames2);
-				
-				
-				
-				
-				
-			//Initialise the Model Manager.
-				//manager = new ModelManager(MapList);
-				
-			//Create Player and Zombie.
-				Image gun = Toolkit.getDefaultToolkit().createImage("player_nofire.png");
-				Image gunFire = Toolkit.getDefaultToolkit().createImage("player_fire.png");
-				final Player playa = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, game.manager);
-				final Weapon Gun = new Weapon(npcImage,600,10,1000,15, "Hand Gun");
-				Weapon Knife = new Weapon(npcImage,50,25, -1,-1, "Knife");
-				playa.addWeapon(Gun);
-				playa.addWeapon(Knife);	
-				
-				AnimationFrame gunFrame1 = new AnimationFrame(gun, 125000000L);
-				AnimationFrame gunFrame2 = new AnimationFrame(gunFire, 325000000L);
-				
-				ArrayList <AnimationFrame> gunFrames = new ArrayList <AnimationFrame>();
-				gunFrames.add(gunFrame2);
-				
-				ArrayList <AnimationFrame> gunFrames1 = new ArrayList <AnimationFrame>();
-				gunFrames1.add(gunFrame1);
-				
-				Animation gunAnimation = new Animation(gunFrames);
-				Animation gunStill = new Animation(gunFrames1);
-				Gun.animations.add(gunStill);
-				Gun.animations.add(gunAnimation);
-				Knife.animations.add(gunStill);
-				Knife.animations.add(gunAnimation);
-				
-				playa.animations.add(playerAnimation1);
-				playa.animations.add(playerAnimation2);
-				
-				
-
-			//Add player to map SpriteList.
-				map1.addPlayer(playa);
-				//map1.setPlayerOnePosition();
-				
-				
-				//Initialise the panel.
-				//final Display display = new Display(manager, playa, this.getWidth(), this.getHeight()) ;
-				display = new Display(game.manager, playa, this.getWidth(), this.getHeight(), xboxGame) ;
-				display.setBackground(Color.BLACK);
-				
-
-			
-				
-				
-			//add mouseListener to display
-				
-				
-				//Xbox Controller Listener
-				
-				if(xboxGame){
-					XboxController xc = new XboxController();
-					myXboxControllerListener xboxListener = new myXboxControllerListener(playa,this,xc);
-					xc.addXboxControllerListener(xboxListener);}
-				
-				else{
-					GameMouseEvents mouse = new GameMouseEvents(display,playa);
-					MouseEventListener mouseListener = new MouseEventListener(mouse);
-					display.addMouseListener(mouseListener);
-					display.addMouseMotionListener(mouseListener);
-					
-					
-				}
-				//---------------------------------------------------------------
-				
-				this.addWindowFocusListener(new WindowAdapter() {
-					public void windowGainedFocus(WindowEvent e) {
-						display.requestFocusInWindow();
-					}
-				});
-				display.setFocusable(true);
-				System.out.println(display.isFocusOwner());
-				
-				
-				//this.requestFocusInWindow(true);
-				
-				
-				System.out.println("showing display");
-				
-				this.setContentPane(display);
-				display.grabFocus();
-				Buttons Button = new Buttons(playa, this);
-				display.addKeyListener( Button);
-				
-				//DoubleBuffer buffer = new DoubleBuffer();
-				
-				
-				
-			//Start Game Thread 1.
-				new Thread() {
-				    public void run() {
-				    	
-				    	long startTime = System.currentTimeMillis();
-				    	long currentTime = startTime;
-				    	while(true){
-				        	long loopTime = System.currentTimeMillis() - currentTime;
-				        	currentTime += loopTime;
-				        	
-				        	
-				        	//if statement used because update has issues with loop taking less then 5ms
-				        	if (loopTime <= 14){
-				        		try {
-					                Thread.sleep(14);}
-						        	catch (InterruptedException ex) { } 
-						    }
-				        	
-				        	
-				        	
-				        	if (pause != true){
-				        		
-				        		if (manager.killed >= 100){
-				        			showWinGameMenu();
-					        	}
-				        		manager.switchMap();
-				        		display.repaint();
-				        		manager.updateAnimations();
-				        		manager.manageSprites();
-					        	
-				        	}
-				        	
-				        	
-				        	
-				        }
-				    }
-				}.start();
-	
-			}
-			
-		*/
-		
-		
-		
-		
-		
-			
-
 }

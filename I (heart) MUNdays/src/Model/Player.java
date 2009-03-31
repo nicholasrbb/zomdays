@@ -28,8 +28,6 @@ public class Player extends Sprite{
 	public boolean right = false;
 	public boolean left = false;
 	public boolean down = false;
-	//public ArrayList <Weapon> WeaponList;
-	//int currentWeapon = 0;
 	private File gun;
 	private File voice1;
 	private Clip gunFired;
@@ -198,6 +196,13 @@ public class Player extends Sprite{
 		
 	}
 
+	public void setPlayerOrientation(int xPos, int yPos){
+		if (xboxController == false){
+			setPlayerSpriteOrientation(xPos, yPos);
+		}else{
+			setplayerSpriteOrientationXbox(xPos, yPos);
+		}
+	}
 
 	/**
 	 * set the players Angle based on mouseEvents
@@ -213,8 +218,14 @@ public class Player extends Sprite{
 		
 		playerOrientation.setToTranslation(printX, printY);	
 		playerOrientation.rotate(Math.toRadians(angle),image.getWidth(null)/2, (image.getHeight(null)/2));
-		xboxController = false;
-			
+	}
+	
+	public void setXBox(boolean xbox){
+		xboxController = xbox;
+	}
+	
+	public boolean getXBox(){
+		return xboxController;
 	}
 	
 	public void setplayerSpriteOrientationXbox(int xPos, int yPos){
@@ -225,8 +236,6 @@ public class Player extends Sprite{
 		
 		playerOrientation.setToTranslation(printX, printY);	
 		playerOrientation.rotate(Math.toRadians(TSangle),image.getWidth(null)/2, (image.getHeight(null)/2));
-		xboxController = true;	
-	
 	}
 		
 		

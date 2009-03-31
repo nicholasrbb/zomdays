@@ -38,11 +38,17 @@ public class GameMouseEvents implements MouseListenerInterface {
 
 	@Override
 	public void mouseEntered() {
-				
-		Image image = Toolkit.getDefaultToolkit().createImage("crosshair.png");
+		if (player.getXBox() == false){		
+			Image image = Toolkit.getDefaultToolkit().createImage("crosshair.png");
+			
+			Cursor aimer = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(15,15), "crosshairCursor");
+			d.setCursor(aimer);
+		}else{
+			Image blankImage = Toolkit.getDefaultToolkit().createImage("blank.png");
+			Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(15,15), "crosshairCursor");
+			d.setCursor(blank);
+		}
 		
-		Cursor aimer = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(15,15), "crosshairCursor");
-		d.setCursor(aimer);
 	}
 
 	@Override
@@ -59,10 +65,11 @@ public class GameMouseEvents implements MouseListenerInterface {
 	@Override
 	public void mousePressed(int worldX, int worldY, int button) {
 		
-		
-		if ( button == 1){
-			//player.attack();
-			player.attack = true;
+		if (player.getXBox() == false){
+			if ( button == 1){
+				//player.attack();
+				player.attack = true;
+			}
 		}
 	}
 

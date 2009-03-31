@@ -23,7 +23,7 @@ public class Display extends JPanel{
 	int offsetX, offsetY;
 	int screenWidth;
 	int screenHeight;
-	Player player;
+	public Player player;
 	Image background;
 	public int cornerX1;
 	public int cornerY1;
@@ -33,16 +33,14 @@ public class Display extends JPanel{
 	public int dcornerX1;
 	public int dcornerY1;
 	
-	public boolean xboxGame;
 	
 	
 	
-	public Display(Player playa, int SW, int SH, boolean xboxGame){
+	public Display(Player playa, int SW, int SH){
 		super();
 		//Buttons Button = new Buttons(playa);
 		//this.addKeyListener( Button);
 
-		this.xboxGame = xboxGame;
 		
 		player = playa;	
 		screenWidth = SW;
@@ -144,16 +142,17 @@ public class Display extends JPanel{
 		}
 		
 		// Print Player 
-		if(xboxGame){
-			System.out.println("xbox Game");
-			player.setplayerSpriteOrientationXbox(cornerX1,cornerY1);
 		
-		}else{
-			player.setPlayerSpriteOrientation(cornerX1, cornerY1);
-		}
+			player.setPlayerOrientation(cornerX1, cornerY1);
 			g2d.drawImage(player.getSpriteImage(),player.getPlayerSpriteOrientation(), null);
 			g2d.drawImage(player.WeaponList.get(player.getCurrentWeapon()).getImage(),player.getPlayerSpriteOrientation(), null);
-    	
+			
+    		
+			g2d.drawString("Health: " + player.getHealth(),50,300);
+    		g2d.drawString("Mag: " + player.WeaponList.get(0).magAmmo(),50,315); 
+    		g2d.drawString("Ammo: " + player.WeaponList.get(0).getAmmo(),50,330);
+    		g2d.drawString("Current Weapon: " + player.WeaponList.get(player.getCurrentWeapon()).getWeaponName() , 50, 345);
+			
 		
 		//Paint all the Items
 		for ( int i = 0; i < player.map.ItemList.size(); i++){
@@ -172,18 +171,9 @@ public class Display extends JPanel{
 				otherTransform.setToTranslation(player.map.PlayerList.get(i).getX() - cornerX1 - 25, player.map.PlayerList.get(i).getY() - cornerY1 - 25);	
 				otherTransform.rotate(Math.toRadians(player.map.PlayerList.get(i).angle),player.map.PlayerList.get(i).getSpriteImage().getWidth(null)/2, player.map.PlayerList.get(i).getSpriteImage().getHeight(null)/2);   
 				g2d.drawImage(player.map.PlayerList.get(i).getSpriteImage(),otherTransform, null);
-				/*
-				System.out.println("corner1: " + cornerX1 + "   " + cornerY1);
-				g2d.drawImage(manager.map.PlayerList.get(i).getSpriteImage(),manager.map.PlayerList.get(i).getSpriteOrientation(), null);
 				
 				
-				Player playdizzle = (Player) manager.map.PlayerList.get(i);
-        		g2d.drawString("Health: " + manager.map.PlayerList.get(i).getHealth(),50,400);
-        		g2d.drawString("Zombies Killed: " + manager.killed,50,415);
-        		g2d.drawString("Mag: " + playdizzle.WeaponList.get(0).magAmmo(),50,430); 
-        		g2d.drawString("Ammo: " + playdizzle.WeaponList.get(0).getAmmo(),50,445);
-        		g2d.drawString("Current Weapon: " + playdizzle.WeaponList.get(playdizzle.getCurrentWeapon()).getWeaponName() , 50, 460);
-				*/
+				
 			}
 		}
 		// Print all NPC's

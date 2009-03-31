@@ -2,6 +2,7 @@ package Model;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,7 +11,7 @@ import java.util.Random;
  * Manager that controls the updating of all sprites and animations for the game,
  * respawns Zombies and controls the transition between different game Maps.
  */
-public class ModelManager{
+public class ModelManager implements Serializable{
 	
 	public TileMap map;
 	Image zombieImage = Toolkit.getDefaultToolkit().createImage("zombie.png");
