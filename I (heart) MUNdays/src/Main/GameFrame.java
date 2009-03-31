@@ -363,7 +363,9 @@ public class GameFrame extends JFrame {
 					        	catch (InterruptedException ex) { } 
 					    }
 			        				        	
-			        	if (pause != true){
+			        	if (multi == false && pause == true){
+			        	
+			        	}else{
 			        		game.manager.updateSprites(20);
 			        		game.manager.switchMap();
 			        		game.manager.updateAnimations();
@@ -371,11 +373,6 @@ public class GameFrame extends JFrame {
 			        		
 				        	display.repaint();
 				        	if (multi){
-				        		if (secondFrame.pause ==  true){
-				        			pause = true;
-				        		}else{
-				        			pause = false;
-				        		}
 				        		secondFrame.display.repaint();
 				        		System.out.println("finished displaying second displlay");
 				        	}
