@@ -20,7 +20,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * 
  * @see Sprite
  */
-public class Player extends Sprite{
+public class Player extends Sprite implements RemotePlayer{
 	
 	private AffineTransform playerOrientation;
 	private AffineTransform Orientation;
@@ -102,7 +102,9 @@ public class Player extends Sprite{
 	
 	}
 
-	
+	public void setRight(boolean R){
+		right = R;
+	}
 	/**
 	 * Calls Sprits Movement method based on keyListener
 	 * 
@@ -341,12 +343,14 @@ public class Player extends Sprite{
 				for ( int r = 20; r <= range; r++){
 					if (xboxController){
 						tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(TSangle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(TSangle)))/25));
-						target = getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle)));
+						//if((PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0) != null)
+						//	target = getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0);
 						
 					}
 					else{
 						tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
-						target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle)));
+						if(getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle))).size() > 0)
+							target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle))).get(0);
 						
 					}
 					

@@ -1,12 +1,11 @@
 package Interface;
 
-import ch.aplu.xboxcontroller.XboxController;
-import ch.aplu.xboxcontroller.XboxControllerListener;
 import Main.GameFrame;
 import Model.Player;
 
-public class myXboxControllerListener implements XboxControllerListener{
+public class myXboxControllerListener /*implements XboxControllerListener*/{
 
+	/*
 	private GameFrame game;
 	private Player p;
 	private XboxController xc;
@@ -224,6 +223,6 @@ public class myXboxControllerListener implements XboxControllerListener{
     
 	}
 	
-	
+*/	
 
 }

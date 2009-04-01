@@ -61,6 +61,7 @@ public class MenuButtons {
 		StartHost.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				game.HostGame();
+				System.out.println("connected");
 				
 			}});
 		

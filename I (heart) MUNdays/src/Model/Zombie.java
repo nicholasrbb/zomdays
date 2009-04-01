@@ -96,16 +96,16 @@ public class Zombie extends Sprite{
 				
 			
 			
-				if ( (target.getX() - 35) > getX()){
+				if ( (target.getX() - 18) > getX()){
 					right = true;
 				}
-				if ( (target.getX() + 35) < getX()){
+				if ( (target.getX() + 18) < getX()){
 					left = true;
 				}
-				if ( (target.getY() + 35) < getY()){
+				if ( (target.getY() + 18) < getY()){
 					up = true;
 				}
-				if ( (target.getY() - 35) > getY()){
+				if ( (target.getY() - 18) > getY()){
 					down = true;
 				}
 				if (up && !right && !left && !down){
