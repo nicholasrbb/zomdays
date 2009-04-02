@@ -45,6 +45,8 @@ public class ModelManager implements Serializable{
 			for (int i = 0; i < map.PlayerList.size(); i++){
 				map.PlayerList.get(i).image = map.PlayerList.get(0).animations.get(map.PlayerList.get(0).currentAnimation).getAnimationImage();
 				map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).image = map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).animations.get(map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).currentAnimation).getAnimationImage();
+				System.out.println(map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).image);
+			
 			}
 		}
 	}
@@ -57,10 +59,7 @@ public class ModelManager implements Serializable{
 	public void manageSprites(){
 		for (int Map = 0; Map < MapList.size(); Map++){
 			map = MapList.get(Map);
-			System.out.println("changing map");
-			System.out.println("map: "+ map);
 			while(map.SpriteList.size() < 100){
-				System.out.println("should add a zombie");
 				int x = Math.abs(generator.nextInt(15000)) + 50;
 				int y = Math.abs(generator.nextInt(15000)) + 50;
 				for (int i = 0; i < map.PlayerList.size(); i++){
@@ -70,14 +69,12 @@ public class ModelManager implements Serializable{
 						map.getCharTile(x/25, (y+25)/25) == " " &&
 						map.getCharTile(x/25, (y-25)/25) == " " &&
 						Math.abs(map.PlayerList.get(i).getX() - x) > 450 && Math.abs(map.PlayerList.get(i).getY() - y) > 550){
-						System.out.println("Adding a Zombie");
 						Zombie zombay = new Zombie(zombieImage, 50, 10, 10, x, y, 0.1, 0.1, map);
 						map.addSprite(zombay);
 					}
 				}
 			}
 		}
-		System.out.println("finished adding zombies");
 	}
 	
 	/**
@@ -104,7 +101,6 @@ public class ModelManager implements Serializable{
 						traveller.PositionY = 3900;
 					}
 					
-					System.out.println("switching map");
 					traveller.PositionX = traveller.getX();
 					traveller.map = map;
 					map.addPlayer(traveller);

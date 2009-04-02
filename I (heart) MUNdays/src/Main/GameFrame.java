@@ -40,7 +40,6 @@ import Model.Weapon;
 import View.Animation;
 import View.AnimationFrame;
 import View.Display;
-import View.clientMain;
 import events.GameMouseEvents;
 /**
  * This class extends JFrame and will be used to contain the 
@@ -299,7 +298,7 @@ public class GameFrame extends JFrame {
 		}
 		
 		public void JoinGame(){
-			clientMain client = new clientMain();
+			
 			/*
 			try {
 				Socket socket = new Socket("gino-laptop", 8189);
@@ -379,9 +378,7 @@ public class GameFrame extends JFrame {
 				        	display.repaint();
 				        	if (multi){
 				        		secondFrame.display.repaint();
-				        		System.out.println("finished displaying second displlay");
 				        	}
-				        	System.out.println("done displaying");
 			        	}
 			        }
 			    }

@@ -15,17 +15,19 @@ public class Weapon {
 	int damage;
 	int ammo;
 	int magAmmo;
+	double rate;
 	String name;
 	public ArrayList <Animation> animations;
 	int currentAnimation;	
 	
-	public Weapon(Image image, int range, int damage, int ammo, int mag, String name){
+	public Weapon(Image image, int range, int damage, int ammo, int mag, double rate, String name){
 		this.image = image;
 		this.range = range;
 		this.damage = damage;
 		this.ammo = ammo;
 		this.magAmmo = mag;
 		this.name = name;
+		this.rate = rate;
 		animations = new ArrayList <Animation>();
 	}
 	
@@ -51,6 +53,14 @@ public class Weapon {
 	 */
 	public int getDamage(){
 		return damage;
+	}
+	
+	/**
+	 * get the weapons firing rate
+	 * @return rate
+	 */
+	public double getRate(){
+		return rate;
 	}
 	
 	/**
@@ -97,6 +107,8 @@ public class Weapon {
 	 */
 	public void updateAmmo(int change){
 		magAmmo = magAmmo + change;
+		if (magAmmo > 0)
+			currentAnimation = 1;
 	}
 	
 }

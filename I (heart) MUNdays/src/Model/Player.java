@@ -37,8 +37,10 @@ public class Player extends Sprite implements RemotePlayer{
 	Clip gunReloadOrig;
 	Clip voice1Orig;
 	
-	public int TSangle = 0;
+	private double lastFireTime;
 	
+	
+	public int TSangle = 0;
 	private boolean xboxController = false;
 	
 	
@@ -67,6 +69,8 @@ public class Player extends Sprite implements RemotePlayer{
 		
 		gun = new File("gunshot.wav");
 		gunReload = new File("reload.wav");
+		
+		lastFireTime = -1;
 		
 		
 		
@@ -310,13 +314,18 @@ public class Player extends Sprite implements RemotePlayer{
 	/**
 	 * player attack with current Weapon
 	 * 
+	 * rate of fire in rounds per second
+	 * @param rate 
 	 */
 	@Override
 	public void attack() {
+		
+		
+		
 		if (attack == true){
 			//currentAnimation = 1;
-			
 			attack = false;
+				
 			
 			
 			
@@ -325,11 +334,31 @@ public class Player extends Sprite implements RemotePlayer{
 			int range = attackingWeapon.getRange();
 			int damage = attackingWeapon.getDamage();
 			
-			if ( attackingWeapon.magAmmo() != 0){
-				if (currentWeapon == 0){
-					WeaponList.get(currentWeapon).currentAnimation = 1;
-					gunShotOrig.setFramePosition(0);
+			/*
+			 * Limit players attack to specific rate of fire of weapon
+			 * and convert players rate from rounds per second to rounds per millisecond
+			 */
+			double tmp =System.currentTimeMillis() - lastFireTime ;
+			System.out.print(tmp);
+			System.out.println("   " + attackingWeapon.getRate()*1000);
+			
+			if (System.currentTimeMillis() - lastFireTime >= attackingWeapon.getRate()*2000 || lastFireTime <=0 ){
+				WeaponList.get(currentWeapon).currentAnimation = 0;
+
+			}
+			
+				
+			if (System.currentTimeMillis() - lastFireTime >= attackingWeapon.getRate()*1000 || lastFireTime <=0 ){
+			
+				
+				
+				if ( attackingWeapon.magAmmo() != 0){
 					
+					if (currentWeapon == 0){
+						System.out.println("weapon animation started");
+						gunShotOrig.setFramePosition(0);
+						lastFireTime = System.currentTimeMillis();
+
 					gunShotOrig.start();
 				}
 				
@@ -362,13 +391,18 @@ public class Player extends Sprite implements RemotePlayer{
 					}
 				}
 			}
-			
-		}else{
-			WeaponList.get(currentWeapon).currentAnimation = 0;
-
+				else{
+					//WeaponList.get(currentWeapon).currentAnimation = 0;
+				}
+		
 		}
 		
 		
+	}
+	
+		else{
+		//	WeaponList.get(currentWeapon).currentAnimation = 0;
+		}
 	}
 	
 
