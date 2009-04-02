@@ -342,10 +342,7 @@ public class Player extends Sprite implements RemotePlayer{
 			System.out.print(tmp);
 			System.out.println("   " + attackingWeapon.getRate()*1000);
 			
-			if (System.currentTimeMillis() - lastFireTime >= attackingWeapon.getRate()*2000 || lastFireTime <=0 ){
-				WeaponList.get(currentWeapon).currentAnimation = 0;
-
-			}
+			
 			
 				
 			if (System.currentTimeMillis() - lastFireTime >= attackingWeapon.getRate()*1000 || lastFireTime <=0 ){
@@ -355,7 +352,7 @@ public class Player extends Sprite implements RemotePlayer{
 				if ( attackingWeapon.magAmmo() != 0){
 					
 					if (currentWeapon == 0){
-						System.out.println("weapon animation started");
+
 						gunShotOrig.setFramePosition(0);
 						lastFireTime = System.currentTimeMillis();
 
@@ -363,7 +360,6 @@ public class Player extends Sprite implements RemotePlayer{
 				}
 				
 
-				
 				attackingWeapon.updateAmmo(-1);
 				
 				
@@ -399,10 +395,13 @@ public class Player extends Sprite implements RemotePlayer{
 		
 		
 	}
+		
 	
-		else{
-		//	WeaponList.get(currentWeapon).currentAnimation = 0;
-		}
+		else if (System.currentTimeMillis() - lastFireTime >=100 || lastFireTime <=0 ){
+				WeaponList.get(currentWeapon).currentAnimation = 0;
+				System.out.println("fejk");
+
+			}		
 	}
 	
 
