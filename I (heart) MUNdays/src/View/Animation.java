@@ -29,7 +29,6 @@ public class Animation {
 	 */
 	public Image getAnimationImage(){
 		elapsedFrameTime = elapsedFrameTime + (System.nanoTime() - currentTime);
-		System.out.println(currentFrame);
 		if (elapsedFrameTime >= frames.get(currentFrame).time) {
 			elapsedFrameTime = 0;
 			if(currentFrame < frames.size()-1 ){

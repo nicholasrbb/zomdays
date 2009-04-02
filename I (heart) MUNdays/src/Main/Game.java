@@ -111,6 +111,9 @@ public class Game extends UnicastRemoteObject{
 				Image gun2x = Toolkit.getDefaultToolkit().createImage("Player/player_2pistol_noflash.png");
 				Image gun2xFire = Toolkit.getDefaultToolkit().createImage("Player/player_2pistol_flash.png");
 
+				Image knifeIn = Toolkit.getDefaultToolkit().getImage("Player/player_knife_in.png");
+				Image knifeOut = Toolkit.getDefaultToolkit().getImage("Player/player_knife_Out.png");
+				
 				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager.MapList.get(0));
 				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(1));
 				
@@ -129,15 +132,28 @@ public class Game extends UnicastRemoteObject{
 				
 				
 				/*
+				 * Initialising Knife Animation
+				 */
+				AnimationFrame knifeFrame1 = new AnimationFrame(knifeIn, 12500000L);
+				AnimationFrame knifeFrame2 = new AnimationFrame(knifeOut, 325000000L);
+				
+				ArrayList <AnimationFrame> knifeFrames = new ArrayList <AnimationFrame>();
+				knifeFrames.add(knifeFrame2);
+				
+				ArrayList <AnimationFrame> knifeFrames1 = new ArrayList <AnimationFrame>();
+				knifeFrames1.add(knifeFrame1);
+				
+				Animation knifeAnimation = new Animation(knifeFrames);
+				Animation knifeStill = new Animation(knifeFrames1);
+				
+				/*
 				 * Initialising Pistol Animation
 				 */
 				AnimationFrame gunFrame1 = new AnimationFrame(gun, 12500000L);
 				AnimationFrame gunFrame2 = new AnimationFrame(gunFire, 32500000L);
 								
 				ArrayList <AnimationFrame> gunFrames = new ArrayList <AnimationFrame>();
-				//gunFrames.add(gunFrame1);
 				gunFrames.add(gunFrame2);
-				//gunFrames.add(gunFrame1);
 				
 				ArrayList <AnimationFrame> gunFrames1 = new ArrayList <AnimationFrame>();
 				gunFrames1.add(gunFrame1);
@@ -171,8 +187,8 @@ public class Game extends UnicastRemoteObject{
 				Gunx2.animations.add(gun2xStill);
 				Gunx2.animations.add(gun2xAnimation);
 				
-				Knife.animations.add(gunStill);
-				Knife.animations.add(gunAnimation);
+				Knife.animations.add(knifeStill);
+				Knife.animations.add(knifeAnimation);
 				
 				player2Gun.animations.add(gunStill);
 				player2Gun.animations.add(gunAnimation);

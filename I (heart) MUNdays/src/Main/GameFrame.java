@@ -444,7 +444,6 @@ public class GameFrame extends JFrame {
 				        		secondFrame.display.repaint();
 				        		System.out.println("finished displaying second displlay");
 				        	}
-				        	System.out.println("done displaying");
 			        	}
 			        }
 			    }

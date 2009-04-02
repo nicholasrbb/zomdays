@@ -38,7 +38,7 @@ public class Player extends Sprite implements RemotePlayer{
 	Clip gunReloadOrig;
 	Clip voice1Orig;
 	
-	public int points;
+	public int points = 999;
 	private double lastFireTime;
 	
 	
@@ -358,15 +358,18 @@ public class Player extends Sprite implements RemotePlayer{
 			 * and convert players rate from rounds per second to rounds per millisecond
 			 */
 			double tmp =System.currentTimeMillis() - lastFireTime ;
-			System.out.print(tmp);
-			System.out.println("   " + attackingWeapon.getRate()*1000);
 			
 			if (System.currentTimeMillis() - lastFireTime >= attackingWeapon.getRate()*1000 || lastFireTime <=0 ){
 				if ( attackingWeapon.magAmmo() != 0){
 					if (currentWeapon == 0 || currentWeapon == 2){
 						gunShotOrig.setFramePosition(0);
 						lastFireTime = System.currentTimeMillis();
+						WeaponList.get(currentWeapon).currentAnimation = 1;
 						gunShotOrig.start();
+					}
+					if (WeaponList.get(currentWeapon).name.equals("Knife")){
+						lastFireTime = System.currentTimeMillis();
+						WeaponList.get(currentWeapon).currentAnimation = 1;
 					}
 					attackingWeapon.updateAmmo(-1);
 					
@@ -394,10 +397,19 @@ public class Player extends Sprite implements RemotePlayer{
 					}
 				}
 			}
-		}else if (System.currentTimeMillis() - lastFireTime >=150 || lastFireTime <=0 ){
+			
+			
+		}
+		if (System.currentTimeMillis() - lastFireTime >=150 || lastFireTime <=0){
 				WeaponList.get(currentWeapon).currentAnimation = 0;
-				System.out.println(currentWeapon);
-		}		
+					}		
+			
+	}
+	
+
+	@Override
+	public int getPoints() {
+		return Points;
 	}
 		
 		
