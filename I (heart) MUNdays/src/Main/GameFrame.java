@@ -13,9 +13,18 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.RemoteServer;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
@@ -24,7 +33,9 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 
 
 
@@ -35,6 +46,7 @@ import Interface.MenuButtons;
 import Interface.MouseEventListener;
 import Model.ModelManager;
 import Model.Player;
+import Model.RemotePlayer;
 import Model.TileMap;
 import Model.Weapon;
 import View.Animation;
@@ -270,55 +282,107 @@ public class GameFrame extends JFrame {
 			
 			secondFrame.setContentPane(secondFrame.display);
 			secondFrame.display.grabFocus();
-			
-			
-			
-		}
-		public void changeToXBox(){
-			
-			
 		}
 		
-		public void HostGame(){
-			ServerSocket serverSocket = null;
-			try {
-				serverSocket = new ServerSocket(8189);
-			} catch (IOException e) {
-			    System.out.println("Could not listen on port: 8189");
-			    System.exit(-1);
-			}
-			
-			Socket clientSocket = null;
-			try {
-			    clientSocket = serverSocket.accept();
-			} catch (IOException e) {
-			    System.out.println("Accept failed: 8189");
-			    System.exit(-1);
-			}
-		}
 		
-		public void JoinGame(){
-			
-			/*
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		public void HostGame() throws RemoteException{
+		
+		//Creates the Game	
 			try {
-				Socket socket = new Socket("gino-laptop", 8189);
-				//out = new PrintWriter(echoSocket.getOutputStream(), true);
-				//in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-
-			} catch (UnknownHostException e1) {
-				System.out.println("shit is broke");
-				e1.printStackTrace();
+				game = new Game();
+			} catch (RemoteException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			
+			
+			
+			
+		//Gets the IP Address and asks for a player name.
+			InetAddress ip = null;
+			try {
+				 ip = java.net.InetAddress.getLocalHost();
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String ipString = ip.toString();
+			int start = ipString.indexOf('/');
+			String realIP = ipString.substring(start+1);
+			
+			String name = JOptionPane.showInputDialog("Your IP Address is " + realIP + ".       Enter you Player Name: ", "") ;
+			
+			game.player1.name = name;
+			System.out.println("Player's name is: " + name);
+			
+			
+		//Tries to run the bat file thats set the RMI stuff
+			try {
+				Runtime.getRuntime().exec("run-server1.bat");
+				
 			} catch (IOException e1) {
-				System.out.println("shit is broke");
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			*/
+			
+			
+		//Registers with rimRegistry
+			try {
+				//Naming.bind("rmi://localhost/Game", game);
+				
+				System.err.println("Server ready");
+			} catch (Exception e) {
+				System.err.println("Server exception: " + e.toString());
+				e.printStackTrace();
+			}
+			
 		}
+		
+		public void JoinGame() throws MalformedURLException, RemoteException, NotBoundException{
+			String name = JOptionPane.showInputDialog("Enter you Player Name: ", "") ;
+			String server = JOptionPane.showInputDialog("Enter the server IP Address: ", "rmi://xxx.xxx.xxx.xxx/Game");
+			
+			RemotePlayer proxy = null ;
+			proxy = (RemotePlayer) Naming.lookup( name ) ;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		public void newGame(){
 			gameMade = true;
 			MainMenu.setVisible(false);
-			game = new Game();
+			try {
+				game = new Game();
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+			
 			
 		//Initialise the panel.
 			display = new Display(game.player1, this.getWidth(), this.getHeight()) ;
@@ -378,7 +442,9 @@ public class GameFrame extends JFrame {
 				        	display.repaint();
 				        	if (multi){
 				        		secondFrame.display.repaint();
+				        		System.out.println("finished displaying second displlay");
 				        	}
+				        	System.out.println("done displaying");
 			        	}
 			        }
 			    }

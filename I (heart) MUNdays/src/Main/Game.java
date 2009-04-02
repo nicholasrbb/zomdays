@@ -3,6 +3,8 @@ package Main;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import Model.ModelManager;
@@ -12,7 +14,7 @@ import Model.Weapon;
 import View.Animation;
 import View.AnimationFrame;
 
-public class Game {
+public class Game extends UnicastRemoteObject{
 	public ArrayList <TileMap> MapList;
 	public ModelManager manager;
 	public boolean pause = false;
@@ -29,7 +31,7 @@ public class Game {
 	 * 
 	 * @param none
 	 */
-	public Game(){
+	public Game() throws RemoteException{
 		MapList = new ArrayList <TileMap>();
 		System.out.println("game being set up");
 
@@ -104,12 +106,16 @@ public class Game {
 			//Create Player and Zombie.
 				Image gun = Toolkit.getDefaultToolkit().createImage("Player/player_1pistol_noflash.png");
 				Image gunFire = Toolkit.getDefaultToolkit().createImage("Player/player_1pistol_flash.png");
+				
 				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager.MapList.get(0));
 				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(1));
+				
 				Weapon Gun = new Weapon(npcImage,600,10,1000,15,0.2, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1,0.0, "Knife");
+				
 				Weapon player2Gun = new Weapon(npcImage,600,10,1000,15,0.5, "Hand Gun");
 				Weapon player2Knife = new Weapon(npcImage,50,25, -1,-1,0.0, "Knife");
+				
 				player1.addWeapon(Gun);
 				player1.addWeapon(Knife);	
 				player2.addWeapon(player2Gun);
@@ -120,19 +126,25 @@ public class Game {
 				AnimationFrame gunFrame2 = new AnimationFrame(gunFire, 32500000L);
 				
 				ArrayList <AnimationFrame> gunFrames = new ArrayList <AnimationFrame>();
+				//gunFrames.add(gunFrame1);
 				gunFrames.add(gunFrame2);
+				//gunFrames.add(gunFrame1);
 				
 				ArrayList <AnimationFrame> gunFrames1 = new ArrayList <AnimationFrame>();
 				gunFrames1.add(gunFrame1);
 				
 				Animation gunAnimation = new Animation(gunFrames);
 				Animation gunStill = new Animation(gunFrames1);
+				
 				Gun.animations.add(gunStill);
 				Gun.animations.add(gunAnimation);
+				
 				Knife.animations.add(gunStill);
 				Knife.animations.add(gunAnimation);
+				
 				player2Gun.animations.add(gunStill);
 				player2Gun.animations.add(gunAnimation);
+				
 				player2Knife.animations.add(gunStill);
 				player2Knife.animations.add(gunAnimation);
 				
