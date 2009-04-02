@@ -38,5 +38,6 @@ public interface RemotePlayer extends Remote{
 	public Image getSpriteImage() ;
 	public boolean getXBox();
 	public void setXBox(boolean b);
+	public int getPoints();
 
 }

@@ -35,6 +35,8 @@ public abstract class Sprite {
 	public ArrayList <Weapon> WeaponList;
 	int currentWeapon = 0;
 	
+	public int Points;
+	
 	
 	public Sprite(double health, int width, int height, int x, int y, double dx, double dy, TileMap Map){
 		radius = 13;

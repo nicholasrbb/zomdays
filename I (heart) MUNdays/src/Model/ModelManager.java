@@ -46,7 +46,6 @@ public class ModelManager implements Serializable{
 			for (int i = 0; i < map.PlayerList.size(); i++){
 				map.PlayerList.get(i).image = map.PlayerList.get(i).animations.get(map.PlayerList.get(i).currentAnimation).getAnimationImage();
 				map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).image = map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).animations.get(map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).currentAnimation).getAnimationImage();
-				//System.out.println(map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).image);
 			
 			}
 		}
@@ -136,7 +135,7 @@ public class ModelManager implements Serializable{
 					map.SpriteList.get(i).setSpriteOrientation();
 				}
 				if (map.SpriteList.get(i).isAlive == false){
-					killed = killed +1;
+					map.PlayerList.get(0).Points = map.PlayerList.get(0).Points + 1;
 					map.removeSprite(map.SpriteList.get(i));
 				}
 			}

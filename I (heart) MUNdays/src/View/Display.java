@@ -179,14 +179,8 @@ public class Display extends JPanel {
 		// Print all NPC's
     	for ( int i = 0; i < player.getMap().SpriteList.size(); i++){
     		AffineTransform npcTransform = new AffineTransform();
-    		if (player.getMap().SpriteList.get(i).getRandom() == false){
-    			npcTransform.setToTranslation(player.getMap().SpriteList.get(i).getX() - cornerX1 - 25, player.getMap().SpriteList.get(i).getY() - cornerY1 - 25);	
-        		npcTransform.rotate(Math.toRadians(player.getMap().SpriteList.get(i).angle),player.getMap().SpriteList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().SpriteList.get(i).getSpriteImage().getHeight(null)/2);
-    		}else{
-    			npcTransform.setToTranslation(player.getMap().SpriteList.get(i).getX() - cornerX1 - 25, player.getMap().SpriteList.get(i).getY() - cornerY1 - 25);	
-    			int angle = 45*(player.getMap().SpriteList.get(i).getNumber());
-        		npcTransform.rotate(angle,player.getMap().SpriteList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().SpriteList.get(i).getSpriteImage().getHeight(null)/2);
-    		}
+    		npcTransform.setToTranslation(player.getMap().SpriteList.get(i).getX() - cornerX1 - 25, player.getMap().SpriteList.get(i).getY() - cornerY1 - 25);	
+    		npcTransform.rotate(Math.toRadians(player.getMap().SpriteList.get(i).angle),player.getMap().SpriteList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().SpriteList.get(i).getSpriteImage().getHeight(null)/2);    	
     		g2d.drawImage(player.getMap().SpriteList.get(i).getSpriteImage(),npcTransform, null);
     	}
     	
@@ -204,7 +198,35 @@ public class Display extends JPanel {
 
 		// Paint Score
 		int spacing = 25;
+		int gameScoreInt = player.getPoints();
+		String gameScore = Integer.toString(gameScoreInt);
 		
+		for(int i = 0; i < gameScore.length(); i++){
+			if (gameScore.charAt(i) == '0')
+				g2d.drawImage(Zero, 10 + spacing*i, 10, null);
+			else if (gameScore.charAt(i) == '1')
+				g2d.drawImage(One, 10 + spacing*i, 10, null);
+			else if (gameScore.charAt(i) == '2')
+				g2d.drawImage(Two, 10 + spacing*i, 10, null);
+			else if (gameScore.charAt(i) == '3')
+				g2d.drawImage(Three, 10 + spacing*i, 10, null);
+			else if (gameScore.charAt(i) == '4')
+				g2d.drawImage(Four, 10 + spacing*i, 10, null);
+			else if (gameScore.charAt(i) == '5')
+				g2d.drawImage(Five, 10 + spacing*i, 10, null);
+			else if (gameScore.charAt(i) == '6')
+				g2d.drawImage(Six, 10 + spacing*i, 10, null);
+			else if (gameScore.charAt(i) == '7')
+				g2d.drawImage(Seven, 10 + spacing*i, 10, null);
+			else if (gameScore.charAt(i) == '8')
+				g2d.drawImage(Eight, 10 + spacing*i, 10, null);
+			else if (gameScore.charAt(i) == '9')
+				g2d.drawImage(Nine, 10 + spacing*i, 10, null);
+			
+				
+		}
+		
+		/*
 		g2d.drawImage(Zero, 10 + spacing*0, 10, null);
 		g2d.drawImage(One, 10 + spacing*1, 10, null);
 		g2d.drawImage(Two, 10 + spacing*2, 10, null);
@@ -215,7 +237,7 @@ public class Display extends JPanel {
 		g2d.drawImage(Seven, 10 + spacing*7, 10, null);
 		g2d.drawImage(Eight, 10 + spacing*8, 10, null);
 		g2d.drawImage(Nine, 10 + spacing*9, 10, null);
-		
+		*/
     	
 		
 	}

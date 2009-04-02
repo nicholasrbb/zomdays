@@ -338,7 +338,6 @@ public class TileMap {
                 	this.setTile(x, y, toolkit.getImage("white.jpg") );
                 	this.setCharTile(x, y, " ");
                 	int type = Math.abs(generator.nextInt(2));
-                	System.out.println(type);
                 	if (type == 0){
                 		Item item = new Item(ammo, "ammo", 50,x*25, y*25);
                 		ItemList.add(item);
@@ -397,7 +396,6 @@ public class TileMap {
 		for ( int x = 0; x<=getWidth(); x++)
 			for (int y = 0; y<=getHeight(); y++){
 				if (getCharTile(x,y) == "*"){
-					System.out.println(x + "  " + y);
 					((Player) PlayerList.get(0)).setPlayerStartPosition(x*25,y*25);
 					return;}
 								
