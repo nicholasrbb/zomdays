@@ -169,11 +169,11 @@ public class TileMap {
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'C') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_BL.jpg") );
+                	this.setTile(x, y, toolkit.getImage("BuildImg/T_Right.jpg") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'D') {
-                	this.setTile(x, y, toolkit.getImage("innerwall_BL.jpg") );
+                	this.setTile(x, y, toolkit.getImage("BuildImg/T_South.jpg") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'E') {
@@ -189,7 +189,7 @@ public class TileMap {
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'H') {
-                	this.setTile(x, y, toolkit.getImage("BuildImg/NS_Wall.jpg") );
+                	this.setTile(x, y, toolkit.getImage("BuildImg/LR_Wall.jpg") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'I') {
@@ -206,7 +206,7 @@ public class TileMap {
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'L') {
-                	this.setTile(x, y, toolkit.getImage("BuildImg/NS_Wall.jpg") );
+                	this.setTile(x, y, toolkit.getImage("BuildImg/LR_Wall.jpg") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'M') {
@@ -243,6 +243,92 @@ public class TileMap {
                 	this.setCharTile(x, y, " ");
                 }
                 
+                if (ch == 'U') {
+                	this.setTile(x, y, toolkit.getImage("BuildImg/T_Left.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                
+                if (ch == 'V') {
+                	this.setTile(x, y, toolkit.getImage("BuildImg/Cross.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                
+                if (ch == 'W') {
+                	
+                	int type = Math.abs(generator.nextInt(3));
+                	if (type == 1){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NR_Angle_Wall_Left1.jpg") );}
+                	else if (type == 2){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NR_Angle_Wall_Left2.jpg") );}
+                	else if (type == 3){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NR_Angle_Wall_Left3.jpg") );}
+                	else {
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NR_Angle_Wall_Left1.jpg") );}
+
+                    this.setCharTile(x, y, "x");                   
+                  
+                    }
+                
+                if (ch == 'X') {
+                	
+                	int type = Math.abs(generator.nextInt(3));
+                	if (type == 1){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NR_Angle_Wall1.jpg") );}
+                	else if (type == 2){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NR_Angle_Wall2.jpg") );}
+                	else if (type == 3){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NR_Angle_Wall3.jpg") );}
+                	else {
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NR_Angle_Wall1.jpg") );}
+
+                    this.setCharTile(x, y, "x");                   
+                  
+                    }
+                
+                if (ch == 'Y') {
+                	this.setTile(x, y, toolkit.getImage("BuildImg/NR_Angle_Wall_End.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                
+                if (ch == 'a') {
+                	this.setTile(x, y, toolkit.getImage("BuildImg/fill.jpg") );
+                	this.setCharTile(x, y, "x");
+                }
+                
+                if (ch == 'b') {
+                	
+                	int type = Math.abs(generator.nextInt(3));
+                	if (type == 1){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NL_Angle_Wall_Left1.jpg") );}
+                	else if (type == 2){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NL_Angle_Wall_Left2.jpg") );}
+                	else if (type == 3){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NL_Angle_Wall_Left3.jpg") );}
+                	else {
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NL_Angle_Wall_Left1.jpg") );}
+
+                    this.setCharTile(x, y, "x");                   
+                  
+                    }
+
+                if (ch == 'c') {
+	
+                	int type = Math.abs(generator.nextInt(3));
+                	if (type == 1){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NL_Angle_Wall1.jpg") );}
+                	else if (type == 2){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NL_Angle_Wall2.jpg") );}
+                	else if (type == 3){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NL_Angle_Wall3.jpg") );}
+                	else {
+                		this.setTile(x, y, toolkit.getImage("BuildImg/NL_Angle_Wall1.jpg") );}
+
+                	this.setCharTile(x, y, "x");                   
+  
+                }
+                
+                
+                
                 if (ch == '*') {
                 	this.setTile(x, y, toolkit.getImage("white.jpg") );
                 	this.setCharTile(x, y, "*");
@@ -265,17 +351,17 @@ public class TileMap {
                 
                             
                 if (ch == '1') {
-                	this.setTile(x, y, toolkit.getImage("Stairs.jpg") );
+                	this.setTile(x, y, toolkit.getImage("stairs.png") );
                 	this.setCharTile(x, y, "1");
                 }
                 
                 if (ch == '2') {
-                	this.setTile(x, y, toolkit.getImage("Stairs.jpg") );
+                	this.setTile(x, y, toolkit.getImage("stairs.png") );
                 	this.setCharTile(x, y, "2");
                 }
                 if (ch == ' ') {
                 	
-                	int type = Math.abs(generator.nextInt(2));
+                	int type = Math.abs(generator.nextInt(3));
                 	if (type == 1){
                 		this.setTile(x, y, toolkit.getImage("BuildImg/floor1.jpg") );}
                 	else if (type == 2){

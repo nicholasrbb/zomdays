@@ -97,7 +97,7 @@ public class GameFrame extends JFrame {
 			MapList = new ArrayList <TileMap>();
 			
 			this.setBounds(25, 200, 600, 400);
-			this.setPreferredSize(new Dimension(600,400));
+			this.setPreferredSize(new Dimension(1280,800));
 			this.setResizable(false);
 			pack() ;
 			setVisible(true) ;

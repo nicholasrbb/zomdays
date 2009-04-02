@@ -59,7 +59,7 @@ public class ModelManager implements Serializable{
 	public void manageSprites(){
 		for (int Map = 0; Map < MapList.size(); Map++){
 			map = MapList.get(Map);
-			while(map.SpriteList.size() < 100){
+			while(map.SpriteList.size() < 1){
 				int x = Math.abs(generator.nextInt(15000)) + 50;
 				int y = Math.abs(generator.nextInt(15000)) + 50;
 				for (int i = 0; i < map.PlayerList.size(); i++){
