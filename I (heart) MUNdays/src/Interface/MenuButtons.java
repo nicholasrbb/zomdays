@@ -2,6 +2,9 @@ package Interface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 
@@ -60,15 +63,32 @@ public class MenuButtons {
 		StartHost = new JButton("Start Hosting Multiplayer Game");
 		StartHost.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.HostGame();
-				System.out.println("connected");
+				//game.newGame();
+				try {
+					game.HostGame();
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//System.out.println("connected");
 				
 			}});
 		
 		StartJoin = new JButton("Start Joining Multiplayer Game");
 		StartJoin.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.JoinGame();
+				try {
+					game.JoinGame();
+				} catch (MalformedURLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NotBoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}});
 		

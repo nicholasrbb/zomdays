@@ -28,6 +28,7 @@ public class Player extends Sprite implements RemotePlayer{
 	public boolean right = false;
 	public boolean left = false;
 	public boolean down = false;
+	public String name;
 	private File gun;
 	private File voice1;
 	private Clip gunFired;
@@ -104,6 +105,30 @@ public class Player extends Sprite implements RemotePlayer{
 
 		
 	
+	}
+	
+	public TileMap getMap(){
+		return map;
+	}
+	
+	public int getMouseX(){
+		return mouseX;
+	}
+	
+	public int getMouseY(){
+		return mouseY;
+	}
+	
+	public void setMouseX(int number){
+		mouseX = number;
+	}
+	
+	public void setMouseY(int number){
+		mouseY = number;
+	}
+	
+	public ArrayList <Weapon> getWeapons(){
+		return WeaponList;
 	}
 
 	public void setRight(boolean R){
@@ -319,17 +344,10 @@ public class Player extends Sprite implements RemotePlayer{
 	 */
 	@Override
 	public void attack() {
-		
-		
-		
+
 		if (attack == true){
-			//currentAnimation = 1;
 			attack = false;
 				
-			
-			
-			
-			
 			Weapon attackingWeapon = WeaponList.get(currentWeapon);
 			int range = attackingWeapon.getRange();
 			int damage = attackingWeapon.getDamage();
@@ -342,70 +360,53 @@ public class Player extends Sprite implements RemotePlayer{
 			System.out.print(tmp);
 			System.out.println("   " + attackingWeapon.getRate()*1000);
 			
-			
-			
-				
 			if (System.currentTimeMillis() - lastFireTime >= attackingWeapon.getRate()*1000 || lastFireTime <=0 ){
-			
-				
-				
 				if ( attackingWeapon.magAmmo() != 0){
-					
 					if (currentWeapon == 0){
-
 						gunShotOrig.setFramePosition(0);
 						lastFireTime = System.currentTimeMillis();
-
-					gunShotOrig.start();
-				}
-				
-
-				attackingWeapon.updateAmmo(-1);
-				
-				
-				String tileShoot = null;
-				Sprite target = null;
-				for ( int r = 20; r <= range; r++){
-					if (xboxController){
-						tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(TSangle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(TSangle)))/25));
-						//if((PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0) != null)
-						//	target = getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0);
-						
+						gunShotOrig.start();
 					}
-					else{
-						tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
-						if(getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle))).size() > 0)
-							target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle))).get(0);
-						
-					}
+					attackingWeapon.updateAmmo(-1);
 					
-					if (tileShoot != " ")
-						return;
-					if ( target != null){
-						target.updateHealth(-damage);
-						return;
+					String tileShoot = null;
+					Sprite target = null;
+					for ( int r = 20; r <= range; r++){
+						if (xboxController){
+							tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(TSangle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(TSangle)))/25));
+							//if((PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0) != null)
+							//	target = getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0);
+							
+						}else{
+							tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
+							if(getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle))).size() > 0){
+								target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle))).get(0);
+							}
+						}
+						if (tileShoot != " "){
+							return;
+						}
+						if ( target != null){
+							target.updateHealth(-damage);
+							return;
+						}
 					}
 				}
 			}
-				else{
-					//WeaponList.get(currentWeapon).currentAnimation = 0;
-				}
-		
-		}
-		
-		
-	}
-		
-	
-		else if (System.currentTimeMillis() - lastFireTime >=100 || lastFireTime <=0 ){
+		}else if (System.currentTimeMillis() - lastFireTime >=100 || lastFireTime <=0 ){
 				WeaponList.get(currentWeapon).currentAnimation = 0;
 				System.out.println("fejk");
-
-			}		
+		}		
 	}
+		
+		
+}
+	
+	
+	
 	
 
 	
 	
 	
-}
+

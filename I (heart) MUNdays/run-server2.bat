@@ -1,0 +1,1 @@
+java -Djava.rmi.server.codebase=rmi://localhost/Game
