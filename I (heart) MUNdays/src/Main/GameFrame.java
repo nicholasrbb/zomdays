@@ -341,7 +341,7 @@ public class GameFrame extends JFrame {
 			
 		//Registers with rimRegistry
 			try {
-				//Naming.bind("rmi://localhost/Game", game);
+				Naming.bind("rmi://"+realIP+"/Game", game);
 				
 				System.err.println("Server ready");
 			} catch (Exception e) {
@@ -356,7 +356,7 @@ public class GameFrame extends JFrame {
 			String server = JOptionPane.showInputDialog("Enter the server IP Address: ", "rmi://xxx.xxx.xxx.xxx/Game");
 			
 			RemotePlayer proxy = null ;
-			proxy = (RemotePlayer) Naming.lookup( name ) ;
+			proxy = (RemotePlayer) Naming.lookup( server ) ;
 		}
 		
 		

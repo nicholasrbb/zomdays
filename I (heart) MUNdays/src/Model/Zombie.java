@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -20,18 +21,20 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class Zombie extends Sprite{
 
-	
+	Random generator = new Random();
 	private AffineTransform npcOrientation;
 	public boolean up = false;
 	public boolean right = false;
 	public boolean left = false;
 	public boolean down = false;
+	
 	private Sprite targetPlayer;
 	private double damage = 0.05;
 	private File voice1;
 	private Clip voice1Orig;
 	
-		
+	int count;
+	
 	public Zombie(Image npcImage, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map) {
 		super(health, width, height, x, y, dx, dy, Map);
 		this.image = npcImage;
@@ -58,11 +61,11 @@ public class Zombie extends Sprite{
 	 */
 	public Sprite whichPlayer(){
 		if ( map.PlayerList.size() >= 1){
-			int closestX = map.PlayerList.get(0).getX();
-			int closestY = map.PlayerList.get(0).getY();
+			int closestX = 0;
+			int closestY = 0;
 			Sprite player = map.PlayerList.get(0);
 		
-			for (int i = 1; i < map.PlayerList.size(); i++){
+			for (int i = 0; i < map.PlayerList.size(); i++){
 				if (map.PlayerList.get(i).getX() != PositionX || map.SpriteList.get(i).getY() != PositionY){
 					if ( (Math.abs(PositionX - map.PlayerList.get(i).getX()) < Math.abs(PositionX - closestX)) && ((Math.abs(PositionY - map.PlayerList.get(i).getY()) < Math.abs(PositionY - closestY)))){
 						closestX = map.PlayerList.get(i).getX();	
@@ -87,57 +90,136 @@ public class Zombie extends Sprite{
 		Sprite target = whichPlayer();
 		targetPlayer = target;
 		
-		if ( targetPlayer != null){
+		if (count > 50){
+			number = generator.nextInt(8);
+			count = 0;
+		}else{
+			count++;
+		}
 		
-			double x = (this.getX() - target.getX())*(this.getX() - target.getX());
-			double y = (this.getY() - target.getY())*(this.getY() - target.getY());
-			
-			if (Math.sqrt(x+y) <= 600){
-				
-			
-			
-				if ( (target.getX() - 18) > getX()){
-					right = true;
+		double x = Math.abs(this.getX() - target.getX())   *    Math.abs(this.getX() - target.getX());
+		double y = Math.abs(this.getY() - target.getY())   *    Math.abs(this.getY() - target.getY());
+		double spriteDistance = Math.sqrt(x+y);
+		
+		
+		String tileWalk = null;
+		if ( spriteDistance < 600){
+			for ( int r = 0; r <= 600; r++){
+				tileWalk = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
+				if (tileWalk != " "){
+					random = true;
+					r = 600;
+				}else if (tileWalk == " " && r > spriteDistance){
+					random = false;
+					r = 600;
 				}
-				if ( (target.getX() + 18) < getX()){
-					left = true;
-				}
-				if ( (target.getY() + 18) < getY()){
-					up = true;
-				}
-				if ( (target.getY() - 18) > getY()){
-					down = true;
-				}
-				if (up && !right && !left && !down){
-					makeMovement(Direction.UP, time);
-				}
-				if (!up && right && !left && !down){
-					makeMovement(Direction.RIGHT, time);
-				}
-				if (!up && !right && left && !down){
-					makeMovement(Direction.LEFT, time);
-				}
-				if (!up && !right && !left && down){
-					makeMovement(Direction.DOWN, time);
-				}
-				if (up && right && !left && !down){
-					makeMovement(Direction.UPRIGHT, time);
-				}
-				if (up && !right && left && !down){
-					makeMovement(Direction.UPLEFT, time);
-				}
-				if (!up && right && !left && down){
-					makeMovement(Direction.DOWNRIGHT, time);
-				}
-				if (!up && !right && left && down){
-					makeMovement(Direction.DOWNLEFT, time);
-				}
+			}	
+		}
+		
+		
+		if (random == true){
+			if (number == 2){
+				up = false;
+				right = true;
+				left = false;
+				down = false;			
+			}
+			if (number == 6){
+				up = false;
+				right = false;
+				left = true;
+				down = false;			
+			}
+			if (number == 8){
+				up = true;
+				right = false;
+				left = false;
+				down = false;			
+			}
+			if (number == 4){
 				up = false;
 				right = false;
 				left = false;
-				down = false;
+				down = true;			
+			}
+			if (number == 5){
+				up = false;
+				right = false;
+				left = true;
+				down = true;			
+			}
+			if (number == 1){
+				up = true;
+				right = true;
+				left = false;
+				down = false;			
+			}
+			if (number == 7){
+				up = true;
+				right = false;
+				left = true;
+				down = false;			
+			}
+			if (number == 3){
+				up = false;
+				right = true;
+				left = false;
+				down = true;			
 			}
 		}
+		
+		
+		
+		if (random == false){
+			if ( targetPlayer != null){
+				x = (this.getX() - target.getX())*(this.getX() - target.getX());
+				y = (this.getY() - target.getY())*(this.getY() - target.getY());
+				if (Math.sqrt(x+y) <= 600){
+					if ( (target.getX() - 18) > getX()){
+						right = true;
+					}
+					if ( (target.getX() + 18) < getX()){
+						left = true;
+					}
+					if ( (target.getY() + 18) < getY()){
+						up = true;
+					}
+					if ( (target.getY() - 18) > getY()){
+						down = true;
+					}
+				}
+			}
+		}
+		
+		
+		if (up && !right && !left && !down){
+			makeMovement(Direction.UP, time);
+		}
+		if (!up && right && !left && !down){
+			makeMovement(Direction.RIGHT, time);
+		}
+		if (!up && !right && left && !down){
+			makeMovement(Direction.LEFT, time);
+		}
+		if (!up && !right && !left && down){
+			makeMovement(Direction.DOWN, time);
+		}
+		if (up && right && !left && !down){
+			makeMovement(Direction.UPRIGHT, time);
+		}
+		if (up && !right && left && !down){
+			makeMovement(Direction.UPLEFT, time);
+		}
+		if (!up && right && !left && down){
+			makeMovement(Direction.DOWNRIGHT, time);
+		}
+		if (!up && !right && left && down){
+			makeMovement(Direction.DOWNLEFT, time);
+		}
+		up = false;
+		right = false;
+		left = false;
+		down = false;
 	}
 	
 	
@@ -150,8 +232,12 @@ public class Zombie extends Sprite{
 		int y = targetPlayer.getY();
 		solveAngle(x,y);
 		
+		
+		
+		
 		npcOrientation.setToTranslation(getX()-25, getY()-25);
 		npcOrientation.rotate(Math.toRadians(angle), image.getWidth(null)/2, image.getHeight(null)/2);	
+		
 	}
 	
 	

@@ -27,6 +27,8 @@ public abstract class Sprite {
 	public double angle;
 	public enum Direction{ UP, RIGHT, LEFT, DOWN, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT }
 	private ArrayList<Sprite> CollidedSprites;
+	protected boolean random = true;
+	protected int number;
 	
 	public ArrayList <Animation> animations;
 	int currentAnimation;
@@ -46,6 +48,14 @@ public abstract class Sprite {
 		PositionY = y;
 		map = Map;
 		animations = new ArrayList <Animation>();
+	}
+	
+	public boolean getRandom(){
+		return random;
+	}
+	
+	public int getNumber(){
+		return number;
 	}
 	
 	/**

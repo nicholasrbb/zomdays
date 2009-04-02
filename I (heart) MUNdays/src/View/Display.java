@@ -179,8 +179,14 @@ public class Display extends JPanel {
 		// Print all NPC's
     	for ( int i = 0; i < player.getMap().SpriteList.size(); i++){
     		AffineTransform npcTransform = new AffineTransform();
-    		npcTransform.setToTranslation(player.getMap().SpriteList.get(i).getX() - cornerX1 - 25, player.getMap().SpriteList.get(i).getY() - cornerY1 - 25);	
-    		npcTransform.rotate(Math.toRadians(player.getMap().SpriteList.get(i).angle),player.getMap().SpriteList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().SpriteList.get(i).getSpriteImage().getHeight(null)/2);    	
+    		if (player.getMap().SpriteList.get(i).getRandom() == false){
+    			npcTransform.setToTranslation(player.getMap().SpriteList.get(i).getX() - cornerX1 - 25, player.getMap().SpriteList.get(i).getY() - cornerY1 - 25);	
+        		npcTransform.rotate(Math.toRadians(player.getMap().SpriteList.get(i).angle),player.getMap().SpriteList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().SpriteList.get(i).getSpriteImage().getHeight(null)/2);
+    		}else{
+    			npcTransform.setToTranslation(player.getMap().SpriteList.get(i).getX() - cornerX1 - 25, player.getMap().SpriteList.get(i).getY() - cornerY1 - 25);	
+    			int angle = 45*(player.getMap().SpriteList.get(i).getNumber());
+        		npcTransform.rotate(angle,player.getMap().SpriteList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().SpriteList.get(i).getSpriteImage().getHeight(null)/2);
+    		}
     		g2d.drawImage(player.getMap().SpriteList.get(i).getSpriteImage(),npcTransform, null);
     	}
     	
