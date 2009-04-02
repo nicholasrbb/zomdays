@@ -20,6 +20,7 @@ public class ModelManager implements Serializable{
 	Player traveller;
 	public ArrayList <TileMap> MapList;
 	int currentMap;
+
 	
 	/**
 	 * contains an ArrayList of tileMaps, and sets a default map

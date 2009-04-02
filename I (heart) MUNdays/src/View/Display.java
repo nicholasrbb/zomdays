@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -153,8 +154,8 @@ public class Display extends JPanel {
     		g2d.drawString("Mag: " + player.getWeapons().get(0).magAmmo(),50,315); 
     		g2d.drawString("Ammo: " + player.getWeapons().get(0).getAmmo(),50,330);
     		g2d.drawString("Current Weapon: " + player.getWeapons().get(player.getCurrentWeapon()).getWeaponName() , 50, 345);
-			
 		
+    	
 		//Paint all the Items
 		for ( int i = 0; i < player.getMap().ItemList.size(); i++){
     		g2d.drawImage(player.getMap().ItemList.get(i).getImage(),player.getMap().ItemList.get(i).getX() - cornerX1 -12, player.getMap().ItemList.get(i).getY() - cornerY1 -12, null);
@@ -182,6 +183,33 @@ public class Display extends JPanel {
     		npcTransform.rotate(Math.toRadians(player.getMap().SpriteList.get(i).angle),player.getMap().SpriteList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().SpriteList.get(i).getSpriteImage().getHeight(null)/2);    	
     		g2d.drawImage(player.getMap().SpriteList.get(i).getSpriteImage(),npcTransform, null);
     	}
+    	
+    	// Load Score Images
+		Image Zero = Toolkit.getDefaultToolkit().getImage("Digits/0.png");
+		Image One = Toolkit.getDefaultToolkit().getImage("Digits/1.png");
+		Image Two = Toolkit.getDefaultToolkit().getImage("Digits/2.png");
+		Image Three = Toolkit.getDefaultToolkit().getImage("Digits/3.png");
+		Image Four = Toolkit.getDefaultToolkit().getImage("Digits/4.png");
+		Image Five = Toolkit.getDefaultToolkit().getImage("Digits/5.png");
+		Image Six = Toolkit.getDefaultToolkit().getImage("Digits/6.png");
+		Image Seven = Toolkit.getDefaultToolkit().getImage("Digits/7.png");
+		Image Eight = Toolkit.getDefaultToolkit().getImage("Digits/8.png");
+		Image Nine = Toolkit.getDefaultToolkit().getImage("Digits/9.png");
+
+		// Paint Score
+		int spacing = 25;
+		
+		g2d.drawImage(Zero, 10 + spacing*0, 10, null);
+		g2d.drawImage(One, 10 + spacing*1, 10, null);
+		g2d.drawImage(Two, 10 + spacing*2, 10, null);
+		g2d.drawImage(Three, 10 + spacing*3, 10, null);
+		g2d.drawImage(Four, 10 + spacing*4, 10, null);
+		g2d.drawImage(Five, 10 + spacing*5, 10, null);
+		g2d.drawImage(Six, 10 + spacing*6, 10, null);
+		g2d.drawImage(Seven, 10 + spacing*7, 10, null);
+		g2d.drawImage(Eight, 10 + spacing*8, 10, null);
+		g2d.drawImage(Nine, 10 + spacing*9, 10, null);
+		
     	
 		
 	}
