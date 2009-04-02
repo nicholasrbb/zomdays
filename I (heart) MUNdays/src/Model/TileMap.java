@@ -177,7 +177,7 @@ public class TileMap {
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'E') {
-                	this.setTile(x, y, toolkit.getImage("BuildImg/RS_Corner") );
+                	this.setTile(x, y, toolkit.getImage("BuildImg/RS_Corner.jpg") );
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'F') {
@@ -214,8 +214,28 @@ public class TileMap {
                 	this.setCharTile(x, y, "x");
                 }
                 if (ch == 'N') {
-                	this.setTile(x, y, toolkit.getImage("BuildImg/LS_Corner") );
+                	this.setTile(x, y, toolkit.getImage("BuildImg/LS_Corner.jpg") );
                 	this.setCharTile(x, y, "x");
+                }
+                
+                if (ch == 'P') {
+                	this.setTile(x, y, toolkit.getImage("BuildImg/R_End.jpg") );
+                	this.setCharTile(x, y, "x");                	
+                }
+                
+                if (ch == 'Q') {
+                	this.setTile(x, y, toolkit.getImage("BuildImg/N_End.jpg") );
+                	this.setCharTile(x, y, "x");                	
+                }
+                
+                if (ch == 'R') {
+                	this.setTile(x, y, toolkit.getImage("BuildImg/L_End.jpg") );
+                	this.setCharTile(x, y, "x");                	
+                }
+                
+                if (ch == 'T') {
+                	this.setTile(x, y, toolkit.getImage("BuildImg/S_End.jpg") );
+                	this.setCharTile(x, y, "x");                	
                 }
                 
                 if (ch == 'S') {
