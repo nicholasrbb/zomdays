@@ -243,12 +243,12 @@ public class Player extends Sprite implements RemotePlayer{
 	public void setPlayerSpriteOrientation(int xPos, int yPos) {	
 		
 		solveAngle(mouseX, mouseY);
-		int printX = getX()-xPos-25;
-		int printY = getY()-yPos-25;
+		int printX = getX()-xPos-55;
+		int printY = getY()-yPos-55;
 	
 		
 		playerOrientation.setToTranslation(printX, printY);	
-		playerOrientation.rotate(Math.toRadians(angle),image.getWidth(null)/2, (image.getHeight(null)/2));
+		playerOrientation.rotate(Math.toRadians(angle),image.getWidth(null)/2, (image.getHeight(null)/2)+10);
 	}
 	
 	public void setXBox(boolean xbox){
