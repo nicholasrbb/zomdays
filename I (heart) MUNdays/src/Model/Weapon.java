@@ -108,7 +108,7 @@ public class Weapon {
 	public void updateAmmo(int change){
 		magAmmo = magAmmo + change;
 		if (magAmmo > 0)
-			currentAnimation = 1;
+		 	currentAnimation = 1;
 	}
 	
 }

@@ -38,6 +38,7 @@ public class Player extends Sprite implements RemotePlayer{
 	Clip gunReloadOrig;
 	Clip voice1Orig;
 	
+	public int points;
 	private double lastFireTime;
 	
 	
@@ -362,7 +363,7 @@ public class Player extends Sprite implements RemotePlayer{
 			
 			if (System.currentTimeMillis() - lastFireTime >= attackingWeapon.getRate()*1000 || lastFireTime <=0 ){
 				if ( attackingWeapon.magAmmo() != 0){
-					if (currentWeapon == 0){
+					if (currentWeapon == 0 || currentWeapon == 2){
 						gunShotOrig.setFramePosition(0);
 						lastFireTime = System.currentTimeMillis();
 						gunShotOrig.start();
@@ -393,9 +394,9 @@ public class Player extends Sprite implements RemotePlayer{
 					}
 				}
 			}
-		}else if (System.currentTimeMillis() - lastFireTime >=100 || lastFireTime <=0 ){
+		}else if (System.currentTimeMillis() - lastFireTime >=150 || lastFireTime <=0 ){
 				WeaponList.get(currentWeapon).currentAnimation = 0;
-				System.out.println("fejk");
+				System.out.println(currentWeapon);
 		}		
 	}
 		

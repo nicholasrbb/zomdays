@@ -107,24 +107,33 @@ public class Game extends UnicastRemoteObject{
 				Image gun = Toolkit.getDefaultToolkit().createImage("Player/player_1pistol_noflash.png");
 				Image gunFire = Toolkit.getDefaultToolkit().createImage("Player/player_1pistol_flash.png");
 				
+				
+				Image gun2x = Toolkit.getDefaultToolkit().createImage("Player/player_2pistol_noflash.png");
+				Image gun2xFire = Toolkit.getDefaultToolkit().createImage("Player/player_2pistol_flash.png");
+
 				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager.MapList.get(0));
 				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(1));
 				
 				Weapon Gun = new Weapon(npcImage,600,10,1000,15,0.2, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1,0.0, "Knife");
+				Weapon Gunx2 = new Weapon(npcImage,600,20,1000,15,.1, "2x Hand Gun");
 				
 				Weapon player2Gun = new Weapon(npcImage,600,10,1000,15,0.5, "Hand Gun");
 				Weapon player2Knife = new Weapon(npcImage,50,25, -1,-1,0.0, "Knife");
 				
 				player1.addWeapon(Gun);
-				player1.addWeapon(Knife);	
+				player1.addWeapon(Knife);
+				player1.addWeapon(Gunx2);
 				player2.addWeapon(player2Gun);
 				player2.addWeapon(player2Knife);
 				
 				
+				/*
+				 * Initialising Pistol Animation
+				 */
 				AnimationFrame gunFrame1 = new AnimationFrame(gun, 12500000L);
 				AnimationFrame gunFrame2 = new AnimationFrame(gunFire, 32500000L);
-				
+								
 				ArrayList <AnimationFrame> gunFrames = new ArrayList <AnimationFrame>();
 				//gunFrames.add(gunFrame1);
 				gunFrames.add(gunFrame2);
@@ -133,11 +142,34 @@ public class Game extends UnicastRemoteObject{
 				ArrayList <AnimationFrame> gunFrames1 = new ArrayList <AnimationFrame>();
 				gunFrames1.add(gunFrame1);
 				
+				
 				Animation gunAnimation = new Animation(gunFrames);
 				Animation gunStill = new Animation(gunFrames1);
 				
+				/*
+				 * Initialising 2x Pistol Animation
+				 */
+				AnimationFrame gun2xFrame1 = new AnimationFrame(gun2x,12500000L);
+				AnimationFrame gun2xFrame2 = new AnimationFrame(gun2xFire, 32500000L);
+				
+				ArrayList <AnimationFrame> gun2xFrames = new ArrayList <AnimationFrame>();
+				gun2xFrames.add(gun2xFrame2);
+				
+				ArrayList <AnimationFrame> gun2xFrames1 = new ArrayList <AnimationFrame>();
+				gun2xFrames1.add(gun2xFrame1);
+				
+				Animation gun2xAnimation = new Animation(gun2xFrames);
+				Animation gun2xStill = new Animation(gun2xFrames1);
+				
+				/*
+				 * adding animations to game
+				 */
+				
 				Gun.animations.add(gunStill);
 				Gun.animations.add(gunAnimation);
+				
+				Gunx2.animations.add(gun2xStill);
+				Gunx2.animations.add(gun2xAnimation);
 				
 				Knife.animations.add(gunStill);
 				Knife.animations.add(gunAnimation);
