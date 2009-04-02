@@ -272,10 +272,10 @@ public class GameFrame extends JFrame {
 			secondFrame.MainMenu.setVisible(false);
 			secondFrame.display = new Display(game.player2, this.getWidth(), this.getHeight()) ;
 			
-			GameMouseEvents mouse = new GameMouseEvents(secondFrame.display,game.player2);
-			MouseEventListener mouseListener = new MouseEventListener(mouse);
-			secondFrame.display.addMouseListener(mouseListener);
-			secondFrame.display.addMouseMotionListener(mouseListener);
+			GameMouseEvents mouse2 = new GameMouseEvents(secondFrame.display,game.player2);
+			MouseEventListener mouseListener2 = new MouseEventListener(mouse2);
+			secondFrame.display.addMouseListener(mouseListener2);
+			secondFrame.display.addMouseMotionListener(mouseListener2);
 			
 			Buttons newButton = new Buttons(game.player2, secondFrame);
 			secondFrame.display.addKeyListener( newButton);

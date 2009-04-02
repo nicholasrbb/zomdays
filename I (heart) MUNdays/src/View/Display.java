@@ -37,7 +37,7 @@ public class Display extends JPanel {
 	
 	
 	
-	public Display(Player playa, int SW, int SH){
+	public Display(RemotePlayer playa, int SW, int SH){
 		super();
 		//Buttons Button = new Buttons(playa);
 		//this.addKeyListener( Button);
@@ -166,17 +166,15 @@ public class Display extends JPanel {
 		// Paint all other Players	
 		for ( int i = 0; i < player.getMap().PlayerList.size(); i++){	
 			if(player.getMap().PlayerList.get(i) != player){
-				
-				
 				AffineTransform otherTransform = new AffineTransform();
 				otherTransform.setToTranslation(player.getMap().PlayerList.get(i).getX() - cornerX1 - 25, player.getMap().PlayerList.get(i).getY() - cornerY1 - 25);	
 				otherTransform.rotate(Math.toRadians(player.getMap().PlayerList.get(i).angle),player.getMap().PlayerList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().PlayerList.get(i).getSpriteImage().getHeight(null)/2);   
 				g2d.drawImage(player.getMap().PlayerList.get(i).getSpriteImage(),otherTransform, null);
-				
-				
-				
+				g2d.drawImage(((Player) player.getMap().PlayerList.get(i)).getWeapons().get(player.getCurrentWeapon()).getImage(),otherTransform, null);
 			}
 		}
+		
+		
 		// Print all NPC's
     	for ( int i = 0; i < player.getMap().SpriteList.size(); i++){
     		AffineTransform npcTransform = new AffineTransform();

@@ -277,6 +277,7 @@ public abstract class Sprite {
 		
 		
 	}
+	
 	public abstract void Movement(long time);
 	
 	public abstract void setSpriteOrientation();
