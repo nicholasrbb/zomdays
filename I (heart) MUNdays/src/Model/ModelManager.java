@@ -45,7 +45,7 @@ public class ModelManager implements Serializable{
 			for (int i = 0; i < map.PlayerList.size(); i++){
 				map.PlayerList.get(i).image = map.PlayerList.get(0).animations.get(map.PlayerList.get(0).currentAnimation).getAnimationImage();
 				map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).image = map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).animations.get(map.PlayerList.get(0).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).currentAnimation).getAnimationImage();
-				System.out.println(map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).image);
+				//System.out.println(map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(0).getCurrentWeapon()).image);
 			
 			}
 		}

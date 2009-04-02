@@ -106,7 +106,7 @@ public class Game {
 				Image gunFire = Toolkit.getDefaultToolkit().createImage("Player/player_1pistol_flash.png");
 				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager.MapList.get(0));
 				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(1));
-				Weapon Gun = new Weapon(npcImage,600,10,1000,15,0.5, "Hand Gun");
+				Weapon Gun = new Weapon(npcImage,600,10,1000,15,0.2, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,50,25, -1,-1,0.0, "Knife");
 				Weapon player2Gun = new Weapon(npcImage,600,10,1000,15,0.5, "Hand Gun");
 				Weapon player2Knife = new Weapon(npcImage,50,25, -1,-1,0.0, "Knife");
