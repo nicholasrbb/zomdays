@@ -239,7 +239,7 @@ public class TileMap {
                 }
                 
                 if (ch == 'S') {
-                	this.setTile(x, y, toolkit.getImage("Stairs.jpg") );
+                	this.setTile(x, y, toolkit.getImage("stairs.png") );
                 	this.setCharTile(x, y, " ");
                 }
                 

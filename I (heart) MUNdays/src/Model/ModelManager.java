@@ -60,7 +60,7 @@ public class ModelManager implements Serializable{
 	public void manageSprites(){
 		for (int Map = 0; Map < MapList.size(); Map++){
 			map = MapList.get(Map);
-			while(map.SpriteList.size() < 1){
+			while(map.SpriteList.size() < 100){
 				int x = Math.abs(generator.nextInt(15000)) + 50;
 				int y = Math.abs(generator.nextInt(15000)) + 50;
 				for (int i = 0; i < map.PlayerList.size(); i++){
@@ -93,7 +93,7 @@ public class ModelManager implements Serializable{
 					if ( currentMap == 0){
 						map = MapList.get(1);
 						currentMap = 1;
-						traveller.PositionX = 5175;
+						traveller.PositionX = 5375;
 						traveller.PositionY = 4100;
 					}else if ( currentMap == 1){
 						map = MapList.get(0);
@@ -125,7 +125,7 @@ public class ModelManager implements Serializable{
 				map.PlayerList.get(i).Movement(timeSpent);
 				map.PlayerList.get(i).setSpriteOrientation();
 				if (map.PlayerList.get(i).isAlive == false){
-					System.exit(0);
+					
 				}
 			}
 			
