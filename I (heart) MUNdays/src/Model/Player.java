@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
@@ -20,7 +21,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * 
  * @see Sprite
  */
-public class Player extends Sprite implements RemotePlayer{
+public class Player extends Sprite implements RemotePlayer, Serializable{
 	
 	private AffineTransform playerOrientation;
 	private AffineTransform Orientation;
@@ -46,6 +47,7 @@ public class Player extends Sprite implements RemotePlayer{
 	
 	public int TSangle = 0;
 	private boolean xboxController = false;
+	
 	
 	
 	/** 
@@ -449,12 +451,10 @@ public class Player extends Sprite implements RemotePlayer{
 	}
 	
 
-	@Override
 	public int getPoints() {
 		return Points;
 	}
 
-	@Override
 	public void setAttack(boolean b) {
 		attack = b;
 		

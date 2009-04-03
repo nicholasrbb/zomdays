@@ -3,6 +3,7 @@ package Main;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -14,12 +15,12 @@ import Model.Weapon;
 import View.Animation;
 import View.AnimationFrame;
 
-public class Game extends UnicastRemoteObject{
+public class Game extends UnicastRemoteObject implements GameInterface, Serializable{
 	public ArrayList <TileMap> MapList;
 	public ModelManager manager;
 	public boolean pause = false;
 	public Player player1;
-	Player player2;
+	public Player player2;
 	
 	
 	
@@ -301,7 +302,9 @@ public class Game extends UnicastRemoteObject{
 		
 		
 		
-		
+	public Player getPlayer(){
+		return player2;
+	}
 		
 		
 	}

@@ -2,6 +2,7 @@ package Model;
 
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import View.Animation;
@@ -12,7 +13,7 @@ import View.finiteAnimation;
  * of all sprites, determines sprite movements and determines all collisions between sprites
  * on a map.
  */
-public abstract class Sprite {
+public abstract class Sprite{
 	protected Image image;
 	double Health;
 	boolean isAlive = false;
@@ -42,6 +43,8 @@ public abstract class Sprite {
 	int currentWeapon = 0;
 	
 	public int Points;
+	
+	
 	
 	
 	public Sprite(double health, int width, int height, int x, int y, double dx, double dy, TileMap Map){
