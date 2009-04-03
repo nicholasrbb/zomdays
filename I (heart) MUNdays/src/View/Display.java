@@ -179,10 +179,15 @@ public class Display extends JPanel {
 		// Print all NPC's
     	for ( int i = 0; i < player.getMap().SpriteList.size(); i++){
     		AffineTransform npcTransform = new AffineTransform();
-    		npcTransform.setToTranslation(player.getMap().SpriteList.get(i).getX() - cornerX1 - 25, player.getMap().SpriteList.get(i).getY() - cornerY1 - 25);	
+    		npcTransform.setToTranslation(player.getMap().SpriteList.get(i).getX() - cornerX1-55, player.getMap().SpriteList.get(i).getY() - cornerY1-55);	
     		npcTransform.rotate(Math.toRadians(player.getMap().SpriteList.get(i).angle),player.getMap().SpriteList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().SpriteList.get(i).getSpriteImage().getHeight(null)/2);    	
+    		
+    		g2d.drawImage(player.getMap().SpriteList.get(i).Legs,npcTransform, null);
     		g2d.drawImage(player.getMap().SpriteList.get(i).getSpriteImage(),npcTransform, null);
+    		
+
     	}
+    	
     	
     	// Load Score Images
 		Image Zero = Toolkit.getDefaultToolkit().getImage("Digits/0.png");

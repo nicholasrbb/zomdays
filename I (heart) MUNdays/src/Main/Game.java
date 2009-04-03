@@ -104,12 +104,12 @@ public class Game extends UnicastRemoteObject{
 				manager = new ModelManager(MapList);
 				
 			//Create Player and Zombie.
-				Image gun = Toolkit.getDefaultToolkit().createImage("Player/player_1pistol_noflash.png");
-				Image gunFire = Toolkit.getDefaultToolkit().createImage("Player/player_1pistol_flash.png");
+				Image gun = Toolkit.getDefaultToolkit().getImage("Player/player_1pistol_noflash.png");
+				Image gunFire = Toolkit.getDefaultToolkit().getImage("Player/player_1pistol_flash.png");
 				
 				
-				Image gun2x = Toolkit.getDefaultToolkit().createImage("Player/player_2pistol_noflash.png");
-				Image gun2xFire = Toolkit.getDefaultToolkit().createImage("Player/player_2pistol_flash.png");
+				Image gun2x = Toolkit.getDefaultToolkit().getImage("Player/player_2pistol_noflash.png");
+				Image gun2xFire = Toolkit.getDefaultToolkit().getImage("Player/player_2pistol_flash.png");
 
 				Image knifeIn = Toolkit.getDefaultToolkit().getImage("Player/player_knife_in.png");
 				Image knifeOut = Toolkit.getDefaultToolkit().getImage("Player/player_knife_Out.png");
