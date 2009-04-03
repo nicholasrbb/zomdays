@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 
 import Main.GameFrame;
 import Model.Player;
+import Model.RemotePlayer;
 
 
 /**
@@ -17,12 +18,12 @@ import Model.Player;
 
 public class Buttons implements KeyListener{
 	
-	Player player;
+	RemotePlayer player;
 	GameFrame game;
 	
-	public Buttons(Player p, GameFrame game){
+	public Buttons(RemotePlayer playa, GameFrame game){
 		this.game = game;
-		player = p;
+		player = playa;
 	}
 	
 	
@@ -39,16 +40,16 @@ public class Buttons implements KeyListener{
 
 		switch (ke.getKeyCode()) {
 	    case KeyEvent.VK_W:  
-	    	player.up = true;
+	    	player.setUP(true);
 	        break;
 	    case KeyEvent.VK_D: 
-	    	player.right = true;
+	    	player.setRIGHT(true);
 	    	break;
 	    case KeyEvent.VK_A: 
-	    	player.left = true;
+	    	player.setLEFT(true);
 	    	break;
 	    case KeyEvent.VK_S: 
-	    	player.down = true;
+	    	player.setDOWN(true);
 	    	break;
 	    case KeyEvent.VK_Q: 
 	    	player.changeWeapon();
@@ -68,16 +69,16 @@ public class Buttons implements KeyListener{
 	public void keyReleased(KeyEvent ke) {
 		switch (ke.getKeyCode()) {
 	    case KeyEvent.VK_W:  
-	    	player.up = false;
+	    	player.setUP(false);
 	        break;
 	    case KeyEvent.VK_D: 
-	    	player.right = false;
+	    	player.setRIGHT(false);
 	    	break;
 	    case KeyEvent.VK_A: 
-	    	player.left = false;
+	    	player.setLEFT(false);
 	    	break;
 	    case KeyEvent.VK_S: 
-	    	player.down = false;
+	    	player.setDOWN(false);
 	    	break;
 		}
 	}

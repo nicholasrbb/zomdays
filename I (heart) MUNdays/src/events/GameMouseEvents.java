@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 
 import Interface.MouseListenerInterface;
 import Model.Player;
+import Model.RemotePlayer;
 import View.Display;
 
 /**
@@ -19,11 +20,11 @@ import View.Display;
 public class GameMouseEvents implements MouseListenerInterface {
 	
 	private Display d;
-	private Player player;
+	private RemotePlayer player;
 		
-	public GameMouseEvents(Display d, Player player){
+	public GameMouseEvents(Display d, RemotePlayer playa){
 		this.d = d;
-		this.player = player;
+		this.player = playa;
 	}
 
 	@Override
@@ -58,8 +59,8 @@ public class GameMouseEvents implements MouseListenerInterface {
 
 	@Override
 	public void mouseMoved(int worldX, int worldY) {
-		player.mouseX = worldX + d.cornerX1;
-		player.mouseY = worldY + d.cornerY1;
+		player.setMouseX(worldX + d.cornerX1);
+		player.setMouseY(worldY + d.cornerY1);
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class GameMouseEvents implements MouseListenerInterface {
 		if (player.getXBox() == false){
 			if ( button == 1){
 				//player.attack();
-				player.attack = true;
+				player.setAttack(true);
 			}
 		}
 	}
