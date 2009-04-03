@@ -30,12 +30,14 @@ public class Player extends Sprite implements RemotePlayer{
 	public boolean down = false;
 	public String name;
 	private File gun;
-	private File voice1;
-	private Clip gunFired;
-	private File gunReload;
+	private File shotgun;
+	private File uzi;
+	private File gunReloadFile;
 	public boolean attack = false;
 	Clip gunShotOrig;
 	Clip gunReloadOrig;
+	Clip shotgunShot;
+	Clip uziShot;
 	Clip voice1Orig;
 	
 	public int points = 0;
@@ -70,7 +72,10 @@ public class Player extends Sprite implements RemotePlayer{
 		//pAnim = new PlayerAnimationManager(this);
 		
 		gun = new File("gunshot.wav");
-		gunReload = new File("reload.wav");
+		gunReloadFile = new File("reload.wav");
+		
+		shotgun = new File("shotgun.wav");
+		uzi = new File("uzi.wav");
 		
 		lastFireTime = -1;
 		
@@ -91,9 +96,9 @@ public class Player extends Sprite implements RemotePlayer{
 				e.printStackTrace();}	
 		
 		try {
-			AudioInputStream handgunReload = AudioSystem.getAudioInputStream(gunReload);
-			gunReloadOrig = AudioSystem.getClip();
-			gunReloadOrig.open(handgunReload);
+			AudioInputStream ShotgunShot = AudioSystem.getAudioInputStream(shotgun);
+			shotgunShot = AudioSystem.getClip();
+			shotgunShot.open(ShotgunShot);
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -101,7 +106,27 @@ public class Player extends Sprite implements RemotePlayer{
 		} catch (LineUnavailableException e) {
 				e.printStackTrace();}
 		
+		try {
+			AudioInputStream UziShot = AudioSystem.getAudioInputStream(uzi);
+			uziShot = AudioSystem.getClip();
+			uziShot.open(UziShot);
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+				e.printStackTrace();}
 		
+		try {
+			AudioInputStream gunReload = AudioSystem.getAudioInputStream(gunReloadFile);
+			gunReloadOrig = AudioSystem.getClip();
+			gunReloadOrig.open(gunReload);
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+				e.printStackTrace();}
 		
 
 		
@@ -328,8 +353,10 @@ public class Player extends Sprite implements RemotePlayer{
 	public void reloadWeapon(){
 		
 		if (WeaponList.get(currentWeapon).getAmmo() >=0){
-			gunReloadOrig.setFramePosition(0);
-			gunReloadOrig.start();
+			if(currentWeapon == 0 || currentWeapon == 2){
+				gunReloadOrig.setFramePosition(0);
+				gunReloadOrig.start();
+			}
 			WeaponList.get(currentWeapon).reload();
 		}
 	}
@@ -343,8 +370,9 @@ public class Player extends Sprite implements RemotePlayer{
 	@Override
 	public void attack() {
 
-		if (attack == true){
-			attack = false;
+		if (attack == true ){
+			if(!WeaponList.get(currentWeapon).auto)
+				attack = false;
 				
 			Weapon attackingWeapon = WeaponList.get(currentWeapon);
 			int range = attackingWeapon.getRange();
@@ -357,6 +385,7 @@ public class Player extends Sprite implements RemotePlayer{
 			double tmp =System.currentTimeMillis() - lastFireTime ;
 			
 			if (System.currentTimeMillis() - lastFireTime >= attackingWeapon.getRate()*1000 || lastFireTime <=0 ){
+				System.out.println("fired");
 				if ( attackingWeapon.magAmmo() != 0){
 					if (currentWeapon == 0 || currentWeapon == 2){
 						gunShotOrig.setFramePosition(0);
@@ -364,6 +393,22 @@ public class Player extends Sprite implements RemotePlayer{
 						WeaponList.get(currentWeapon).currentAnimation = 1;
 						gunShotOrig.start();
 					}
+					
+					if (currentWeapon == 3){
+						shotgunShot.setFramePosition(0);
+						lastFireTime = System.currentTimeMillis();
+						WeaponList.get(currentWeapon).currentAnimation = 1;
+						shotgunShot.start();
+					}
+					
+					if (currentWeapon == 4){
+						uziShot.setFramePosition(0);
+						lastFireTime = System.currentTimeMillis();
+						System.out.println("fired Uzi");
+						WeaponList.get(currentWeapon).currentAnimation = 1;
+						uziShot.start();
+					}
+					
 					if (WeaponList.get(currentWeapon).name.equals("Knife")){
 						lastFireTime = System.currentTimeMillis();
 						WeaponList.get(currentWeapon).currentAnimation = 1;

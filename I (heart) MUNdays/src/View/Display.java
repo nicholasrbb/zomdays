@@ -188,11 +188,10 @@ public class Display extends JPanel {
     			int angle = 45*(player.getMap().SpriteList.get(i).getNumber());
         		npcTransform.rotate(angle,player.getMap().SpriteList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().SpriteList.get(i).getSpriteImage().getHeight(null)/2);
     		}
-    		System.out.println(player.getMap().SpriteList.get(i).);
-    		g2d.drawImage(player.getMap().SpriteList.get(i).Blood, npcTransform, null);
     		g2d.drawImage(player.getMap().SpriteList.get(i).Legs,npcTransform, null);
     		g2d.drawImage(player.getMap().SpriteList.get(i).getSpriteImage(),npcTransform, null);
-    		
+    		g2d.drawImage(player.getMap().SpriteList.get(i).Blood, npcTransform, null);
+
     		
 
     	}

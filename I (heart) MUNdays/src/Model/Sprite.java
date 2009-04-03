@@ -5,6 +5,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 import View.Animation;
+import View.finiteAnimation;
 
 /**
  * Class that controls and determines parameters of all sprites. Gets and sets speed and health 
@@ -33,10 +34,10 @@ public abstract class Sprite {
 	public Image Blood;
 	
 	public ArrayList <Animation> animations;
-	public ArrayList <Animation> bloodAnimations;
+	public ArrayList <finiteAnimation> bloodAnimations;
 	public int currentAnimation = 0;
 	public int currentWalkAnimation = 0;
-	public int currentStateAnimation = 0;
+	public int currentStateAnimation = 1;
 	public ArrayList <Weapon> WeaponList;
 	int currentWeapon = 0;
 	
@@ -55,7 +56,7 @@ public abstract class Sprite {
 		PositionY = y;
 		map = Map;
 		animations = new ArrayList <Animation>();
-		bloodAnimations = new ArrayList <Animation>();;
+		bloodAnimations = new ArrayList <finiteAnimation>();;
 		currentAnimation = 0;
 		currentWalkAnimation = 0;
 		currentStateAnimation = 0;
