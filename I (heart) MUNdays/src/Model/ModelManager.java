@@ -114,18 +114,22 @@ public class ModelManager implements Serializable{
 						System.out.println(k);
 						if ( k == 1){
 							zombieImage = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_yellow.png");
+							Zombie zombay = new Zombie(zombieImage,ZombieLegs, 20, 10, 10, x, y, 0.1, 0.1, map,0.2);
+							zombay.animations.add(ZombieWalk);
+							map.addSprite(zombay);
 						}
 						else if ( k == 2){
 							zombieImage = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_green.png");							
+							Zombie zombay = new Zombie(zombieImage,ZombieLegs, 50, 10, 10, x, y, 0.1, 0.1, map,0.05);
+							zombay.animations.add(ZombieWalk);
+							map.addSprite(zombay);
 						}
 						else{
 							zombieImage = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_blue.png");
-							
+							Zombie zombay = new Zombie(zombieImage,ZombieLegs, 30, 10, 10, x, y, 0.25, 0.25, map,0.05);
+							zombay.animations.add(ZombieWalk);
+							map.addSprite(zombay);
 						}
-						
-						Zombie zombay = new Zombie(zombieImage,ZombieLegs, 50, 10, 10, x, y, 0.1, 0.1, map);
-						zombay.animations.add(ZombieWalk);
-						map.addSprite(zombay);
 					}
 				}
 			}
