@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.ServerSocket;
@@ -42,7 +43,6 @@ import javax.swing.JPanel;
 
 
 import Interface.Buttons;
-import Interface.MenuButtons;
 import Interface.MouseEventListener;
 import Model.ModelManager;
 import Model.Player;
@@ -69,7 +69,7 @@ import events.GameMouseEvents;
  *
  */
 @SuppressWarnings("serial")
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements Serializable{
 	
 	public ArrayList <TileMap> MapList;
 	public MyMainMenu MainMenu;
@@ -77,12 +77,6 @@ public class GameFrame extends JFrame {
 	public WinMenu NewWinMenu;
 	public InGameMenu pauseMenu;
 	public ChooseMultiplayerMenu chooseMultiplayerMenu;
-	//public JPanel inGameMenu;
-	//public JPanel otherMainMenu;
-	//public JPanel gameOverMenu;
-	//public JPanel winMenu;
-	//public JPanel HostMenu;
-	//public JPanel JoinMenu;
 	public Display display;
 	public boolean makeGame = false;
 	public boolean mainmenu = false;
@@ -315,7 +309,7 @@ public class GameFrame extends JFrame {
 		
 		
 		public void HostGame() throws RemoteException{
-		
+		game = new Game();
 		//Creates the Game	
 			try {
 				game = new Game();
@@ -344,18 +338,14 @@ public class GameFrame extends JFrame {
 			System.out.println("Player's name is: " + name);
 			
 			
-		//Tries to run the bat file thats set the RMI stuff
-			try {
-				Runtime.getRuntime().exec("run-server1.bat");
-				
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		
 			
 		//Registers with rimRegistry
 			try {
-				Naming.bind("rmi://"+realIP+"/Game", game);
+				java.rmi.registry.LocateRegistry.createRegistry(1099);
+				
+				
+				Naming.rebind("rmi://"+realIP+"/Game", game);
 				
 				System.err.println("Server ready");
 			} catch (Exception e) {
@@ -375,25 +365,27 @@ public class GameFrame extends JFrame {
 			String server = JOptionPane.showInputDialog("Enter the server IP Address: ", "rmi://xxx.xxx.xxx.xxx/Game");
 			
 			
-			Game proxy = null ;
-			proxy = (Game) Naming.lookup( server ) ;
-			Player player = proxy.player2;
+			Remote proxy = null ;
+			proxy = Naming.lookup( server ) ;
+			GameInterface gameinterface= (GameInterface) proxy;
+			System.out.println("connected");
+			System.out.println(gameinterface.getPlayer());
+			//Player player = gameinterface.getPlayer();
 			
 			
 		//Making a game
-			display = new Display(player, this.getWidth(), this.getHeight()) ;
-			display.setBackground(Color.BLACK);
+			//display = new Display(gameinterface.getPlayer(), this.getWidth(), this.getHeight()) ;
+			//display.setBackground(Color.BLACK);
 						
-			GameMouseEvents mouse2 = new GameMouseEvents(display,player);
-			MouseEventListener mouseListener2 = new MouseEventListener(mouse2);
-			display.addMouseListener(mouseListener2);
-			display.addMouseMotionListener(mouseListener2);
+			//GameMouseEvents mouse2 = new GameMouseEvents(display,gameinterface.getPlayer());
+			//MouseEventListener mouseListener2 = new MouseEventListener(mouse2);
+			//display.addMouseListener(mouseListener2);
+			//display.addMouseMotionListener(mouseListener2);
 			
-			Buttons newButton = new Buttons(player, this);
-			secondFrame.display.addKeyListener( newButton);
+			//Buttons newButton = new Buttons(gameinterface.getPlayer(), this);
+			//secondFrame.display.addKeyListener( newButton);
 			
-			secondFrame.setContentPane(display);
-			display.grabFocus();
+			//display.grabFocus();
 			
 			
 			
@@ -421,6 +413,7 @@ public class GameFrame extends JFrame {
 			try {
 				game = new Game();
 			} catch (RemoteException e1) {
+				System.out.println("exception");
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
