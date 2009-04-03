@@ -17,11 +17,11 @@ import javax.swing.JPanel;
 import Interface.LabelListener;
 import Main.GameFrame;
 
-public class MultiplayerMenu extends JPanel{
+public class ChooseMultiplayerMenu extends JPanel{
 
 
 	GameFrame game;
-		public MultiplayerMenu(final GameFrame game){
+		public ChooseMultiplayerMenu(final GameFrame game){
 			super();
 			this.game = game;
 			this.setBackground(Color.BLACK);
@@ -32,9 +32,9 @@ public class MultiplayerMenu extends JPanel{
 			//Image image = new Image();
 			Image Title = Toolkit.getDefaultToolkit().createImage("I heart ZOMdays.png");
 			ImageIcon iconTitle = new ImageIcon(Title);
-			Image image = Toolkit.getDefaultToolkit().createImage("HostGame.png");
+			Image image = Toolkit.getDefaultToolkit().createImage("SplitScreen.png");
 			ImageIcon iconimage = new ImageIcon(image);
-			Image image2 = Toolkit.getDefaultToolkit().createImage("JoinGame.png");
+			Image image2 = Toolkit.getDefaultToolkit().createImage("Network.png");
 			ImageIcon iconimage2 = new ImageIcon(image2);
 			Image image3 = Toolkit.getDefaultToolkit().createImage("Back.png");
 			ImageIcon iconimage3 = new ImageIcon(image3);
@@ -56,37 +56,23 @@ public class MultiplayerMenu extends JPanel{
 			label.addMouseListener(new LabelListener(label) {
 				
 				public void mouseClicked(MouseEvent arg0) {
-					try {
-						game.HostGame();
-					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					game.newGame();
+					game.NewMultiplayerGame();
 					
 				}});
 			
 			label2.addMouseListener(new LabelListener(label2) {
 				
 				public void mouseClicked(MouseEvent arg0) {
-					try {
-						game.JoinGame();
-					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (NotBoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					game.showMultiplayerMenu();
 				}});
 			
 			
 			label3.addMouseListener(new LabelListener(label3) {
 				
 				public void mouseClicked(MouseEvent arg0) {
-					game.showChooseMultiplayerMenu();
+					game.showMainMenu();
+					
 				}});
 			
 			

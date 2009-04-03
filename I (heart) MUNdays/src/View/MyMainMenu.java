@@ -82,7 +82,7 @@ GameFrame game;
 		label2.addMouseListener(new LabelListener(label2) {
 			
 			public void mouseClicked(MouseEvent arg0) {
-				game.showMultiplayerMenu();
+				game.showChooseMultiplayerMenu();
 			}});
 		
 		
@@ -128,19 +128,5 @@ GameFrame game;
 		labelMUN.setIcon(icon);
 		currentImage++;
 	}
-	/*
-	public Image getAnimationImage(){
-		elapsedFrameTime = elapsedFrameTime + (System.nanoTime() - currentTime);
-		if (elapsedFrameTime >= frames.get(currentFrame).time) {
-			elapsedFrameTime = 0;
-			if(currentFrame < frames.size()-1 ){
-				currentFrame = currentFrame + 1;
-			}else{
-				currentFrame = 0;
-			}
-		}
-		currentTime = System.nanoTime();
-		return frames.get(currentFrame).image;
-	}
-	*/
+	
 }
