@@ -20,6 +20,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -35,8 +36,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-
 
 
 
@@ -310,7 +309,6 @@ public class GameFrame extends JFrame {
 			
 			
 			
-			
 		//Gets the IP Address and asks for a player name.
 			InetAddress ip = null;
 			try {
@@ -338,7 +336,6 @@ public class GameFrame extends JFrame {
 				e1.printStackTrace();
 			}
 			
-			
 		//Registers with rimRegistry
 			try {
 				Naming.bind("rmi://"+realIP+"/Game", game);
@@ -349,16 +346,41 @@ public class GameFrame extends JFrame {
 				e.printStackTrace();
 			}
 			
+			newGame();
+			
+			
+			
+			
 		}
 		
 		public void JoinGame() throws MalformedURLException, RemoteException, NotBoundException{
 			String name = JOptionPane.showInputDialog("Enter you Player Name: ", "") ;
 			String server = JOptionPane.showInputDialog("Enter the server IP Address: ", "rmi://xxx.xxx.xxx.xxx/Game");
 			
-			RemotePlayer proxy = null ;
-			proxy = (RemotePlayer) Naming.lookup( server ) ;
-		}
-		
+			
+			Game proxy = null ;
+			proxy = (Game) Naming.lookup( server ) ;
+			Player player = proxy.player2;
+			
+			
+		//Making a game
+			display = new Display(player, this.getWidth(), this.getHeight()) ;
+			display.setBackground(Color.BLACK);
+						
+			GameMouseEvents mouse2 = new GameMouseEvents(display,player);
+			MouseEventListener mouseListener2 = new MouseEventListener(mouse2);
+			display.addMouseListener(mouseListener2);
+			display.addMouseMotionListener(mouseListener2);
+			
+			Buttons newButton = new Buttons(player, this);
+			secondFrame.display.addKeyListener( newButton);
+			
+			secondFrame.setContentPane(display);
+			display.grabFocus();
+			
+			
+			
+    	}
 		
 		
 		
@@ -373,7 +395,9 @@ public class GameFrame extends JFrame {
 		
 		public void newGame(){
 			gameMade = true;
+			HostMenu.setVisible(false);
 			MainMenu.setVisible(false);
+			
 			try {
 				game = new Game();
 			} catch (RemoteException e1) {

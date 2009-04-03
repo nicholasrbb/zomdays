@@ -18,7 +18,7 @@ public class Game extends UnicastRemoteObject{
 	public ArrayList <TileMap> MapList;
 	public ModelManager manager;
 	public boolean pause = false;
-	Player player1;
+	public Player player1;
 	Player player2;
 	
 	

@@ -34,10 +34,14 @@ public interface RemotePlayer extends Remote{
 	public void removeWeapon(Weapon weapon);
 	public void reloadWeapon();
 	public void attack();
-	public void setRight(boolean R);
 	public Image getSpriteImage() ;
 	public boolean getXBox();
 	public void setXBox(boolean b);
 	public int getPoints();
+	public void setAttack(boolean b);
+	public void setUP(boolean b);
+	public void setLEFT(boolean b);
+	public void setDOWN(boolean b);
+	public void setRIGHT(boolean b);
 
 }

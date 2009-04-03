@@ -132,9 +132,6 @@ public class Player extends Sprite implements RemotePlayer{
 		return WeaponList;
 	}
 
-	public void setRight(boolean R){
-		right = R;
-	}
 	/**
 	 * Calls Sprits Movement method based on keyListener
 	 * 
@@ -411,7 +408,29 @@ public class Player extends Sprite implements RemotePlayer{
 	public int getPoints() {
 		return Points;
 	}
+
+	@Override
+	public void setAttack(boolean b) {
+		attack = b;
 		
+	}
+	
+	public void setUP(boolean b) {
+		up = b;
+		
+	}
+	public void setRIGHT(boolean b) {
+		right = b;
+		
+	}
+	public void setLEFT(boolean b) {
+		left = b;
+		
+	}
+	public void setDOWN(boolean b) {
+		down = b;
+		
+	}
 		
 }
 	
