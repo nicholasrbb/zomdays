@@ -51,6 +51,7 @@ import Model.TileMap;
 import Model.Weapon;
 import View.Animation;
 import View.AnimationFrame;
+import View.ChooseMultiplayerMenu;
 import View.Display;
 import View.InGameMenu;
 import View.MultiplayerMenu;
@@ -75,6 +76,7 @@ public class GameFrame extends JFrame {
 	public MultiplayerMenu multiplayerMenu;
 	public WinMenu NewWinMenu;
 	public InGameMenu pauseMenu;
+	public ChooseMultiplayerMenu chooseMultiplayerMenu;
 	//public JPanel inGameMenu;
 	//public JPanel otherMainMenu;
 	//public JPanel gameOverMenu;
@@ -95,11 +97,12 @@ public class GameFrame extends JFrame {
 	/**
 	 * 
 	 */
-		public GameFrame(){
+		public GameFrame(boolean b){
 			MainMenu = new MyMainMenu(this);
 			multiplayerMenu = new MultiplayerMenu(this);
 			pauseMenu = new InGameMenu(this);
 			NewWinMenu = new WinMenu(this);
+			chooseMultiplayerMenu = new ChooseMultiplayerMenu(this);
 			//otherMainMenu = new JPanel();
 			//HostMenu = new JPanel();
 			//JoinMenu = new JPanel();
@@ -108,6 +111,7 @@ public class GameFrame extends JFrame {
 			//winMenu = new JPanel();
 			MapList = new ArrayList <TileMap>();
 			
+			multi = b;
 			this.setBounds(25, 200, 600, 600);
 			this.setPreferredSize(new Dimension(800,600));
 			this.setResizable(false);
@@ -147,7 +151,10 @@ public class GameFrame extends JFrame {
 				e.printStackTrace();
 			} catch (LineUnavailableException e) {
 					e.printStackTrace();}			
-			showMainMenu();
+			
+			if ( multi == false){
+				showMainMenu();
+			}
 			
 			
 		}
@@ -164,9 +171,7 @@ public class GameFrame extends JFrame {
 			this.setContentPane(MainMenu);
 			MainMenu.grabFocus();
 			MainMenu.setVisible(true);
-			//this.setContentPane(otherMainMenu);
-			//otherMainMenu.grabFocus();
-			//otherMainMenu.setVisible(true);
+			
 			
 			if(firstTime == true){
 				long elapsedTime = 0;
@@ -202,9 +207,17 @@ public class GameFrame extends JFrame {
 		
 		public void showMultiplayerMenu(){
 			MainMenu.setVisible(false);
+			chooseMultiplayerMenu.setVisible(false);
 			this.setContentPane(multiplayerMenu);
 			multiplayerMenu.grabFocus();
 			multiplayerMenu.setVisible(true);
+		}
+		
+		public void showChooseMultiplayerMenu(){
+			MainMenu.setVisible(false);
+			this.setContentPane(chooseMultiplayerMenu);
+			chooseMultiplayerMenu.grabFocus();
+			chooseMultiplayerMenu.setVisible(true);
 		}
 		
 		
@@ -264,10 +277,15 @@ public class GameFrame extends JFrame {
 		public void NewMultiplayerGame(){
 			multi = true;
 			
-			secondFrame = new GameFrame();
-			secondFrame.setBounds(650, 200, 600, 400);
+			secondFrame = new GameFrame(true);
+			secondFrame.multi = true;
+			secondFrame.setBounds(650, 200, 800, 600);
 			secondFrame.setResizable(false);
 			secondFrame.MainMenu.setVisible(false);
+			secondFrame.multiplayerMenu.setVisible(false);
+			secondFrame.pauseMenu.setVisible(false);
+			secondFrame.NewWinMenu.setVisible(false);
+			secondFrame.chooseMultiplayerMenu.setVisible(false);
 			secondFrame.display = new Display(game.player2, this.getWidth(), this.getHeight()) ;
 			
 			GameMouseEvents mouse2 = new GameMouseEvents(secondFrame.display,game.player2);
@@ -395,6 +413,10 @@ public class GameFrame extends JFrame {
 		public void newGame(){
 			gameMade = true;
 			MainMenu.setVisible(false);
+			multiplayerMenu.setVisible(false);
+			pauseMenu.setVisible(false);
+			NewWinMenu.setVisible(false);
+			chooseMultiplayerMenu.setVisible(false);
 			
 			try {
 				game = new Game();
@@ -464,7 +486,6 @@ public class GameFrame extends JFrame {
 				        	display.repaint();
 				        	if (multi){
 				        		secondFrame.display.repaint();
-				        		System.out.println("finished displaying second displlay");
 				        	}
 			        	}
 			        }
