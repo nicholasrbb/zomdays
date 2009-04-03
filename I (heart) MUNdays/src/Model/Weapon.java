@@ -15,12 +15,13 @@ public class Weapon {
 	int damage;
 	int ammo;
 	int magAmmo;
+	int capacity;
 	double rate;
 	String name;
 	public ArrayList <Animation> animations;
 	int currentAnimation;	
 	
-	public Weapon(Image image, int range, int damage, int ammo, int mag, double rate, String name){
+	public Weapon(Image image, int capacity, int range, int damage, int ammo, int mag, double rate, String name){
 		this.image = image;
 		this.range = range;
 		this.damage = damage;
@@ -28,6 +29,7 @@ public class Weapon {
 		this.magAmmo = mag;
 		this.name = name;
 		this.rate = rate;
+		this.capacity = capacity;
 		animations = new ArrayList <Animation>();
 	}
 	
@@ -92,7 +94,7 @@ public class Weapon {
 	 * ammo accordingly.  
 	 */
 	public void reload(){
-		int add = 15 - magAmmo;
+		int add = capacity - magAmmo;
 		if(ammo >= add){
 			magAmmo = magAmmo + add;
 		}else{
@@ -105,8 +107,12 @@ public class Weapon {
 	/**
 	 * Updates the weapon's ammo  
 	 */
-	public void updateAmmo(int change){
-		magAmmo = magAmmo + change;
+	public void updateAmmo(){
+		if (magAmmo >0){
+			magAmmo--;
+			if (capacity == 30)
+				magAmmo--;
+		}
 		
 	}
 	

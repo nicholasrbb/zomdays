@@ -36,7 +36,7 @@ public class Zombie extends Sprite{
 	
 	int count;
 	
-	public Zombie(Image npcImage,Image Legs, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map, double damage) {
+	public Zombie(Image npcImage,Image Legs, Image Blood, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map, double damage) {
 		super(health, width, height, x, y, dx, dy, Map);
 		this.image = npcImage;
 		this.Legs = Legs;
@@ -279,6 +279,13 @@ public class Zombie extends Sprite{
 	public void updateHealth(double change){
 		//zAnim.setState(ZombieAnimationStates.Damage);
 
+		if (change == 10 || change == 20){
+			currentStateAnimation = 1;
+		}
+		
+		
+			
+		
 		Health = Health + change;
 		if (Health <= 0){
 			//if (!voice1Orig.isActive()){
