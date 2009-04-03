@@ -33,11 +33,13 @@ public class Zombie extends Sprite{
 	private File voice1;
 	private Clip voice1Orig;
 	
+	
 	int count;
 	
-	public Zombie(Image npcImage, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map) {
+	public Zombie(Image npcImage,Image Legs, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map) {
 		super(health, width, height, x, y, dx, dy, Map);
 		this.image = npcImage;
+		this.Legs = Legs;
 		npcOrientation = new AffineTransform();
 		
 		voice1 = new File("creep.wav");

@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
+import View.Animation;
+import View.AnimationFrame;
+
 
 /**
  * Manager that controls the updating of all sprites and animations for the game,
@@ -14,12 +17,17 @@ import java.util.Random;
 public class ModelManager implements Serializable{
 	
 	public TileMap map;
-	Image zombieImage = Toolkit.getDefaultToolkit().createImage("zombie.png");
+	Image zombieImage; 
 	Random generator = new Random();
 	public int killed = 0;
 	Player traveller;
 	public ArrayList <TileMap> MapList;
 	int currentMap;
+	private Image ZombieLegs;
+	
+	Animation ZombieWalk;
+	Animation ZombieBlood;
+	
 
 	
 	/**
@@ -31,6 +39,32 @@ public class ModelManager implements Serializable{
 		MapList = maplist;
 		map = maplist.get(0);
 		currentMap = 0;
+		
+		ZombieLegs = Toolkit.getDefaultToolkit().createImage("Player/player_shortlegs_right.png");
+		
+		Image walk0 = Toolkit.getDefaultToolkit().createImage("Player/player_shortlegs_right.png");
+		Image walk1 = Toolkit.getDefaultToolkit().createImage("Player/player_longlegs_right.png");
+		Image walk2 = Toolkit.getDefaultToolkit().createImage("Player/player_shortlegs_left.png");
+		Image walk3 = Toolkit.getDefaultToolkit().createImage("Player/player_longlegs_left.png");
+		
+		AnimationFrame zomFrame1 = new AnimationFrame(walk0, 100000000L);
+		AnimationFrame zomFrame2 = new AnimationFrame(walk1, 100000000L);
+		AnimationFrame zomFrame3 = new AnimationFrame(walk0, 100000000L);
+		AnimationFrame zomFrame4 = new AnimationFrame(walk2, 100000000L);
+		AnimationFrame zomFrame5 = new AnimationFrame(walk3, 100000000L);
+		AnimationFrame zomFrame6 = new AnimationFrame(walk2, 100000000L);
+		
+		ArrayList <AnimationFrame> frames1 = new ArrayList <AnimationFrame>();
+		
+		frames1.add(zomFrame1);
+		frames1.add(zomFrame2);
+		frames1.add(zomFrame3);
+		frames1.add(zomFrame4);
+		frames1.add(zomFrame5);
+		frames1.add(zomFrame6);
+		
+	    ZombieWalk = new Animation(frames1);
+		
 	}
 	
 	/**
@@ -46,7 +80,12 @@ public class ModelManager implements Serializable{
 			for (int i = 0; i < map.PlayerList.size(); i++){
 				map.PlayerList.get(i).image = map.PlayerList.get(i).animations.get(map.PlayerList.get(i).currentAnimation).getAnimationImage();
 				map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).image = map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).animations.get(map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).currentAnimation).getAnimationImage();
-			
+			}
+			for (int i = 0; i < map.SpriteList.size(); i++){
+				System.out.println(map.SpriteList.get(i).Legs);
+				System.out.println(map.SpriteList.get(i).currentWalkAnimation);
+				map.SpriteList.get(i).Legs = map.SpriteList.get(i).animations.get(map.SpriteList.get(i).currentWalkAnimation).getAnimationImage();
+				//map.SpriteList.get(i).Legs = map.SpriteList.get(i).animations.get(map.SpriteList.get(i).currentStateAnimation).getAnimationImage();		//	}
 			}
 		}
 	}
@@ -60,6 +99,7 @@ public class ModelManager implements Serializable{
 		for (int Map = 0; Map < MapList.size(); Map++){
 			map = MapList.get(Map);
 			while(map.SpriteList.size() < 100){
+				
 				int x = Math.abs(generator.nextInt(15000)) + 50;
 				int y = Math.abs(generator.nextInt(15000)) + 50;
 				for (int i = 0; i < map.PlayerList.size(); i++){
@@ -69,7 +109,22 @@ public class ModelManager implements Serializable{
 						map.getCharTile(x/25, (y+25)/25) == " " &&
 						map.getCharTile(x/25, (y-25)/25) == " " &&
 						Math.abs(map.PlayerList.get(i).getX() - x) > 450 && Math.abs(map.PlayerList.get(i).getY() - y) > 550){
-						Zombie zombay = new Zombie(zombieImage, 50, 10, 10, x, y, 0.1, 0.1, map);
+						
+						int k = Math.abs(generator.nextInt(3));
+						System.out.println(k);
+						if ( k == 1){
+							zombieImage = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_yellow.png");
+						}
+						else if ( k == 2){
+							zombieImage = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_green.png");							
+						}
+						else{
+							zombieImage = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_blue.png");
+							
+						}
+						
+						Zombie zombay = new Zombie(zombieImage,ZombieLegs, 50, 10, 10, x, y, 0.1, 0.1, map);
+						zombay.animations.add(ZombieWalk);
 						map.addSprite(zombay);
 					}
 				}

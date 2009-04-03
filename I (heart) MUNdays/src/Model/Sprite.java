@@ -29,9 +29,12 @@ public abstract class Sprite {
 	private ArrayList<Sprite> CollidedSprites;
 	protected boolean random = true;
 	protected int number;
+	public Image Legs;
 	
 	public ArrayList <Animation> animations;
 	int currentAnimation;
+	int currentWalkAnimation;
+	int currentStateAnimation;
 	public ArrayList <Weapon> WeaponList;
 	int currentWeapon = 0;
 	
@@ -50,6 +53,9 @@ public abstract class Sprite {
 		PositionY = y;
 		map = Map;
 		animations = new ArrayList <Animation>();
+		currentAnimation = 0;
+		currentWalkAnimation = 0;
+		currentStateAnimation = 0;
 	}
 	
 	public boolean getRandom(){
