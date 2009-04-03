@@ -38,7 +38,7 @@ public class Player extends Sprite implements RemotePlayer{
 	Clip gunReloadOrig;
 	Clip voice1Orig;
 	
-	public int points = 999;
+	public int points = 0;
 	private double lastFireTime;
 	
 	

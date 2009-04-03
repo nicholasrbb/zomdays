@@ -236,19 +236,7 @@ public class Display extends JPanel {
 			
 				
 		}
-		
-		/*
-		g2d.drawImage(Zero, 10 + spacing*0, 10, null);
-		g2d.drawImage(One, 10 + spacing*1, 10, null);
-		g2d.drawImage(Two, 10 + spacing*2, 10, null);
-		g2d.drawImage(Three, 10 + spacing*3, 10, null);
-		g2d.drawImage(Four, 10 + spacing*4, 10, null);
-		g2d.drawImage(Five, 10 + spacing*5, 10, null);
-		g2d.drawImage(Six, 10 + spacing*6, 10, null);
-		g2d.drawImage(Seven, 10 + spacing*7, 10, null);
-		g2d.drawImage(Eight, 10 + spacing*8, 10, null);
-		g2d.drawImage(Nine, 10 + spacing*9, 10, null);
-		*/
+	
     	
 		
 	}
