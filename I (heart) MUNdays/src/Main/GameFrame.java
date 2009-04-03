@@ -33,6 +33,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -51,6 +52,10 @@ import Model.Weapon;
 import View.Animation;
 import View.AnimationFrame;
 import View.Display;
+import View.InGameMenu;
+import View.MultiplayerMenu;
+import View.MyMainMenu;
+import View.WinMenu;
 import events.GameMouseEvents;
 /**
  * This class extends JFrame and will be used to contain the 
@@ -66,12 +71,16 @@ import events.GameMouseEvents;
 public class GameFrame extends JFrame {
 	
 	public ArrayList <TileMap> MapList;
-	public JPanel MainMenu;
-	public JPanel inGameMenu;
-	public JPanel gameOverMenu;
-	public JPanel winMenu;
-	public JPanel HostMenu;
-	public JPanel JoinMenu;
+	public MyMainMenu MainMenu;
+	public MultiplayerMenu multiplayerMenu;
+	public WinMenu NewWinMenu;
+	public InGameMenu pauseMenu;
+	//public JPanel inGameMenu;
+	//public JPanel otherMainMenu;
+	//public JPanel gameOverMenu;
+	//public JPanel winMenu;
+	//public JPanel HostMenu;
+	//public JPanel JoinMenu;
 	public Display display;
 	public boolean makeGame = false;
 	public boolean mainmenu = false;
@@ -82,21 +91,25 @@ public class GameFrame extends JFrame {
 	public Game game;
 	GameFrame secondFrame;
 	boolean multi = false;
-	
+	boolean firstTime = true;
 	/**
 	 * 
 	 */
 		public GameFrame(){
-			MainMenu = new JPanel();
-			HostMenu = new JPanel();
-			JoinMenu = new JPanel();
-			inGameMenu = new JPanel();
-			gameOverMenu = new JPanel();
-			winMenu = new JPanel();
+			MainMenu = new MyMainMenu(this);
+			multiplayerMenu = new MultiplayerMenu(this);
+			pauseMenu = new InGameMenu(this);
+			NewWinMenu = new WinMenu(this);
+			//otherMainMenu = new JPanel();
+			//HostMenu = new JPanel();
+			//JoinMenu = new JPanel();
+			//inGameMenu = new JPanel();
+			//gameOverMenu = new JPanel();
+			//winMenu = new JPanel();
 			MapList = new ArrayList <TileMap>();
 			
-			this.setBounds(25, 200, 600, 400);
-			this.setPreferredSize(new Dimension(800,500));
+			this.setBounds(25, 200, 600, 600);
+			this.setPreferredSize(new Dimension(800,600));
 			this.setResizable(false);
 			pack() ;
 			setVisible(true) ;
@@ -115,49 +128,12 @@ public class GameFrame extends JFrame {
 			
 			//Setting up Main Menu
 			Dimension size = new Dimension( 800, 600) ;
-			MainMenu.setPreferredSize(size) ;
-			MainMenu.setOpaque(true) ;
-			MainMenu.setBackground(Color.black) ;
-			MenuButtons menuButtons = new MenuButtons(this);
-			MainMenu.add(menuButtons.NewGame);
-			MainMenu.add(menuButtons.NewMultiplayerGame);
-			MainMenu.add(menuButtons.HostMultiplayerGame);
-			MainMenu.add(menuButtons.JoinMultiplayerGame);
-			MainMenu.add(menuButtons.Exit);
+			
+						
 			
 			
-			//Setting up Host Menu
-			MenuButtons HostButtons = new MenuButtons(this);
-			HostMenu.setPreferredSize(size) ;
-			HostMenu.setOpaque(true) ;
-			HostMenu.setBackground(Color.black) ;
-			HostMenu.add(HostButtons.StartHost);
-			HostMenu.add(HostButtons.Cancel);
-			
-			//Setting up Join Menu
-			MenuButtons JoinButtons = new MenuButtons(this);
-			JoinMenu.setPreferredSize(size) ;
-			JoinMenu.setOpaque(true) ;
-			JoinMenu.setBackground(Color.black) ;
-			JoinMenu.add(HostButtons.StartJoin);
-			JoinMenu.add(JoinButtons.Cancel);
 			
 			
-			//Adding Buttons to in game menu
-			MenuButtons ingamemenuButtons = new MenuButtons(this);
-			inGameMenu.setPreferredSize(size) ;
-			inGameMenu.setOpaque(true) ;
-			inGameMenu.setBackground(Color.black) ;
-			inGameMenu.add(ingamemenuButtons.Resume);
-			inGameMenu.add(ingamemenuButtons.NewXboxGame);
-			inGameMenu.add(ingamemenuButtons.Exit);
-			
-			//Adding Button to Win Menu
-			MenuButtons winGameMenuButtons = new MenuButtons(this);
-			winMenu.setPreferredSize(size) ;
-			winMenu.setOpaque(true) ;
-			winMenu.setBackground(Color.blue) ;
-			winMenu.add(winGameMenuButtons.Exit);
 			
 			//Setting up Win Sound
 			Win = new File("dark2.wav");
@@ -172,6 +148,8 @@ public class GameFrame extends JFrame {
 			} catch (LineUnavailableException e) {
 					e.printStackTrace();}			
 			showMainMenu();
+			
+			
 		}
 		
 		/**
@@ -183,30 +161,54 @@ public class GameFrame extends JFrame {
 		 */
 		
 		public void showMainMenu(){
-			inGameMenu.setVisible(false);
-			winMenu.setVisible(false);
 			this.setContentPane(MainMenu);
 			MainMenu.grabFocus();
 			MainMenu.setVisible(true);
+			//this.setContentPane(otherMainMenu);
+			//otherMainMenu.grabFocus();
+			//otherMainMenu.setVisible(true);
+			
+			if(firstTime == true){
+				long elapsedTime = 0;
+				long startTime = System.currentTimeMillis();
+				for(int i = 0; i < MainMenu.images.size();){
+					elapsedTime = System.currentTimeMillis() - startTime;
+					if (elapsedTime >= 150){
+						MainMenu.interateImage();
+						elapsedTime = 0;
+						startTime = System.currentTimeMillis();
+						MainMenu.repaint();
+						System.out.println("changed image");
+						i++;
+					}
+					this.paintComponents(this.getGraphics());
+				}
+				firstTime = false;
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 		
-		public void showHostMenu(){
+		
+		
+		
+		
+		public void showMultiplayerMenu(){
 			MainMenu.setVisible(false);
-			inGameMenu.setVisible(false);
-			winMenu.setVisible(false);
-			this.setContentPane(HostMenu);
-			HostMenu.grabFocus();
-			HostMenu.setVisible(true);
+			this.setContentPane(multiplayerMenu);
+			multiplayerMenu.grabFocus();
+			multiplayerMenu.setVisible(true);
 		}
 		
-		public void showJoinMenu(){
-			MainMenu.setVisible(false);
-			inGameMenu.setVisible(false);
-			winMenu.setVisible(false);
-			this.setContentPane(JoinMenu);
-			JoinMenu.grabFocus();
-			JoinMenu.setVisible(true);
-		}
+		
+		
 		/**
 		 * Switch focus to the InGameMenu JPanel, setting all other JPanels visibility 
 		 * to false and its visibility to true. JButtons are added to the JPanel through
@@ -217,11 +219,10 @@ public class GameFrame extends JFrame {
 		public void showInGameMenu(){
 			pause = true;
 			display.setVisible(false);
-			winMenu.setVisible(false);
 			MainMenu.setVisible(false);
-			this.setContentPane(inGameMenu);
-			inGameMenu.setVisible(true);
-			inGameMenu.grabFocus();
+			this.setContentPane(pauseMenu);
+			pauseMenu.setVisible(true);
+			pauseMenu.grabFocus();
 		}
 		
 		/**
@@ -234,14 +235,13 @@ public class GameFrame extends JFrame {
 		 */
 		public void showWinGameMenu(){
 			pause = true;
-			display.setVisible(false);
+			//display.setVisible(false);
 			MainMenu.setVisible(false);
-			inGameMenu.setVisible(false);
-			this.setContentPane(winMenu);
-			winMenu.setVisible(true);
-			winMenu.grabFocus();
+			this.setContentPane(NewWinMenu);
+			NewWinMenu.setVisible(true);
+			NewWinMenu.grabFocus();
 			
-			winSound.start();
+			//winSound.start();
 			
 		}
 		
@@ -255,7 +255,6 @@ public class GameFrame extends JFrame {
 		public void resumeGame(){
 			pause = false;
 			MainMenu.setVisible(false);
-			winMenu.setVisible(false);
 			display.setVisible(true);
 			this.setContentPane(display);
 			display.grabFocus();
@@ -346,7 +345,7 @@ public class GameFrame extends JFrame {
 				e.printStackTrace();
 			}
 			
-			newGame();
+			//newGame();
 			
 			
 			
@@ -395,7 +394,6 @@ public class GameFrame extends JFrame {
 		
 		public void newGame(){
 			gameMade = true;
-			HostMenu.setVisible(false);
 			MainMenu.setVisible(false);
 			
 			try {

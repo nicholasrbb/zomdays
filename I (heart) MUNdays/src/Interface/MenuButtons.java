@@ -57,7 +57,7 @@ public class MenuButtons {
 		HostMultiplayerGame = new JButton("Host Multiplayer Game");
 		HostMultiplayerGame.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.showHostMenu();
+				//game.showHostMenu();
 			}});
 		
 		StartHost = new JButton("Start Hosting Multiplayer Game");
@@ -95,7 +95,7 @@ public class MenuButtons {
 		JoinMultiplayerGame = new JButton("Join Multiplayer Game");
 		JoinMultiplayerGame.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.showJoinMenu();
+				//game.showJoinMenu();
 			}});
 		
 		Cancel = new JButton("Cancel");
