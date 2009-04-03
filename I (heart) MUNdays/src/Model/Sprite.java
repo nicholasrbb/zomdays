@@ -30,11 +30,13 @@ public abstract class Sprite {
 	protected boolean random = true;
 	protected int number;
 	public Image Legs;
+	public Image Blood;
 	
 	public ArrayList <Animation> animations;
-	int currentAnimation;
-	int currentWalkAnimation;
-	int currentStateAnimation;
+	public ArrayList <Animation> bloodAnimations;
+	public int currentAnimation = 0;
+	public int currentWalkAnimation = 0;
+	public int currentStateAnimation = 0;
 	public ArrayList <Weapon> WeaponList;
 	int currentWeapon = 0;
 	
@@ -53,6 +55,7 @@ public abstract class Sprite {
 		PositionY = y;
 		map = Map;
 		animations = new ArrayList <Animation>();
+		bloodAnimations = new ArrayList <Animation>();;
 		currentAnimation = 0;
 		currentWalkAnimation = 0;
 		currentStateAnimation = 0;

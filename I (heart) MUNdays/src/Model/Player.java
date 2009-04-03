@@ -368,7 +368,7 @@ public class Player extends Sprite implements RemotePlayer{
 						lastFireTime = System.currentTimeMillis();
 						WeaponList.get(currentWeapon).currentAnimation = 1;
 					}
-					attackingWeapon.updateAmmo(-1);
+					attackingWeapon.updateAmmo();
 					
 					String tileShoot = null;
 					Sprite target = null;

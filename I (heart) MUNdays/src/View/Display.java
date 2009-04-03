@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -187,8 +188,11 @@ public class Display extends JPanel {
     			int angle = 45*(player.getMap().SpriteList.get(i).getNumber());
         		npcTransform.rotate(angle,player.getMap().SpriteList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().SpriteList.get(i).getSpriteImage().getHeight(null)/2);
     		}
+    		System.out.println(player.getMap().SpriteList.get(i).);
+    		g2d.drawImage(player.getMap().SpriteList.get(i).Blood, npcTransform, null);
     		g2d.drawImage(player.getMap().SpriteList.get(i).Legs,npcTransform, null);
     		g2d.drawImage(player.getMap().SpriteList.get(i).getSpriteImage(),npcTransform, null);
+    		
     		
 
     	}
@@ -236,7 +240,16 @@ public class Display extends JPanel {
 			
 				
 		}
-	
+		// paint life bar
+		
+		double maxAmmo = 400/15;
+		g2d.drawRect(30, 440, 400, 25);
+		Color color = g2d.getColor();
+		g2d.setColor(Color.RED);
+		g2d.fillRect(31, 441,player.getHealth()*8-1, 24);
+		g2d.setColor(Color.BLUE);
+		g2d.fillRect(31, 455,(int) (player.getWeapons().get(player.getCurrentWeapon()).magAmmo()*maxAmmo), 10);
+		g2d.setColor(color);
     	
 		
 	}

@@ -26,7 +26,9 @@ public class ModelManager implements Serializable{
 	private Image ZombieLegs;
 	
 	Animation ZombieWalk;
-	Animation ZombieBlood;
+	Animation ZombieBloodBig;
+	Animation ZombieBloodSmall;
+	Animation ZombieBloodBlank;
 	
 
 	
@@ -64,6 +66,33 @@ public class ModelManager implements Serializable{
 		frames1.add(zomFrame6);
 		
 	    ZombieWalk = new Animation(frames1);
+	    
+	    //Initialize Blood!
+	    //ZombieLegs = Toolkit.getDefaultToolkit().createImage("Player/player_shortlegs_right.png");
+		
+		Image bloodsmall = Toolkit.getDefaultToolkit().createImage("Player/player_shortlegs_right.png");
+		Image bloodlarge = Toolkit.getDefaultToolkit().createImage("Player/player_longlegs_right.png");
+		Image blank = Toolkit.getDefaultToolkit().createImage("Player/player_shortlegs_left.png");
+		
+		AnimationFrame bloodFrame1 = new AnimationFrame(bloodsmall, 100000000L);
+		AnimationFrame bloodFrame2 = new AnimationFrame(bloodlarge, 100000000L);
+		AnimationFrame bloodFrame3 = new AnimationFrame(blank, 100000000L);
+		
+		
+		ArrayList <AnimationFrame> bloodbigframes = new ArrayList <AnimationFrame>();
+		ArrayList <AnimationFrame> bloodsmallframes = new ArrayList <AnimationFrame>();
+		ArrayList <AnimationFrame> blankframes = new ArrayList <AnimationFrame>();
+		
+		bloodbigframes.add(bloodFrame1);
+		bloodbigframes.add(bloodFrame2);
+		bloodsmallframes.add(bloodFrame1);
+		blankframes.add(bloodFrame3);
+		
+	    ZombieBloodBig = new Animation(bloodbigframes);
+	    ZombieBloodSmall = new Animation(bloodsmallframes);
+	    ZombieBloodBlank = new Animation(blankframes);
+	    
+	    
 		
 	}
 	
@@ -85,8 +114,8 @@ public class ModelManager implements Serializable{
 				System.out.println(map.SpriteList.get(i).Legs);
 				System.out.println(map.SpriteList.get(i).currentWalkAnimation);
 				map.SpriteList.get(i).Legs = map.SpriteList.get(i).animations.get(map.SpriteList.get(i).currentWalkAnimation).getAnimationImage();
-				//map.SpriteList.get(i).Legs = map.SpriteList.get(i).animations.get(map.SpriteList.get(i).currentStateAnimation).getAnimationImage();		//	}
-			}
+				map.SpriteList.get(i).Blood = map.SpriteList.get(i).bloodAnimations.get(map.SpriteList.get(i).currentStateAnimation).getAnimationImage();		
+				}
 		}
 	}
 	
@@ -111,25 +140,37 @@ public class ModelManager implements Serializable{
 						Math.abs(map.PlayerList.get(i).getX() - x) > 450 && Math.abs(map.PlayerList.get(i).getY() - y) > 550){
 						
 						int k = Math.abs(generator.nextInt(3));
-						System.out.println(k);
+						
+						Image BlankBlood = Toolkit.getDefaultToolkit().createImage("Zombie/blank.png");
 						if ( k == 1){
 							zombieImage = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_yellow.png");
-							Zombie zombay = new Zombie(zombieImage,ZombieLegs, 20, 10, 10, x, y, 0.1, 0.1, map,0.2);
+							
+							Zombie zombay = new Zombie(zombieImage,ZombieLegs,BlankBlood, 20, 10, 10, x, y, 0.1, 0.1, map,0.2);
 							zombay.animations.add(ZombieWalk);
+							zombay.bloodAnimations.add(ZombieBloodBlank);
+							zombay.bloodAnimations.add(ZombieBloodSmall);
+							zombay.bloodAnimations.add(ZombieBloodBig);
 							map.addSprite(zombay);
 						}
 						else if ( k == 2){
 							zombieImage = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_green.png");							
-							Zombie zombay = new Zombie(zombieImage,ZombieLegs, 50, 10, 10, x, y, 0.1, 0.1, map,0.05);
+							Zombie zombay = new Zombie(zombieImage,ZombieLegs,BlankBlood, 50, 10, 10, x, y, 0.1, 0.1, map,0.05);
 							zombay.animations.add(ZombieWalk);
+							zombay.bloodAnimations.add(ZombieBloodBlank);
+							zombay.bloodAnimations.add(ZombieBloodSmall);
+							zombay.bloodAnimations.add(ZombieBloodBig);
 							map.addSprite(zombay);
 						}
 						else{
 							zombieImage = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_blue.png");
-							Zombie zombay = new Zombie(zombieImage,ZombieLegs, 30, 10, 10, x, y, 0.25, 0.25, map,0.05);
+							Zombie zombay = new Zombie(zombieImage,ZombieLegs,BlankBlood, 30, 10, 10, x, y, 0.25, 0.25, map,0.05);
 							zombay.animations.add(ZombieWalk);
+							zombay.bloodAnimations.add(ZombieBloodBlank);
+							zombay.bloodAnimations.add(ZombieBloodSmall);
+							zombay.bloodAnimations.add(ZombieBloodBig);
 							map.addSprite(zombay);
 						}
+						
 					}
 				}
 			}
@@ -183,6 +224,7 @@ public class ModelManager implements Serializable{
 				map.PlayerList.get(i).Movement(timeSpent);
 				map.PlayerList.get(i).setSpriteOrientation();
 				if (map.PlayerList.get(i).isAlive == false){
+					
 					
 				}
 			}
