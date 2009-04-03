@@ -277,14 +277,12 @@ public class Zombie extends Sprite{
 	 */
 	@Override
 	public void updateHealth(double change){
-		//zAnim.setState(ZombieAnimationStates.Damage);
-
-		if (change == 10 || change == 20){
-			currentStateAnimation = 1;
-		}
 		
 		
-			
+		System.out.println(currentAnimation);
+		bloodAnimations.get(currentAnimation).startAnimation();
+		
+					
 		
 		Health = Health + change;
 		if (Health <= 0){

@@ -29,13 +29,15 @@ public class GameMouseEvents implements MouseListenerInterface {
 
 	@Override
 	public void mouseClick(int worldX, int worldY, int button, int clickCount) {
-		
+		player.setMouseX(worldX + d.cornerX1);
+		player.setMouseY(worldY + d.cornerY1);
 	}
 
 	@Override
 	public void mouseDragged(int worldX, int worldY) {
-		// TODO Auto-generated method stub
-	}
+		player.setMouseX(worldX + d.cornerX1);
+		player.setMouseY(worldY + d.cornerY1);
+		}
 
 	@Override
 	public void mouseEntered() {
@@ -65,18 +67,22 @@ public class GameMouseEvents implements MouseListenerInterface {
 
 	@Override
 	public void mousePressed(int worldX, int worldY, int button) {
-		
+		player.setMouseX(worldX + d.cornerX1);
+		player.setMouseY(worldY + d.cornerY1);
 		if (player.getXBox() == false){
 			if ( button == 1){
 				//player.attack();
 				player.setAttack(true);
 			}
 		}
+		
 	}
 
 	@Override
 	public void mouseReleased(int worldX, int worldY, int button) {
-		
+		player.setMouseX(worldX + d.cornerX1);
+		player.setMouseY(worldY + d.cornerY1);
+		player.setAttack(false);
 		
 	}
 

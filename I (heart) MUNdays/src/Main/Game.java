@@ -114,19 +114,29 @@ public class Game extends UnicastRemoteObject{
 				Image knifeIn = Toolkit.getDefaultToolkit().getImage("Player/player_knife_in.png");
 				Image knifeOut = Toolkit.getDefaultToolkit().getImage("Player/player_knife_Out.png");
 				
+				Image shotgun = Toolkit.getDefaultToolkit().getImage("Player/player_shotgun_noflash.png");
+				Image shotgunFire = Toolkit.getDefaultToolkit().getImage("Player/player_shotgun_flash.png");
+				
+				Image uzi = Toolkit.getDefaultToolkit().getImage("Player/player_uzi_noflash.png");
+				Image uziFire = Toolkit.getDefaultToolkit().getImage("Player/player_uzi_flash.png");
+				
 				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager.MapList.get(0));
 				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(1));
 				
-				Weapon Gun = new Weapon(npcImage,15,600,10,1000,15,0.2, "Hand Gun");
-				Weapon Knife = new Weapon(npcImage,0,50,25, -1,-1,0.0, "Knife");
-				Weapon Gunx2 = new Weapon(npcImage,30,600,20,1000,30,.1, "2x Hand Gun");
+				Weapon Gun = new Weapon(npcImage,15,600,10,1000,15,0.2,false, "Hand Gun");
+				Weapon Knife = new Weapon(npcImage,0,50,25, -1,-1,0.2,false, "Knife");
+				Weapon Gunx2 = new Weapon(npcImage,30,600,20,1000,20,.1,false, "2x Hand Gun");
+				Weapon Shotgun = new Weapon(npcImage,8,600,40,1000,8,1,false, "Shotgun");
+				Weapon Uzi = new Weapon(npcImage,1000,600,20,100000,1000,.005,true, "Uzi");
 				
-				Weapon player2Gun = new Weapon(npcImage,15,600,10,1000,15,0.5, "Hand Gun");
-				Weapon player2Knife = new Weapon(npcImage,0,50,25, -1,-1,0.0, "Knife");
+				Weapon player2Gun = new Weapon(npcImage,15,600,10,1000,15,0.5,false, "Hand Gun");
+				Weapon player2Knife = new Weapon(npcImage,0,50,25, -1,-1,0.0,false, "Knife");
 				
 				player1.addWeapon(Gun);
 				player1.addWeapon(Knife);
 				player1.addWeapon(Gunx2);
+				player1.addWeapon(Shotgun);
+				player1.addWeapon(Uzi);
 				player2.addWeapon(player2Gun);
 				player2.addWeapon(player2Knife);
 				
@@ -178,6 +188,36 @@ public class Game extends UnicastRemoteObject{
 				Animation gun2xStill = new Animation(gun2xFrames1);
 				
 				/*
+				 * Initialising 2x Pistol Animation
+				 */
+				AnimationFrame shotgunFrame1 = new AnimationFrame(shotgun,12500000L);
+				AnimationFrame shotgunFrame2 = new AnimationFrame(shotgunFire, 32500000L);
+				
+				ArrayList <AnimationFrame> shotgunFrames = new ArrayList <AnimationFrame>();
+				shotgunFrames.add(shotgunFrame2);
+				
+				ArrayList <AnimationFrame> shotgunFrames1 = new ArrayList <AnimationFrame>();
+				shotgunFrames1.add(shotgunFrame1);
+				
+				Animation shotgunAnimation = new Animation(shotgunFrames);
+				Animation shotgunStill = new Animation(shotgunFrames1);
+				
+				/*
+				 * Initialising 2x Pistol Animation
+				 */
+				AnimationFrame uziFrame1 = new AnimationFrame(uzi,12500000L);
+				AnimationFrame uziFrame2 = new AnimationFrame(uziFire, 32500000L);
+				
+				ArrayList <AnimationFrame> uziFrames = new ArrayList <AnimationFrame>();
+				uziFrames.add(uziFrame2);
+				
+				ArrayList <AnimationFrame> uziFrames1 = new ArrayList <AnimationFrame>();
+				uziFrames1.add(uziFrame1);
+				
+				Animation uziAnimation = new Animation(uziFrames);
+				Animation uziStill = new Animation(uziFrames1);
+				
+				/*
 				 * adding animations to game
 				 */
 				
@@ -186,6 +226,12 @@ public class Game extends UnicastRemoteObject{
 				
 				Gunx2.animations.add(gun2xStill);
 				Gunx2.animations.add(gun2xAnimation);
+				
+				Shotgun.animations.add(shotgunStill);
+				Shotgun.animations.add(shotgunAnimation);
+				
+				Uzi.animations.add(uziStill);
+				Uzi.animations.add(uziAnimation);
 				
 				Knife.animations.add(knifeStill);
 				Knife.animations.add(knifeAnimation);

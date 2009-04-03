@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  */
 public class Animation {
-	private ArrayList <AnimationFrame> frames;
+	protected ArrayList <AnimationFrame> frames;
 	int currentFrame = 0;
 	long elapsedFrameTime = 0;
 	long currentTime = 0;

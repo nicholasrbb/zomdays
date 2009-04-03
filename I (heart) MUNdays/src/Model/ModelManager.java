@@ -8,6 +8,7 @@ import java.util.Random;
 
 import View.Animation;
 import View.AnimationFrame;
+import View.finiteAnimation;
 
 
 /**
@@ -26,9 +27,11 @@ public class ModelManager implements Serializable{
 	private Image ZombieLegs;
 	
 	Animation ZombieWalk;
-	Animation ZombieBloodBig;
-	Animation ZombieBloodSmall;
-	Animation ZombieBloodBlank;
+	finiteAnimation ZombieBloodBig;
+	finiteAnimation ZombieBloodSmall;
+	
+	ArrayList <AnimationFrame> bloodbigframes;
+	ArrayList <AnimationFrame> bloodsmallframes;
 	
 
 	
@@ -70,30 +73,27 @@ public class ModelManager implements Serializable{
 	    //Initialize Blood!
 	    //ZombieLegs = Toolkit.getDefaultToolkit().createImage("Player/player_shortlegs_right.png");
 		
-		Image bloodsmall = Toolkit.getDefaultToolkit().createImage("Player/player_shortlegs_right.png");
-		Image bloodlarge = Toolkit.getDefaultToolkit().createImage("Player/player_longlegs_right.png");
-		Image blank = Toolkit.getDefaultToolkit().createImage("Player/player_shortlegs_left.png");
+		Image bloodsmall = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_blood_small.png");
+		Image bloodlarge = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_blood_big.png");
+		Image blank = Toolkit.getDefaultToolkit().createImage("Zombie/blank.png");
 		
 		AnimationFrame bloodFrame1 = new AnimationFrame(bloodsmall, 100000000L);
 		AnimationFrame bloodFrame2 = new AnimationFrame(bloodlarge, 100000000L);
-		AnimationFrame bloodFrame3 = new AnimationFrame(blank, 100000000L);
+		AnimationFrame bloodFrame3 = new AnimationFrame(blank, 200000000L);
 		
 		
-		ArrayList <AnimationFrame> bloodbigframes = new ArrayList <AnimationFrame>();
-		ArrayList <AnimationFrame> bloodsmallframes = new ArrayList <AnimationFrame>();
-		ArrayList <AnimationFrame> blankframes = new ArrayList <AnimationFrame>();
+		bloodbigframes = new ArrayList <AnimationFrame>();
 		
 		bloodbigframes.add(bloodFrame1);
 		bloodbigframes.add(bloodFrame2);
-		bloodsmallframes.add(bloodFrame1);
-		blankframes.add(bloodFrame3);
+		bloodbigframes.add(bloodFrame1);
+
+		bloodbigframes.add(bloodFrame3);
+
 		
-	    ZombieBloodBig = new Animation(bloodbigframes);
-	    ZombieBloodSmall = new Animation(bloodsmallframes);
-	    ZombieBloodBlank = new Animation(blankframes);
 	    
 	    
-		
+	    
 	}
 	
 	/**
@@ -111,8 +111,6 @@ public class ModelManager implements Serializable{
 				map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).image = map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).animations.get(map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).currentAnimation).getAnimationImage();
 			}
 			for (int i = 0; i < map.SpriteList.size(); i++){
-				System.out.println(map.SpriteList.get(i).Legs);
-				System.out.println(map.SpriteList.get(i).currentWalkAnimation);
 				map.SpriteList.get(i).Legs = map.SpriteList.get(i).animations.get(map.SpriteList.get(i).currentWalkAnimation).getAnimationImage();
 				map.SpriteList.get(i).Blood = map.SpriteList.get(i).bloodAnimations.get(map.SpriteList.get(i).currentStateAnimation).getAnimationImage();		
 				}
@@ -127,7 +125,7 @@ public class ModelManager implements Serializable{
 	public void manageSprites(){
 		for (int Map = 0; Map < MapList.size(); Map++){
 			map = MapList.get(Map);
-			while(map.SpriteList.size() < 100){
+			while(map.SpriteList.size() < 120){
 				
 				int x = Math.abs(generator.nextInt(15000)) + 50;
 				int y = Math.abs(generator.nextInt(15000)) + 50;
@@ -147,8 +145,7 @@ public class ModelManager implements Serializable{
 							
 							Zombie zombay = new Zombie(zombieImage,ZombieLegs,BlankBlood, 20, 10, 10, x, y, 0.1, 0.1, map,0.2);
 							zombay.animations.add(ZombieWalk);
-							zombay.bloodAnimations.add(ZombieBloodBlank);
-							zombay.bloodAnimations.add(ZombieBloodSmall);
+							ZombieBloodBig = new finiteAnimation(bloodbigframes);
 							zombay.bloodAnimations.add(ZombieBloodBig);
 							map.addSprite(zombay);
 						}
@@ -156,8 +153,7 @@ public class ModelManager implements Serializable{
 							zombieImage = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_green.png");							
 							Zombie zombay = new Zombie(zombieImage,ZombieLegs,BlankBlood, 50, 10, 10, x, y, 0.1, 0.1, map,0.05);
 							zombay.animations.add(ZombieWalk);
-							zombay.bloodAnimations.add(ZombieBloodBlank);
-							zombay.bloodAnimations.add(ZombieBloodSmall);
+							ZombieBloodBig = new finiteAnimation(bloodbigframes);
 							zombay.bloodAnimations.add(ZombieBloodBig);
 							map.addSprite(zombay);
 						}
@@ -165,8 +161,7 @@ public class ModelManager implements Serializable{
 							zombieImage = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_blue.png");
 							Zombie zombay = new Zombie(zombieImage,ZombieLegs,BlankBlood, 30, 10, 10, x, y, 0.25, 0.25, map,0.05);
 							zombay.animations.add(ZombieWalk);
-							zombay.bloodAnimations.add(ZombieBloodBlank);
-							zombay.bloodAnimations.add(ZombieBloodSmall);
+							ZombieBloodBig = new finiteAnimation(bloodbigframes);
 							zombay.bloodAnimations.add(ZombieBloodBig);
 							map.addSprite(zombay);
 						}

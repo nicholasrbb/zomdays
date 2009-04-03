@@ -20,8 +20,9 @@ public class Weapon {
 	String name;
 	public ArrayList <Animation> animations;
 	int currentAnimation;	
+	public boolean auto;
 	
-	public Weapon(Image image, int capacity, int range, int damage, int ammo, int mag, double rate, String name){
+	public Weapon(Image image, int capacity, int range, int damage, int ammo, int mag, double rate,boolean auto, String name){
 		this.image = image;
 		this.range = range;
 		this.damage = damage;
@@ -29,6 +30,7 @@ public class Weapon {
 		this.magAmmo = mag;
 		this.name = name;
 		this.rate = rate;
+		this.auto = auto;
 		this.capacity = capacity;
 		animations = new ArrayList <Animation>();
 	}
