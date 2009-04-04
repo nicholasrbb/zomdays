@@ -147,6 +147,9 @@ public abstract class Sprite{
 		Health = Health + change;
 		if (Health <= 0){
 			isAlive = false;
+			Health = 0;
+			
+			
 		}
 	}
 	

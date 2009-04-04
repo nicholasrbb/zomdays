@@ -178,7 +178,7 @@ public class Display extends JPanel {
 					otherTransform.setToTranslation(player.getMap().PlayerList.get(i).getX() - cornerX1 - 25, player.getMap().PlayerList.get(i).getY() - cornerY1 - 25);	
 					otherTransform.rotate(Math.toRadians(player.getMap().PlayerList.get(i).angle),player.getMap().PlayerList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().PlayerList.get(i).getSpriteImage().getHeight(null)/2);   
 					g2d.drawImage(player.getMap().PlayerList.get(i).getSpriteImage(),otherTransform, null);
-					g2d.drawImage(((Player) player.getMap().PlayerList.get(i)).getWeapons().get(player.getCurrentWeapon()).getImage(),otherTransform, null);
+					//g2d.drawImage(((Player) player.getMap().PlayerList.get(i)).getWeapons().get(player.getCurrentWeapon()).getImage(),otherTransform, null);
 				}
 			}
 			
@@ -202,7 +202,73 @@ public class Display extends JPanel {
 	
 	    	}
 	    	
+	    	// Load HUD Images
+	    	Image bullet = Toolkit.getDefaultToolkit().getImage("Hud/9mm.png");
+	    	Image gun = Toolkit.getDefaultToolkit().getImage("Hud/gun.png");
+	    	Image gun2x =Toolkit.getDefaultToolkit().getImage("Hud/gun2x.png"); 
+	    	Image bulletUzi = Toolkit.getDefaultToolkit().getImage("Hud/9mmUzi.png");
+	    	Image shell = Toolkit.getDefaultToolkit().getImage("Hud/shell.png");
+	    	Image reload = Toolkit.getDefaultToolkit().getImage("Hud/Reload.png");
 	    	
+	    	Image health = Toolkit.getDefaultToolkit().getImage("Hud/healthBar.png");
+	    	int hudAmmo = player.getWeapons().get(player.getCurrentWeapon()).magAmmo();
+	    	int ammoXPos = 750;
+	    	int ammoYPos = 10;
+	    	
+	    	Image ammoImage;
+	    	
+	    	int rowLimit;
+	    	if (player.getWeapons().get(player.getCurrentWeapon()).getWeaponName().equals("Shotgun")){
+	    		ammoImage = shell;
+	    		rowLimit = 8;
+	    	}
+	    	
+	    	else if (player.getWeapons().get(player.getCurrentWeapon()).getWeaponName().equals("Uzi")){
+	    		ammoImage = bulletUzi;
+	    		rowLimit = 30;
+	    	}
+	    	
+	    	else if (player.getWeapons().get(player.getCurrentWeapon()).getWeaponName().equals("2x Hand Gun")){
+	    		g2d.drawImage(gun2x, ammoXPos-gun2x.getWidth(null), ammoYPos, null);
+	    		
+	    		ammoXPos = ammoXPos - gun.getWidth(null)- 50;
+	    		ammoImage = bullet;
+	    		rowLimit = player.getWeapons().get(player.getCurrentWeapon()).magAmmo()/2;
+	    	}
+	    	else if(player.getWeapons().get(player.getCurrentWeapon()).getWeaponName().equals("Hand Gun")){
+	    		g2d.drawImage(gun, ammoXPos-gun.getWidth(null), ammoYPos, null);
+	    		ammoXPos = ammoXPos - gun.getWidth(null)- 50;
+	    		ammoImage = bullet;
+	    		rowLimit = 15;
+	    	}
+	    	else{
+	    		ammoImage = bullet;
+	    		rowLimit = 0;
+	    	}
+	    	
+	    	int count = 0;
+    		int stack = 0;
+    		
+	    	for(int k = 1; k <=hudAmmo; k++){
+	    		System.out.println(k);
+	    		
+	    		if (count >= rowLimit){
+	    			count = 0;
+	    			stack++;
+	    		}
+	    		
+	    		 		
+	    		g2d.drawImage(ammoImage, ammoXPos-((k-1)*ammoImage.getWidth(null))+(ammoImage.getWidth(null)*rowLimit*stack), ammoYPos + (ammoImage.getHeight(null)*stack), null);
+	    		count++;
+	    		
+	    		
+	    	}
+	    	
+	    	if (hudAmmo == 0){
+	    		g2d.drawImage(reload, ammoXPos-reload.getWidth(null), ammoYPos, null);
+	    	}
+		
+
 	    	
 	    	// Load Score Images
 			Image Zero = Toolkit.getDefaultToolkit().getImage("Digits/0.png");
@@ -215,6 +281,68 @@ public class Display extends JPanel {
 			Image Seven = Toolkit.getDefaultToolkit().getImage("Digits/7.png");
 			Image Eight = Toolkit.getDefaultToolkit().getImage("Digits/8.png");
 			Image Nine = Toolkit.getDefaultToolkit().getImage("Digits/9.png");
+			
+			//Load Ammo Count Images
+			Image ammoBack = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/ammoBack.png");
+			Image ZeroSmall = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/0.png");
+			Image OneSmall = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/1.png");
+			Image TwoSmall = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/2.png");
+			Image ThreeSmall = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/3.png");
+			Image FourSmall = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/4.png");
+			Image FiveSmall = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/5.png");
+			Image SixSmall = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/6.png");
+			Image SevenSmall = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/7.png");
+			Image EightSmall = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/8.png");
+			Image NineSmall = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/9.png");
+			Image DashSmall = Toolkit.getDefaultToolkit().getImage("Hud/SmallDigits/-.png");
+			
+			
+			//Setup and Paint Ammo Count
+			int AmmoCount = player.getWeapons().get(player.getCurrentWeapon()).getAmmo();			
+			String ammoCount = Integer.toString(AmmoCount);
+			System.out.println(ammoCount);
+			int ammoCountX = ammoXPos+30;
+			int ammoCountY = ammoYPos + 80;
+			int digitStart = ammoXPos+32;
+			g2d.drawImage(ammoBack, ammoXPos+30, ammoYPos + 78, null);
+			g2d.drawRect(ammoXPos+30, ammoYPos + 78, 117, 33);
+			
+			
+			
+			if(ammoCount.length() == 0){
+				ammoCount = "----";
+			}
+			
+			
+			
+			for(int i = 0; i < ammoCount.length(); i++){
+				
+				
+				if (ammoCount.charAt(i) == '0')
+					g2d.drawImage(ZeroSmall, digitStart + i*25, ammoCountY, null);
+				else if (ammoCount.charAt(i) == '1')
+					g2d.drawImage(OneSmall, digitStart + i*25, ammoCountY, null);
+				else if (ammoCount.charAt(i) == '2')
+					g2d.drawImage(TwoSmall, digitStart + i*25, ammoCountY, null);
+				else if (ammoCount.charAt(i) == '3')
+					g2d.drawImage(ThreeSmall, digitStart + i*25, ammoCountY, null);
+				else if (ammoCount.charAt(i) == '4')
+					g2d.drawImage(FourSmall, digitStart + i*25, ammoCountY, null);
+				else if (ammoCount.charAt(i) == '5')
+					g2d.drawImage(FiveSmall, digitStart + i*25, ammoCountY, null);
+				else if (ammoCount.charAt(i) == '6')
+					g2d.drawImage(SixSmall, digitStart + i*25, ammoCountY, null);
+				else if (ammoCount.charAt(i) == '7')
+					g2d.drawImage(SevenSmall, digitStart + i*25, ammoCountY, null);
+				else if (ammoCount.charAt(i) == '8')
+					g2d.drawImage(EightSmall, digitStart + i*25, ammoCountY, null);
+				else if (ammoCount.charAt(i) == '9')
+					g2d.drawImage(NineSmall, digitStart + i*25, ammoCountY, null);
+				else if (ammoCount.charAt(i) == '-')
+					g2d.drawImage(DashSmall, digitStart + i*25, ammoCountY, null);
+					
+			}
+			
 	
 			// Paint Score
 			int spacing = 25;
@@ -247,14 +375,10 @@ public class Display extends JPanel {
 			}
 			// paint life bar
 			
-			double maxAmmo = 400/15;
-			g2d.drawRect(30, 440, 400, 25);
-			Color color = g2d.getColor();
-			g2d.setColor(Color.RED);
-			g2d.fillRect(31, 441,player.getHealth()*8-1, 24);
-			g2d.setColor(Color.BLUE);
-			g2d.fillRect(31, 455,(int) (player.getWeapons().get(player.getCurrentWeapon()).magAmmo()*maxAmmo), 10);
-			g2d.setColor(color);
+			
+			g2d.drawImage(health, 30, 540, player.getHealth()*6, 20, null);
+			g2d.drawRect(30, 540, 300, 20);
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -431,6 +431,8 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 								target = getCollider(PositionX + r*Math.sin(Math.toRadians(angle)), PositionY - r*Math.cos(Math.toRadians(angle))).get(0);
 							}
 						}
+						
+						
 						if (tileShoot != " "){
 							return;
 						}
