@@ -128,7 +128,7 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				Weapon Knife = new Weapon(npcImage,0,50,25, -1,-1,0.2,false, "Knife");
 				Weapon Gunx2 = new Weapon(npcImage,30,600,20,1000,20,.1,false, "2x Hand Gun");
 				Weapon Shotgun = new Weapon(npcImage,8,600,40,1000,8,1,false, "Shotgun");
-				Weapon Uzi = new Weapon(npcImage,1000,600,20,100000,1000,.005,true, "Uzi");
+				Weapon Uzi = new Weapon(npcImage,60,600,8,1000,60,.08,true, "Uzi");
 				
 				Weapon player2Gun = new Weapon(npcImage,15,600,10,1000,15,0.5,false, "Hand Gun");
 				Weapon player2Knife = new Weapon(npcImage,0,50,25, -1,-1,0.0,false, "Knife");
@@ -189,7 +189,7 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				Animation gun2xStill = new Animation(gun2xFrames1);
 				
 				/*
-				 * Initialising 2x Pistol Animation
+				 * Initialising ShotGun Animation
 				 */
 				AnimationFrame shotgunFrame1 = new AnimationFrame(shotgun,12500000L);
 				AnimationFrame shotgunFrame2 = new AnimationFrame(shotgunFire, 32500000L);
@@ -204,13 +204,14 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				Animation shotgunStill = new Animation(shotgunFrames1);
 				
 				/*
-				 * Initialising 2x Pistol Animation
+				 * Initialising Uzi Animation
 				 */
 				AnimationFrame uziFrame1 = new AnimationFrame(uzi,12500000L);
-				AnimationFrame uziFrame2 = new AnimationFrame(uziFire, 32500000L);
+				AnimationFrame uziFrame2 = new AnimationFrame(uziFire, 12500000L);
 				
 				ArrayList <AnimationFrame> uziFrames = new ArrayList <AnimationFrame>();
 				uziFrames.add(uziFrame2);
+				uziFrames.add(uziFrame1);
 				
 				ArrayList <AnimationFrame> uziFrames1 = new ArrayList <AnimationFrame>();
 				uziFrames1.add(uziFrame1);
