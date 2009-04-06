@@ -7,13 +7,12 @@ import java.awt.Toolkit;
 import java.rmi.RemoteException;
 
 import Interface.MouseListenerInterface;
-import Model.Player;
 import Model.RemotePlayer;
 import View.Display;
 
 /**
  * This gets associated with a player and Display to control players
- * actions and bullet collisions with enemey on a given map.
+ * actions and bullet collisions with enemies on a given map.
  * 
  * @see Player, Display, MouseEventListener
  *

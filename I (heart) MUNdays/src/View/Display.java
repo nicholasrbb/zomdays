@@ -38,6 +38,13 @@ public class Display extends JPanel {
 	public int dcornerX1;
 	public int dcornerY1;
 	
+	Image healthPack;
+	Image ammoPack;
+	Image Points10;
+	Image Points20;
+	Image Points50;
+	
+	
 	
 	
 	
@@ -58,12 +65,17 @@ public class Display extends JPanel {
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+			
 			
 		}
 		
 		
-		
+		healthPack = Toolkit.getDefaultToolkit().createImage("BuildImg/health.jpg");
+		ammoPack = Toolkit.getDefaultToolkit().createImage("BuildImg/bullet.jpg");
+		Points10 = Toolkit.getDefaultToolkit().createImage("Points/Brain3.png");
+		Points20 = Toolkit.getDefaultToolkit().createImage("Points/Brain2.png");
+		Points50 = Toolkit.getDefaultToolkit().createImage("Points/Brain1.png");
+	}
 		
 		
 		@Override public void paintComponent(Graphics g){
@@ -143,12 +155,38 @@ public class Display extends JPanel {
 				int dx = 0;
 				for(int x = firstTileX; x < lastTileX; x++ ){
 					Image image = player.getMap().getTile(x, y);
-					g2d.drawImage(background,dx - offsetX,dy - offsetY, null);
 					g2d.drawImage(image,dx - offsetX,dy - offsetY, null);
 					dx = dx+25;
 				}
 				dy = dy+25;
 			}
+			
+			if(player.getMap().ItemList.size() > 0){
+	    		for (int i = 0; i < player.getMap().ItemList.size();i++ ){
+	    			if(player.getMap().ItemList.get(i).getType().equals("health")){
+		    			g2d.drawImage(healthPack, player.getMap().ItemList.get(i).getX()- cornerX1, player.getMap().ItemList.get(i).getY()- cornerY1, null);
+
+	    			}
+	    			if(player.getMap().ItemList.get(i).getType().equals("ammo")){
+		    			g2d.drawImage(ammoPack, player.getMap().ItemList.get(i).getX()- cornerX1, player.getMap().ItemList.get(i).getY()- cornerY1, null);
+		    			
+		   			}
+	    			
+	    			if(player.getMap().ItemList.get(i).getType().equals("points10")){
+		    			g2d.drawImage(Points10, player.getMap().ItemList.get(i).getX()- cornerX1, player.getMap().ItemList.get(i).getY()- cornerY1, null);
+	    			}
+	    			
+	    			if(player.getMap().ItemList.get(i).getType().equals("points20")){
+		    			g2d.drawImage(Points20, player.getMap().ItemList.get(i).getX()- cornerX1, player.getMap().ItemList.get(i).getY()- cornerY1, null);
+	    			}
+	    			
+	    			if(player.getMap().ItemList.get(i).getType().equals("points50")){
+		    			g2d.drawImage(Points50, player.getMap().ItemList.get(i).getX()- cornerX1, player.getMap().ItemList.get(i).getY()- cornerY1, null);
+	    		}
+	    	}
+		
+			
+		
 			
 			
 			// Print Player 
@@ -156,19 +194,8 @@ public class Display extends JPanel {
 				g2d.drawImage(player.getSpriteImage(),player.getPlayerSpriteOrientation(), null);
 				g2d.drawImage(player.getWeapons().get(player.getCurrentWeapon()).getImage(),player.getPlayerSpriteOrientation(), null);
 				
-	    		
-				g2d.drawString("Health: " + player.getHealth(),50,300);
-	    		g2d.drawString("Mag: " + player.getWeapons().get(0).magAmmo(),50,315); 
-	    		g2d.drawString("Ammo: " + player.getWeapons().get(0).getAmmo(),50,330);
-	    		g2d.drawString("Current Weapon: " + player.getWeapons().get(player.getCurrentWeapon()).getWeaponName() , 50, 345);
-			
 	    	
-			//Paint all the Items
-			for ( int i = 0; i < player.getMap().ItemList.size(); i++){
-	    		g2d.drawImage(player.getMap().ItemList.get(i).getImage(),player.getMap().ItemList.get(i).getX() - cornerX1 -12, player.getMap().ItemList.get(i).getY() - cornerY1 -12, null);
-			}
-			
-	
+
 			
 			
 			// Paint all other Players	
@@ -219,7 +246,6 @@ public class Display extends JPanel {
 	    	int ammoYPos = 10;
 	    	
 	    	Image ammoImage;
-	    	System.out.println(uzi.getWidth(null) + gun.getWidth(null));
 	    	
 	    	int rowLimit;
 	    	if (player.getWeapons().get(player.getCurrentWeapon()).getWeaponName().equals("Shotgun")){
@@ -260,7 +286,6 @@ public class Display extends JPanel {
 	    	int count = 0;
     		int stack = 0;
     		
-    		System.out.println(ammoXPos);
 	    	for(int k = 1; k <=hudAmmo; k++){
 	    		
 	    		if (count >= rowLimit){
@@ -278,7 +303,10 @@ public class Display extends JPanel {
 	    	if (hudAmmo == 0){
 	    		g2d.drawImage(reload, ammoXPos-reload.getWidth(null), ammoYPos, null);
 	    	}
-		
+	    	
+	    	// Draw all Items
+	    	
+	    	
 
 	    	
 	    	// Load Score Images
@@ -311,7 +339,6 @@ public class Display extends JPanel {
 			//Setup and Paint Ammo Count
 			int AmmoCount = player.getWeapons().get(player.getCurrentWeapon()).getAmmo();			
 			String ammoCount = Integer.toString(AmmoCount);
-			System.out.println(ammoCount);
 			int ammoCountX = ammoXPos+30;
 			int ammoCountY = ammoYPos + 80;
 			int digitStart = ammoXPos+35;
@@ -395,9 +422,9 @@ public class Display extends JPanel {
 			
 			g2d.drawImage(health, 30, 540, player.getHealth()*6, 20, null);
 			g2d.drawRect(30, 540, 300, 20);
-
+			}
+			
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -15,6 +15,12 @@ import Model.Weapon;
 import View.Animation;
 import View.AnimationFrame;
 
+/**
+ * This sets up the game TileMaps, and load the images for for the player 
+ * animations and starts the main game loop
+ * 
+ */
+@SuppressWarnings("serial")
 public class Game extends UnicastRemoteObject implements GameInterface, Serializable{
 	public ArrayList <TileMap> MapList;
 	public ModelManager manager;
@@ -124,11 +130,11 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager.MapList.get(0));
 				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(1));
 				
-				Weapon Gun = new Weapon(npcImage,15,600,10,1000,15,0.2,false, "Hand Gun");
+				Weapon Gun = new Weapon(npcImage,15,600,10,30,15,0.2,false, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,0,50,25, -1,-1,0.2,false, "Knife");
-				Weapon Gunx2 = new Weapon(npcImage,30,600,20,1000,20,.1,false, "2x Hand Gun");
-				Weapon Shotgun = new Weapon(npcImage,8,600,40,1000,8,1,false, "Shotgun");
-				Weapon Uzi = new Weapon(npcImage,60,600,8,1000,60,.08,true, "Uzi");
+				Weapon Gunx2 = new Weapon(npcImage,30,600,20,60,20,.1,false, "2x Hand Gun");
+				Weapon Shotgun = new Weapon(npcImage,8,600,4,0,0,.8,false, "Shotgun");
+				Weapon Uzi = new Weapon(npcImage,60,600,8,60,30,.08,true, "Uzi");
 				
 				Weapon player2Gun = new Weapon(npcImage,15,600,10,1000,15,0.5,false, "Hand Gun");
 				Weapon player2Knife = new Weapon(npcImage,0,50,25, -1,-1,0.0,false, "Knife");
@@ -289,6 +295,8 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				        		manager.manageSprites();
 					        	
 				        	}
+				        	
+				        	
 				        	
 				        	
 				        	

@@ -2,7 +2,6 @@ package Model;
 
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;

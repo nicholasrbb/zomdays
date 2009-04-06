@@ -6,7 +6,6 @@ import java.awt.event.KeyListener;
 import java.rmi.RemoteException;
 
 import Main.GameFrame;
-import Model.Player;
 import Model.RemotePlayer;
 
 
@@ -60,11 +59,9 @@ public class Buttons implements KeyListener{
 		    	break;
 		    case KeyEvent.VK_ESCAPE: 
 		    	game.showInGameMenu();
-		    	//System.exit(0);
 		    	break;
 			}
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -87,7 +84,6 @@ public class Buttons implements KeyListener{
 		    	break;
 			}
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

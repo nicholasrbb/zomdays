@@ -2,7 +2,6 @@ package Model;
 
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import View.Animation;
@@ -147,10 +146,14 @@ public abstract class Sprite{
 		Health = Health + change;
 		if (Health <= 0){
 			isAlive = false;
-			Health = 0;
-			
-			
+			Health = 0;}
+			//never let players health exceed 50
+		if (Health > 50){
+			Health = 50;
 		}
+			
+			
+		
 	}
 	
 	/**
