@@ -2,6 +2,9 @@ package Main;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -35,6 +38,7 @@ import Model.TileMap;
 import View.ChooseMultiplayerMenu;
 import View.Display;
 import View.InGameMenu;
+import View.LoseMenu;
 import View.MultiplayerMenu;
 import View.MyMainMenu;
 import View.WinMenu;
@@ -56,6 +60,7 @@ public class GameFrame extends JFrame implements Serializable{
 	public MyMainMenu MainMenu;
 	public MultiplayerMenu multiplayerMenu;
 	public WinMenu NewWinMenu;
+	public LoseMenu NewLoseMenu;
 	public InGameMenu pauseMenu;
 	public ChooseMultiplayerMenu chooseMultiplayerMenu;
 	public Display display;
@@ -77,22 +82,28 @@ public class GameFrame extends JFrame implements Serializable{
 			multiplayerMenu = new MultiplayerMenu(this);
 			pauseMenu = new InGameMenu(this);
 			NewWinMenu = new WinMenu(this);
+			NewLoseMenu = new LoseMenu(this);
 			chooseMultiplayerMenu = new ChooseMultiplayerMenu(this);
-			//otherMainMenu = new JPanel();
-			//HostMenu = new JPanel();
-			//JoinMenu = new JPanel();
-			//inGameMenu = new JPanel();
-			//gameOverMenu = new JPanel();
-			//winMenu = new JPanel();
 			MapList = new ArrayList <TileMap>();
 			
 			multi = b;
+			
 			this.setBounds(25, 200, 600, 600);
 			this.setPreferredSize(new Dimension(800,600));
 			this.setResizable(false);
 			pack() ;
 			setVisible(true) ;
 			setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ) ;
+			
+			/*
+			DisplayMode dm = new DisplayMode (800,600,32,60);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			GraphicsDevice gd = ge.getDefaultScreenDevice();
+			this.setUndecorated(true);
+			this.setResizable(false);
+			gd.setFullScreenWindow(this);
+			gd.setDisplayMode(dm);
+			*/
 			
 			
 		
@@ -215,6 +226,17 @@ public class GameFrame extends JFrame implements Serializable{
 			//winSound.start();
 			
 		}
+		public void showLoseGameMenu(){
+			pause = true;
+			//display.setVisible(false);
+			NewLoseMenu.setVisible(false);
+			this.setContentPane(NewLoseMenu);
+			NewLoseMenu.setVisible(true);
+			NewLoseMenu.grabFocus();
+			
+			//winSound.start();
+			
+		}
 		
 		/**
 		 * This allows the user to resume the game from the ingame menu.
@@ -245,7 +267,7 @@ public class GameFrame extends JFrame implements Serializable{
 			secondFrame.NewWinMenu.setVisible(false);
 			secondFrame.chooseMultiplayerMenu.setVisible(false);
 			secondFrame.display = new Display(game.player2, this.getWidth(), this.getHeight()) ;
-			
+			game.MapList.get(0).addPlayer(game.player2);
 			GameMouseEvents mouse2 = new GameMouseEvents(secondFrame.display,game.player2);
 			MouseEventListener mouseListener2 = new MouseEventListener(mouse2);
 			secondFrame.display.addMouseListener(mouseListener2);
@@ -256,6 +278,11 @@ public class GameFrame extends JFrame implements Serializable{
 			
 			secondFrame.setContentPane(secondFrame.display);
 			secondFrame.display.grabFocus();
+		}
+		
+		
+		public void restartGame(){
+			
 		}
 		
 		
@@ -270,13 +297,11 @@ public class GameFrame extends JFrame implements Serializable{
 		
 		
 		
-		
-		
 		public void HostGame() throws RemoteException{
-		game = new Game();
+		game = new Game(this);
 		//Creates the Game	
 			try {
-				game = new Game();
+				game = new Game(this);
 			} catch (RemoteException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -334,36 +359,9 @@ public class GameFrame extends JFrame implements Serializable{
 			GameInterface gameinterface= (GameInterface) proxy;
 			System.out.println("connected");
 			System.out.println(gameinterface.getPlayer());
-			//Player player = gameinterface.getPlayer();
-			
-			
-		//Making a game
-			//display = new Display(gameinterface.getPlayer(), this.getWidth(), this.getHeight()) ;
-			//display.setBackground(Color.BLACK);
-						
-			//GameMouseEvents mouse2 = new GameMouseEvents(display,gameinterface.getPlayer());
-			//MouseEventListener mouseListener2 = new MouseEventListener(mouse2);
-			//display.addMouseListener(mouseListener2);
-			//display.addMouseMotionListener(mouseListener2);
-			
-			//Buttons newButton = new Buttons(gameinterface.getPlayer(), this);
-			//secondFrame.display.addKeyListener( newButton);
-			
-			//display.grabFocus();
-			
-			
+				
 			
     	}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		public void newGame(){
@@ -375,7 +373,7 @@ public class GameFrame extends JFrame implements Serializable{
 			chooseMultiplayerMenu.setVisible(false);
 			
 			try {
-				game = new Game();
+				game = new Game(this);
 			} catch (RemoteException e1) {
 				System.out.println("exception");
 				// TODO Auto-generated catch block
@@ -435,10 +433,14 @@ public class GameFrame extends JFrame implements Serializable{
 			        	if (multi == false && pause == true){
 			        	
 			        	}else{
-			        		game.manager.updateSprites(20);
-			        		game.manager.switchMap();
+			        		game.manager.updateSprites(loopTime);
+			        		//game.manager.switchMap();
 			        		game.manager.updateAnimations();
 			        		game.manager.manageSprites();
+			        		
+			        		if(game.player1.getPoints() >= 2500){
+			        			showWinGameMenu();
+			        		}
 			        		
 				        	display.repaint();
 				        	if (multi){
