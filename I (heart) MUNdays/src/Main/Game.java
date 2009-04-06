@@ -28,6 +28,7 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 	public Player player1;
 	public Player player2;
 	
+	public GameFrame game;
 	
 	
 	
@@ -38,7 +39,8 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 	 * 
 	 * @param none
 	 */
-	public Game() throws RemoteException{
+	public Game(GameFrame game) throws RemoteException{
+		this.game = game;
 		MapList = new ArrayList <TileMap>();
 		System.out.println("game being set up");
 
@@ -51,7 +53,7 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 					e1.printStackTrace();
 				}
 				
-				
+				/*
 				TileMap map2 = null;
 				try {
 					map2 = new TileMap(1000,1000, "Engr4thFloor.txt");
@@ -59,7 +61,7 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				
+				*/
 				
 				
 				
@@ -72,15 +74,12 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				Image walk1 = Toolkit.getDefaultToolkit().createImage("Player/player_longlegs_right.png");
 				Image walk2 = Toolkit.getDefaultToolkit().createImage("Player/player_shortlegs_left.png");
 				Image walk3 = Toolkit.getDefaultToolkit().createImage("Player/player_longlegs_left.png");
-				//Image walk4 = Toolkit.getDefaultToolkit().createImage("blank.png");
 		
 				
 				
-				//AnimationFrame playaFrame1 = new AnimationFrame(walk4, 125000000L);
 				AnimationFrame playaFrame2 = new AnimationFrame(walk0, 125000000L);
 				AnimationFrame playaFrame3 = new AnimationFrame(walk1, 125000000L);
 				AnimationFrame playaFrame4 = new AnimationFrame(walk0, 125000000L);
-				//AnimationFrame playaFrame5 = new AnimationFrame(walk4, 125000000L);
 				AnimationFrame playaFrame6 = new AnimationFrame(walk2, 125000000L);
 				AnimationFrame playaFrame7 = new AnimationFrame(walk3, 125000000L);
 				AnimationFrame playaFrame8 = new AnimationFrame(walk2, 125000000L);
@@ -103,12 +102,15 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				Animation playerAnimation1 = new Animation(frames1);
 				Animation playerAnimation2 = new Animation(frames2);
 				
+				Animation player2Animation1 = new Animation(frames1);
+				Animation player2Animation2 = new Animation(frames2);
+				
 				
 				
 				
 				
 			//Initialise the Model Manager.
-				manager = new ModelManager(MapList);
+				manager = new ModelManager(MapList, game);
 				
 			//Create Player and Zombie.
 				Image gun = Toolkit.getDefaultToolkit().getImage("Player/player_1pistol_noflash.png");
@@ -128,7 +130,7 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				Image uziFire = Toolkit.getDefaultToolkit().getImage("Player/player_uzi_flash.png");
 				
 				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager.MapList.get(0));
-				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(1));
+				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(0));
 				
 				Weapon Gun = new Weapon(npcImage,15,600,10,30,15,0.2,false, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,0,50,25, -1,-1,0.2,false, "Knife");
@@ -136,8 +138,11 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				Weapon Shotgun = new Weapon(npcImage,8,600,4,0,0,.8,false, "Shotgun");
 				Weapon Uzi = new Weapon(npcImage,60,600,8,60,30,.08,true, "Uzi");
 				
-				Weapon player2Gun = new Weapon(npcImage,15,600,10,1000,15,0.5,false, "Hand Gun");
-				Weapon player2Knife = new Weapon(npcImage,0,50,25, -1,-1,0.0,false, "Knife");
+				Weapon player2Gun = new Weapon(npcImage,15,600,10,30,15,0.2,false, "Hand Gun");
+				Weapon player2Knife = new Weapon(npcImage,0,50,25, -1,-1,0.2,false, "Knife");
+				Weapon player2Gunx2 = new Weapon(npcImage,30,600,20,60,20,.1,false, "2x Hand Gun");
+				Weapon player2Shotgun = new Weapon(npcImage,8,600,4,0,0,.8,false, "Shotgun");
+				Weapon player2Uzi = new Weapon(npcImage,60,600,8,0,0,.08,true, "Uzi");
 				
 				player1.addWeapon(Gun);
 				player1.addWeapon(Knife);
@@ -146,6 +151,9 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				player1.addWeapon(Uzi);
 				player2.addWeapon(player2Gun);
 				player2.addWeapon(player2Knife);
+				player2.addWeapon(player2Gunx2);
+				player2.addWeapon(player2Shotgun);
+				player2.addWeapon(player2Uzi);
 				
 				
 				/*
@@ -162,6 +170,23 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				
 				Animation knifeAnimation = new Animation(knifeFrames);
 				Animation knifeStill = new Animation(knifeFrames1);
+				
+				
+				// Player 2 knife
+				
+				AnimationFrame knifeFrame12 = new AnimationFrame(knifeIn, 12500000L);
+				AnimationFrame knifeFrame22 = new AnimationFrame(knifeOut, 325000000L);
+				
+				ArrayList <AnimationFrame> knifeFrames2 = new ArrayList <AnimationFrame>();
+				knifeFrames.add(knifeFrame2);
+				
+				ArrayList <AnimationFrame> knifeFrames12 = new ArrayList <AnimationFrame>();
+				knifeFrames1.add(knifeFrame1);
+				
+				Animation knifeAnimation2 = new Animation(knifeFrames);
+				Animation knifeStill2 = new Animation(knifeFrames1);
+				
+				
 				
 				/*
 				 * Initialising Pistol Animation
@@ -232,79 +257,51 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				Gun.animations.add(gunStill);
 				Gun.animations.add(gunAnimation);
 				
+				player2Gun.animations.add(gunStill);
+				player2Gun.animations.add(gunAnimation);
+				
 				Gunx2.animations.add(gun2xStill);
 				Gunx2.animations.add(gun2xAnimation);
+				
+				player2Gunx2.animations.add(gun2xStill);
+				player2Gunx2.animations.add(gun2xAnimation);
 				
 				Shotgun.animations.add(shotgunStill);
 				Shotgun.animations.add(shotgunAnimation);
 				
+				player2Shotgun.animations.add(shotgunStill);
+				player2Shotgun.animations.add(shotgunAnimation);
+				
 				Uzi.animations.add(uziStill);
 				Uzi.animations.add(uziAnimation);
+				
+				player2Uzi.animations.add(uziStill);
+				player2Uzi.animations.add(uziAnimation);
 				
 				Knife.animations.add(knifeStill);
 				Knife.animations.add(knifeAnimation);
 				
-				player2Gun.animations.add(gunStill);
-				player2Gun.animations.add(gunAnimation);
+				player2Knife.animations.add(knifeStill);
+				player2Knife.animations.add(knifeAnimation);
 				
-				player2Knife.animations.add(gunStill);
-				player2Knife.animations.add(gunAnimation);
 				
+							
 				player1.animations.add(playerAnimation1);
 				player1.animations.add(playerAnimation2);
 				
-				player2.animations.add(playerAnimation1);
-				player2.animations.add(playerAnimation2);
+				player2.animations.add(player2Animation1);
+				player2.animations.add(player2Animation2);
 				
 
 			//Add player to map SpriteList.
 				map1.addPlayer(player1);
-				map2.addPlayer(player2);
-				//map1.setPlayerOnePosition();
+				//map2.addPlayer(player2);
+			    //map1.setPlayerOnePosition();
 				
 				
 			
 	}
-				
-		public void gameLoop(){	
-				
-			//Start Game Thread 1.
-				new Thread() {
-				    public void run() {
-				    	
-				    	long startTime = System.currentTimeMillis();
-				    	long currentTime = startTime;
-				    	while(true){
-				        	long loopTime = System.currentTimeMillis() - currentTime;
-				        	currentTime += loopTime;
-				        	
-				        	
-				        	//if statement used because update has issues with loop taking less then 5ms
-				        	if (loopTime <= 20){
-				        		try {
-					                Thread.sleep(20);}
-						        	catch (InterruptedException ex) { } 
-						    }
-				        	
-				        	
-				        	
-				        	if (pause != true){
-				        		
-				        		manager.switchMap();
-				        		manager.updateAnimations();
-				        		manager.manageSprites();
-					        	
-				        	}
-				        	
-				        	
-				        	
-				        	
-				        	
-				        }
-				    }
-				}.start();
-	
-			}
+			
 			
 		
 		

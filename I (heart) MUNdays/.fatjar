@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Mon Apr 06 00:24:13 NDT 2009
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=I (heart) MUNdays_fat.jar
+manifest.mergeall=true
+manifest.mainclass=Main.GameManager
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=

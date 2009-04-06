@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Main.GameFrame;
 import View.Animation;
 import View.AnimationFrame;
 import View.finiteAnimation;
@@ -19,6 +20,7 @@ import View.finiteAnimation;
 public class ModelManager implements Serializable{
 	
 	public TileMap map;
+	public GameFrame game;
 	Image zombieImage; 
 	Random generator = new Random();
 	public int killed = 0;
@@ -41,7 +43,8 @@ public class ModelManager implements Serializable{
 	 * 
 	 * @param maplist
 	 */
-	public ModelManager(ArrayList <TileMap> maplist){
+	public ModelManager(ArrayList <TileMap> maplist, GameFrame game){
+		this.game = game;
 		MapList = maplist;
 		map = maplist.get(0);
 		currentMap = 0;
@@ -106,6 +109,16 @@ public class ModelManager implements Serializable{
 		for (int Map = 0; Map < MapList.size(); Map++){
 			map = MapList.get(Map);
 			for (int i = 0; i < map.PlayerList.size(); i++){
+				System.out.println(map.PlayerList.get(i).WeaponList.get(i).name);
+				
+				System.out.println("That!!!      "   + 
+						map.PlayerList.get(i).WeaponList.
+						get(map.PlayerList.get(i).
+								getCurrentWeapon()).animations.get(map.PlayerList.get(i)
+										.WeaponList.get(map.PlayerList.get(i)
+												.getCurrentWeapon()).currentAnimation).getAnimationImage());
+
+				//System.out.println(Map + "   "   +i + " "+map.PlayerList.size()  + " " + map.PlayerList.get(i).WeaponList.size());
 				map.PlayerList.get(i).image = map.PlayerList.get(i).animations.get(map.PlayerList.get(i).currentAnimation).getAnimationImage();
 				map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).image = map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).animations.get(map.PlayerList.get(i).WeaponList.get(map.PlayerList.get(i).getCurrentWeapon()).currentAnimation).getAnimationImage();
 			}
@@ -218,8 +231,7 @@ public class ModelManager implements Serializable{
 				map.PlayerList.get(i).Movement(timeSpent);
 				map.PlayerList.get(i).setSpriteOrientation();
 				if (map.PlayerList.get(i).isAlive == false){
-					
-					
+					game.showLoseGameMenu();			
 				}
 			}
 			
