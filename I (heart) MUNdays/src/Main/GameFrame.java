@@ -2,31 +2,19 @@ package Main;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.DisplayMode;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Image;
-import java.awt.Toolkit;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.RemoteServer;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
@@ -34,23 +22,16 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
 
 
 
 
 import Interface.Buttons;
 import Interface.MouseEventListener;
-import Model.ModelManager;
-import Model.Player;
-import Model.RemotePlayer;
 import Model.TileMap;
-import Model.Weapon;
-import View.Animation;
-import View.AnimationFrame;
 import View.ChooseMultiplayerMenu;
 import View.Display;
 import View.InGameMenu;
@@ -114,24 +95,7 @@ public class GameFrame extends JFrame implements Serializable{
 			setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ) ;
 			
 			
-			/*
-			DisplayMode dm = new DisplayMode (1280,800,32,60);
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			GraphicsDevice gd = ge.getDefaultScreenDevice();
-			this.setUndecorated(true);
-			this.setResizable(false);
-			gd.setFullScreenWindow(this);
-			gd.setDisplayMode(dm);
-			*/
-			
-			//Setting up Main Menu
-			Dimension size = new Dimension( 800, 600) ;
-			
-						
-			
-			
-			
-			
+		
 			
 			//Setting up Win Sound
 			Win = new File("dark2.wav");
@@ -361,7 +325,7 @@ public class GameFrame extends JFrame implements Serializable{
 		}
 		
 		public void JoinGame() throws MalformedURLException, RemoteException, NotBoundException{
-			String name = JOptionPane.showInputDialog("Enter you Player Name: ", "") ;
+			//String name = JOptionPane.showInputDialog("Enter you Player Name: ", "") ;
 			String server = JOptionPane.showInputDialog("Enter the server IP Address: ", "rmi://xxx.xxx.xxx.xxx/Game");
 			
 			

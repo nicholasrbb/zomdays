@@ -3,7 +3,6 @@ package Model;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface RMIInterface extends Remote{

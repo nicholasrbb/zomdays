@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -21,6 +22,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * 
  * @see Sprite
  */
+@SuppressWarnings("serial")
 public class Player extends Sprite implements RemotePlayer, Serializable{
 	
 	private AffineTransform playerOrientation;
@@ -178,17 +180,58 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 		
 		
 		//item effects
+		if(map.ItemList.size() > 0){
 		for ( int i = 0; i < map.ItemList.size(); i++){
-			if ( Math.abs(PositionX - map.ItemList.get(i).getX()) < 25 && Math.abs(PositionY - map.ItemList.get(i).getY()) < 25){
-				if ( map.ItemList.get(i).getType()  == "ammo"){
-					WeaponList.get(currentWeapon).ammo += map.ItemList.get(i).getAmount();
+			if ( Math.abs(PositionX - map.ItemList.get(i).getX()-25) < 50 && Math.abs(PositionY - map.ItemList.get(i).getY()-25) < 50){
+				if ( map.ItemList.get(i).getType()  == "ammo" && WeaponList.get(currentWeapon).ammo < 1000 &&WeaponList.get(currentWeapon).ammo >= 0){
+					for(int j = 0 ; j < WeaponList.size();j++){
+						String tmp = WeaponList.get(j).name;
+						if (tmp.equals("Hand Gun"))
+							WeaponList.get(j).ammo = WeaponList.get(j).ammo + 10; 
+						
+						else if (tmp.equals("2x Hand Gun"))
+							WeaponList.get(j).ammo = WeaponList.get(j).ammo + 20; 
+						
+						else if (tmp.equals("Shotgun"))
+							WeaponList.get(j).ammo = WeaponList.get(j).ammo + 4; 
+						
+						else if (tmp.equals("Uzi"))
+							WeaponList.get(j).ammo = WeaponList.get(j).ammo + 20; 
+						
+					}
+					
+					
+					if (WeaponList.get(currentWeapon).ammo > 1000)
+						WeaponList.get(currentWeapon).ammo =1000;
+					map.ItemList.remove(i);
+					break;
 				}
-				if ( map.ItemList.get(i).getType()  == "health"){
+				else if ( map.ItemList.get(i) != null && map.ItemList.get(i).getType()  == "health" && Health < 50){
 					Health += map.ItemList.get(i).getAmount();
+					if (Health > 50)
+						Health = 50;
+					map.ItemList.remove(i);
+					break;
+				}
+				else if ( map.ItemList.get(i) != null && map.ItemList.get(i).getType()  == "points10"){
+					Points = Points + 10;
+					map.ItemList.remove(i);
+					break;
+				}
+				else if ( map.ItemList.get(i) != null && map.ItemList.get(i).getType()  == "points20"){
+					Points = Points + 20;
+					map.ItemList.remove(i);
+					break;
+				}
+				else if ( map.ItemList.get(i) != null && map.ItemList.get(i).getType()  == "points50"){
+					Points = Points + 50;
+					map.ItemList.remove(i);
+					break;
 				}
 				
-				map.ItemList.remove(i);
+				
 			}
+		}
 			
 		
 		}
@@ -384,10 +427,8 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 			 * Limit players attack to specific rate of fire of weapon
 			 * and convert players rate from rounds per second to rounds per millisecond
 			 */
-			double tmp =System.currentTimeMillis() - lastFireTime ;
 			
 			if (System.currentTimeMillis() - lastFireTime >= attackingWeapon.getRate()*1000 || lastFireTime <=0 ){
-				System.out.println("fired");
 				if ( attackingWeapon.magAmmo() != 0){
 					if (currentWeapon == 0 || currentWeapon == 2){
 						gunShotOrig.setFramePosition(0);
@@ -401,12 +442,37 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 						lastFireTime = System.currentTimeMillis();
 						WeaponList.get(currentWeapon).currentAnimation = 1;
 						shotgunShot.start();
+						attackSpray(angle+1);
+						attackSpray(angle-1);
+						attackSpray(angle+2);
+						attackSpray(angle-2);
+						attackSpray(angle+3);
+						attackSpray(angle-3);
+						attackSpray(angle+4);
+						attackSpray(angle-4);
+						attackSpray(angle+5);
+						attackSpray(angle-5);
 					}
 					
 					if (currentWeapon == 4){
+						Random random = new Random();
+						int spray = Math.abs(random.nextInt(4));
+						if (spray == 0){
+							angle++;
+						}
+						else if (spray == 1){
+							angle--;
+						}
+						else if (spray == 1){
+							angle--;
+							angle--;
+						}
+						else if (spray == 1){
+							angle++;
+							angle++;
+						}
 						uziShot.setFramePosition(0);
 						lastFireTime = System.currentTimeMillis();
-						System.out.println("fired Uzi");
 						WeaponList.get(currentWeapon).currentAnimation = 1;
 						uziShot.start();
 					}
@@ -452,6 +518,38 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 			
 	}
 	
+
+	private void attackSpray(double d) {
+		
+		Weapon attackingWeapon = WeaponList.get(currentWeapon);
+		int range = attackingWeapon.getRange();
+		int damage = attackingWeapon.getDamage();
+	
+		String tileShoot = null;
+		Sprite target = null;
+		for ( int r = 20; r <= range; r++){
+			if (xboxController){
+				tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(TSangle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(TSangle)))/25));
+				//if((PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0) != null)
+				//	target = getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0);
+				
+			}else{
+				tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(d)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(d)))/25));
+				if(getCollider(PositionX + r*Math.sin(Math.toRadians(d)), PositionY - r*Math.cos(Math.toRadians(d))).size() > 0){
+					target = getCollider(PositionX + r*Math.sin(Math.toRadians(d)), PositionY - r*Math.cos(Math.toRadians(d))).get(0);
+				}
+			}
+			
+			
+			if (tileShoot != " "){
+				return;
+			}
+			if ( target != null){
+				target.updateHealth(-damage);
+				return;
+			}		
+		}
+	}
 
 	public int getPoints() {
 		return Points;

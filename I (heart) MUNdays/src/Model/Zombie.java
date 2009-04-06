@@ -266,8 +266,6 @@ public class Zombie extends Sprite{
 	 * 
 	 */
 	public void attack(){
-		//zAnim.setState(ZombieAnimationStates.Attacking);
-
 		targetPlayer.updateHealth(-damage);
 	}
 	
@@ -279,7 +277,6 @@ public class Zombie extends Sprite{
 	public void updateHealth(double change){
 		
 		
-		System.out.println(currentAnimation);
 		bloodAnimations.get(currentAnimation).startAnimation();
 		
 					
@@ -291,6 +288,8 @@ public class Zombie extends Sprite{
 			//voice1Orig.start();}
 			isAlive = false;
 		}
+		
+		
 	}
 
 	

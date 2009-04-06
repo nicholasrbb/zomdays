@@ -15,6 +15,7 @@ import View.finiteAnimation;
  * Manager that controls the updating of all sprites and animations for the game,
  * respawns Zombies and controls the transition between different game Maps.
  */
+@SuppressWarnings("serial")
 public class ModelManager implements Serializable{
 	
 	public TileMap map;
@@ -70,9 +71,7 @@ public class ModelManager implements Serializable{
 		
 	    ZombieWalk = new Animation(frames1);
 	    
-	    //Initialize Blood!
-	    //ZombieLegs = Toolkit.getDefaultToolkit().createImage("Player/player_shortlegs_right.png");
-		
+	    //Initialize Blood Animation
 		Image bloodsmall = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_blood_small.png");
 		Image bloodlarge = Toolkit.getDefaultToolkit().createImage("Zombie/zombie_blood_big.png");
 		Image blank = Toolkit.getDefaultToolkit().createImage("Zombie/blank.png");

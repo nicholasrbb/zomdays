@@ -8,9 +8,7 @@ import java.awt.Image;
  */
 public class Item {
 	
-	Image ammo;
-	Image health;
-	Image image;
+	
 	String type;
 	int amount;
 	int x,y;
@@ -25,11 +23,10 @@ public class Item {
 	 * @param x
 	 * @param y
 	 */
-	public Item(Image image, String type, int amount, int x, int y){
+	public Item(String type, int amount, int x, int y){
 		this.x = x;
 		this.y = y;
 		this.type = type;
-		this.image = image;
 		this.amount = amount;
 	}
 	
@@ -69,9 +66,7 @@ public class Item {
 	 *@return Image image
 	 *
 	 */
-	public Image getImage(){
-		return image;
-	}
+	
 	
 	/**
 	 *Returns Items amount of ammo or health.  

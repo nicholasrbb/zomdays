@@ -1,10 +1,14 @@
 package Interface;
 
-import Main.GameFrame;
-import Model.Player;
+
+/**
+ * Adds the option of using a Xbox Controller instead of Keyboard and mouse.
+ * 
+ */
 
 public class myXboxControllerListener /*implements XboxControllerListener*/{
 
+	
 	/*
 	private GameFrame game;
 	private Player p;

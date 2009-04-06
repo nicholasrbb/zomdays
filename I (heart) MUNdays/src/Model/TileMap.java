@@ -29,9 +29,7 @@ public class TileMap {
     public int height;
     Random generator  = new Random();
     
-    Image ammo = Toolkit.getDefaultToolkit().createImage("innerwall_BL.jpg");
-    Image health = Toolkit.getDefaultToolkit().createImage("innerwall_BL.jpg");
-    
+   
     public TileMap(int width, int height, String file) throws IOException {
         Map = new Image[width][height];
         SpriteList = new ArrayList <Sprite>();
@@ -327,27 +325,83 @@ public class TileMap {
   
                 }
                 
-                
-                
-                if (ch == '*') {
-                	this.setTile(x, y, toolkit.getImage("white.jpg") );
-                	this.setCharTile(x, y, "*");
-                }
+    
                  // create Tiles to contain Items
-                if (ch == '0') {
-                	this.setTile(x, y, toolkit.getImage("white.jpg") );
-                	this.setCharTile(x, y, " ");
-                	int type = Math.abs(generator.nextInt(2));
+                if (ch == '!') {
+                	
+                	int type = Math.abs(generator.nextInt(3));
                 	if (type == 0){
-                		Item item = new Item(ammo, "ammo", 50,x*25, y*25);
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor1.jpg") );}
+                	else if (type == 1){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor2.jpg") );}
+                	else if (type == 2){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor3.jpg") );}
+                	else {
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor4.jpg") );}
+
+                	
+                	int Itemtype = Math.abs(generator.nextInt(1));
+                	if (Itemtype == 0){
+                		Item item = new Item("ammo", 20,x*25, y*25);
                 		ItemList.add(item);
                 	}
                 	if (type == 1){
-                		Item item = new Item(health,"health", 10,x*25, y*25);
+                		Item item = new Item("health", 10,x*25, y*25);
                 		ItemList.add(item);
                 	}	
+                	this.setCharTile(x, y, " ");
                 }
                 
+                if (ch == '#') {
+                	
+                	int type3 = Math.abs(generator.nextInt(3));
+                	if (type3 == 1){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor1.jpg") );}
+                	else if (type3 == 2){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor2.jpg") );}
+                	else if (type3 == 3){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor3.jpg") );}
+                	else {
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor4.jpg") );}
+
+                	
+                	int Itemtype2 = Math.abs(generator.nextInt(3));
+                	System.out.println(Itemtype2);
+                	if (Itemtype2 == 0){
+                		Item item = new Item("points10", 10,x*25, y*25);
+                		ItemList.add(item);
+                	}
+                	else if (Itemtype2 == 1){
+                		Item item = new Item("points10", 20,x*25, y*25);
+                		ItemList.add(item);
+                	}	
+                	
+                	else if (Itemtype2 == 2){
+                		Item item = new Item("points20", 50,x*25, y*25);
+                		ItemList.add(item);
+                	}	
+                	this.setCharTile(x, y, " ");
+                }
+                
+                if (ch == '$') {
+                	
+                	int type4 = Math.abs(generator.nextInt(4));
+                	if (type4 == 1){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor1.jpg") );}
+                	else if (type4 == 2){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor2.jpg") );}
+                	else if (type4 == 3){
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor3.jpg") );}
+                	else {
+                		this.setTile(x, y, toolkit.getImage("BuildImg/floor4.jpg") );}
+
+                	
+                
+               		Item item = new Item("points50", 10,x*25, y*25);
+               		ItemList.add(item);
+                	
+                	this.setCharTile(x, y, " ");
+                }
                             
                 if (ch == '1') {
                 	this.setTile(x, y, toolkit.getImage("stairs.png") );
