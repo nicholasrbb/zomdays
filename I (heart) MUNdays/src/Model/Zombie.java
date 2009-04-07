@@ -238,8 +238,8 @@ public class Zombie extends Sprite{
 		
 		
 		
-		npcOrientation.setToTranslation(getX()-25, getY()-25);
-		npcOrientation.rotate(Math.toRadians(angle), image.getWidth(null)/2, image.getHeight(null)/2);	
+		npcOrientation.setToTranslation(getX()-55, getY()-69);
+		npcOrientation.rotate(Math.toRadians(angle),55, 69);	
 		
 	}
 	

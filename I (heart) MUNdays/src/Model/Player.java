@@ -52,6 +52,8 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 	
 	
 	
+	
+	
 	/** 
 	 * Creates a Player Object with a given Image, Size, Position and Speed.
 	 * <p> Player also knows the ModelManager
@@ -67,13 +69,16 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 	 * 
 	 * @see ModelManager
 	 */
-	public Player(Image playerImage, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map) {
+	public Player(Image playerImage, int health, int width, int height, int x, int y, double dx, double dy, TileMap Map,boolean Xboxcontroller) {
 		super(health, width, height, x, y, dx, dy, Map);
 		this.image = playerImage;
+		this.xboxController = Xboxcontroller;
 		playerOrientation = new AffineTransform();
 		Orientation = new AffineTransform();
 		WeaponList = new ArrayList <Weapon>();
 		//pAnim = new PlayerAnimationManager(this);
+		
+		bulletList = new ArrayList <Bullet>();
 		
 		gun = new File("gunshot.wav");
 		gunReloadFile = new File("reload.wav");
@@ -159,6 +164,10 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 	
 	public ArrayList <Weapon> getWeapons(){
 		return WeaponList;
+	}
+	
+	public ArrayList <Bullet> getBullets(){
+		return bulletList;
 	}
 
 	/**
@@ -312,11 +321,11 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 		
 		solveAngle(mouseX, mouseY);
 		int printX = getX()-xPos-55;
-		int printY = getY()-yPos-55;
+		int printY = getY()-yPos-69;
 	
 		
 		playerOrientation.setToTranslation(printX, printY);	
-		playerOrientation.rotate(Math.toRadians(angle),image.getWidth(null)/2, (image.getHeight(null)/2)+10);
+		playerOrientation.rotate(Math.toRadians(angle),55, 69);
 	}
 	
 	public void setXBox(boolean xbox){
@@ -329,8 +338,8 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 	
 	public void setplayerSpriteOrientationXbox(int xPos, int yPos){
 		
-		int printX = getX()-xPos-25;
-		int printY = getY()-yPos-25;
+		int printX = getX()-xPos-55;
+		int printY = getY()-yPos-69;
 	
 		
 		playerOrientation.setToTranslation(printX, printY);	
@@ -442,16 +451,16 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 						lastFireTime = System.currentTimeMillis();
 						WeaponList.get(currentWeapon).currentAnimation = 1;
 						shotgunShot.start();
-						attackSpray(angle+1);
-						attackSpray(angle-1);
 						attackSpray(angle+2);
 						attackSpray(angle-2);
-						attackSpray(angle+3);
-						attackSpray(angle-3);
-						attackSpray(angle+4);
-						attackSpray(angle-4);
-						attackSpray(angle+5);
-						attackSpray(angle-5);
+						attackSpray(angle+8);
+						attackSpray(angle-8);
+						attackSpray(angle+10);
+						attackSpray(angle-10);
+						attackSpray(angle+16);
+						attackSpray(angle-16);
+						attackSpray(angle+20);
+						attackSpray(angle-20);
 					}
 					
 					if (currentWeapon == 4){
@@ -459,17 +468,24 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 						int spray = Math.abs(random.nextInt(4));
 						if (spray == 0){
 							angle++;
+							angle++;
 						}
 						else if (spray == 1){
 							angle--;
+							angle--;
 						}
-						else if (spray == 1){
+						else if (spray == 2){
+							angle--;
+							angle--;
 							angle--;
 							angle--;
 						}
-						else if (spray == 1){
+						else if (spray == 3){
 							angle++;
 							angle++;
+							angle++;
+							angle++;
+							
 						}
 						uziShot.setFramePosition(0);
 						lastFireTime = System.currentTimeMillis();
@@ -485,11 +501,12 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 					
 					String tileShoot = null;
 					Sprite target = null;
-					for ( int r = 20; r <= range; r++){
+					for ( int r = 1; r <= range; r++){
 						if (xboxController){
 							tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(TSangle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(TSangle)))/25));
-							//if((PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0) != null)
-							//	target = getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0);
+							if(getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)),PositionY- r*Math.cos(Math.toRadians(TSangle))).size() > 0)
+							
+								target = getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0);
 							
 						}else{
 							tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
@@ -500,12 +517,22 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 						
 						
 						if (tileShoot != " "){
+							Bullet shotTile = new Bullet(PositionX,PositionY,(int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
+							bulletList.add(shotTile);
 							return;
 						}
 						if ( target != null){
+							Bullet shotTarget = new Bullet(PositionX,PositionY,(int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
+							bulletList.add(shotTarget);
 							target.updateHealth(-damage);
 							return;
 						}
+						else if(r == range){
+							Bullet shotAir = new Bullet(PositionX,PositionY,(int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
+						bulletList.add(shotAir);
+							
+						}
+							
 					}
 				}
 			}
@@ -527,11 +554,11 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 	
 		String tileShoot = null;
 		Sprite target = null;
-		for ( int r = 20; r <= range; r++){
+		for ( double r = 1; r <= range; r=r+0.5){
 			if (xboxController){
 				tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(TSangle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(TSangle)))/25));
-				//if((PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0) != null)
-				//	target = getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0);
+				if(getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0) != null)
+					target = getCollider(PositionX + r*Math.sin(Math.toRadians(TSangle)), PositionY - r*Math.cos(Math.toRadians(TSangle))).get(0);
 				
 			}else{
 				tileShoot = map.getCharTile((int)((PositionX + r*Math.sin(Math.toRadians(d)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(d)))/25));
@@ -542,9 +569,13 @@ public class Player extends Sprite implements RemotePlayer, Serializable{
 			
 			
 			if (tileShoot != " "){
+				Bullet shotTarget = new Bullet(PositionX,PositionY,(int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
+				bulletList.add(shotTarget);
 				return;
 			}
 			if ( target != null){
+				Bullet shotTarget = new Bullet(PositionX,PositionY,(int)((PositionX + r*Math.sin(Math.toRadians(angle)))/25),(int) ((PositionY - (int) r*Math.cos(Math.toRadians(angle)))/25));
+				bulletList.add(shotTarget);
 				target.updateHealth(-damage);
 				return;
 			}		

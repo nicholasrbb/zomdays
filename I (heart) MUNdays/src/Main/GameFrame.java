@@ -28,12 +28,15 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import ch.aplu.xboxcontroller.XboxController;
+
 
 
 
 
 import Interface.Buttons;
 import Interface.MouseEventListener;
+import Interface.myXboxControllerListener;
 import Model.TileMap;
 import View.ChooseMultiplayerMenu;
 import View.Display;
@@ -74,6 +77,7 @@ public class GameFrame extends JFrame implements Serializable{
 	GameFrame secondFrame;
 	boolean multi = false;
 	boolean firstTime = true;
+	XboxController xc = new XboxController();
 	/**
 	 * 
 	 */
@@ -268,10 +272,15 @@ public class GameFrame extends JFrame implements Serializable{
 			secondFrame.chooseMultiplayerMenu.setVisible(false);
 			secondFrame.display = new Display(game.player2, this.getWidth(), this.getHeight()) ;
 			game.MapList.get(0).addPlayer(game.player2);
-			GameMouseEvents mouse2 = new GameMouseEvents(secondFrame.display,game.player2);
-			MouseEventListener mouseListener2 = new MouseEventListener(mouse2);
-			secondFrame.display.addMouseListener(mouseListener2);
-			secondFrame.display.addMouseMotionListener(mouseListener2);
+			
+			
+			myXboxControllerListener xboxListener = new myXboxControllerListener(game.player2,secondFrame,xc);
+			xc.addXboxControllerListener(xboxListener);
+			
+			//GameMouseEvents mouse2 = new GameMouseEvents(secondFrame.display,game.player2);
+			//MouseEventListener mouseListener2 = new MouseEventListener(mouse2);
+			//secondFrame.display.addMouseListener(mouseListener2);
+			//secondFrame.display.addMouseMotionListener(mouseListener2);
 			
 			Buttons newButton = new Buttons(game.player2, secondFrame);
 			secondFrame.display.addKeyListener( newButton);
@@ -437,6 +446,7 @@ public class GameFrame extends JFrame implements Serializable{
 			        		//game.manager.switchMap();
 			        		game.manager.updateAnimations();
 			        		game.manager.manageSprites();
+			        		game.manager.manageBullets();
 			        		
 			        		if(game.player1.getPoints() >= 2500){
 			        			showWinGameMenu();

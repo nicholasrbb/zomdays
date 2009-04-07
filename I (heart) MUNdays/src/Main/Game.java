@@ -129,8 +129,8 @@ public class Game extends UnicastRemoteObject implements GameInterface, Serializ
 				Image uzi = Toolkit.getDefaultToolkit().getImage("Player/player_uzi_noflash.png");
 				Image uziFire = Toolkit.getDefaultToolkit().getImage("Player/player_uzi_flash.png");
 				
-				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager.MapList.get(0));
-				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(0));
+				player1 = new Player(playerImage, 50, 10, 10, 1400, 2900, 0.3, 0.3, manager.MapList.get(0),false);
+				player2 = new Player(playerImage, 50, 10, 10, 1300, 2900, 0.3, 0.3, manager.MapList.get(0),true);
 				
 				Weapon Gun = new Weapon(npcImage,15,600,10,30,15,0.2,false, "Hand Gun");
 				Weapon Knife = new Weapon(npcImage,0,50,25, -1,-1,0.2,false, "Knife");

@@ -2,5 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
+	<classpathentry kind="lib" path="X:/I (heart) MUNdays/I (heart) MUNdays/jaw.jar"/>
+	<classpathentry kind="lib" path="X:/I (heart) MUNdays/I (heart) MUNdays/XboxController.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

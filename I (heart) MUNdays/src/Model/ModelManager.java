@@ -109,14 +109,8 @@ public class ModelManager implements Serializable{
 		for (int Map = 0; Map < MapList.size(); Map++){
 			map = MapList.get(Map);
 			for (int i = 0; i < map.PlayerList.size(); i++){
-				System.out.println(map.PlayerList.get(i).WeaponList.get(i).name);
 				
-				System.out.println("That!!!      "   + 
-						map.PlayerList.get(i).WeaponList.
-						get(map.PlayerList.get(i).
-								getCurrentWeapon()).animations.get(map.PlayerList.get(i)
-										.WeaponList.get(map.PlayerList.get(i)
-												.getCurrentWeapon()).currentAnimation).getAnimationImage());
+				
 
 				//System.out.println(Map + "   "   +i + " "+map.PlayerList.size()  + " " + map.PlayerList.get(i).WeaponList.size());
 				map.PlayerList.get(i).image = map.PlayerList.get(i).animations.get(map.PlayerList.get(i).currentAnimation).getAnimationImage();
@@ -179,6 +173,19 @@ public class ModelManager implements Serializable{
 						}
 						
 					}
+				}
+			}
+		}
+	}
+	
+	public void manageBullets(){
+		for (int i = 0; i < map.PlayerList.size() && map.PlayerList.size() > 0; i++){
+			for (int j = 0; j < map.PlayerList.get(i).bulletList.size() && map.PlayerList.get(i).bulletList.size() > 0; j++){
+				map.PlayerList.get(i).bulletList.get(j).updateBullet();
+				
+				if (map.PlayerList.get(i).bulletList.get(j).visible == false){
+					System.out.println("Removed");
+					map.PlayerList.get(i).bulletList.remove(j);
 				}
 			}
 		}

@@ -1,10 +1,10 @@
 #Fat Jar Configuration File
-#Mon Apr 06 00:24:13 NDT 2009
+#Tue Apr 07 02:18:26 NDT 2009
 onejar.license.required=true
 manifest.classpath=
 manifest.removesigners=true
 onejar.checkbox=false
-jarname=I (heart) MUNdays_fat.jar
+jarname=I (heart) MUNdaysNew.jar
 manifest.mergeall=true
 manifest.mainclass=Main.GameManager
 manifest.file=<createnew>
