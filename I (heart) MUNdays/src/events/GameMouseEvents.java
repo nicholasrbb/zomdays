@@ -55,13 +55,13 @@ public class GameMouseEvents implements MouseListenerInterface {
 	public void mouseEntered() {
 		try {
 			if (player.getXBox() == false){		
-				Image image = Toolkit.getDefaultToolkit().createImage("crosshair.png");
+				Image image = Toolkit.getDefaultToolkit().createImage("crosshairDot.png");
 				
-				Cursor aimer = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(15,15), "crosshairCursor");
+				Cursor aimer = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(25,25), "crosshairCursor");
 				d.setCursor(aimer);
 			}else{
 				Image blankImage = Toolkit.getDefaultToolkit().createImage("blank.png");
-				Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(15,15), "crosshairCursor");
+				Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(blankImage, new Point(25,25), "crosshairCursor");
 				d.setCursor(blank);
 			}
 		} catch (RemoteException e) {

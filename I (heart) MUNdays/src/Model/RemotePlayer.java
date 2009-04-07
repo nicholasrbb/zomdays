@@ -42,5 +42,6 @@ public interface RemotePlayer extends Remote{
 	public void setLEFT(boolean b) throws RemoteException;
 	public void setDOWN(boolean b) throws RemoteException;
 	public void setRIGHT(boolean b) throws RemoteException;
+	public ArrayList <Bullet> getBullets();
 
 }

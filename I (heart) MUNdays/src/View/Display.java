@@ -7,6 +7,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.renderable.RenderableImage;
+import java.io.File;
+import java.io.IOException;
 import java.rmi.RemoteException;
 
 import javax.swing.JPanel;
@@ -43,6 +46,9 @@ public class Display extends JPanel {
 	Image Points10;
 	Image Points20;
 	Image Points50;
+	BufferedImage bulletImg;
+	BufferedImage bulletUzi;
+	BufferedImage bulletDual;
 	
 	
 	
@@ -75,9 +81,29 @@ public class Display extends JPanel {
 		Points10 = Toolkit.getDefaultToolkit().createImage("Points/Brain3.png");
 		Points20 = Toolkit.getDefaultToolkit().createImage("Points/Brain2.png");
 		Points50 = Toolkit.getDefaultToolkit().createImage("Points/Brain1.png");
+		try {
+			bulletImg = javax.imageio.ImageIO.read(new File("Player/bullet.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			bulletUzi = javax.imageio.ImageIO.read(new File("Player/bulletUzi.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			bulletDual = javax.imageio.ImageIO.read(new File("Player/bulletDual.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 		
 		
+	
 		@Override public void paintComponent(Graphics g){
 		try{
 			//manager.updateSprites(20);
@@ -187,6 +213,77 @@ public class Display extends JPanel {
 		
 			
 		
+	    	// Print Players Bullets
+	    		
+	    		for(int n = 0; n < player.getBullets().size(); n++){
+	    			double angle = 0;
+	    			int endx = player.getBullets().get(n).xStart;
+	    			int x = player.getBullets().get(n).xEnd*25;
+	    			int endY = player.getBullets().get(n).yStart;
+	    			int y = player.getBullets().get(n).yEnd*25;
+	    			
+	    			
+	    			if ( x >= endx && y <= endY){
+	    				angle =    - (180*Math.atan2(endY-y ,x-endx))/Math.PI;
+	    				System.out.println("1");
+	    			}
+	    			if ( x >= endx && y > endY){
+	    				angle = (180*Math.atan2(y-endY,x-endx))/Math.PI;
+	    				System.out.println("2");
+	    			}
+	    			if ( x < endx && y > endY){
+	    				angle = -180 - (180*Math.atan2(y-endY,endx-x))/Math.PI;
+	    				System.out.println("3");
+	    			}
+	    			if ( x < endx && y <= endY){
+	    				angle = -180 + (180*Math.atan2(endY-y,endx-x))/Math.PI;
+	    				System.out.println("4");
+	    			}
+	    			
+	    		
+	    						
+	    			System.out.println(player.getBullets().get(n).xStart + "  " +player.getBullets().get(n).yStart + "  -  " + player.getBullets().get(n).xEnd  + "  " + player.getBullets().get(n).yEnd );
+	    			int deltax = Math.abs(player.getBullets().get(n).xStart - player.getBullets().get(n).xEnd*25);
+	    			int deltay = Math.abs(player.getBullets().get(n).yStart - player.getBullets().get(n).yEnd*25);
+	    			int hyp = (int) Math.sqrt(deltax*deltax + deltay*deltay);
+	    			
+	    			
+	    			
+	    			AffineTransform bulletTransform = new AffineTransform();
+	    			bulletTransform.translate(player.getBullets().get(n).xStart-cornerX1+50, player.getBullets().get(n).yStart-cornerY1-25);
+	    			
+	    			
+	    			
+	    			if(player.getWeapons().get(player.getCurrentWeapon()).getWeaponName().equals("Uzi")){
+	    				bulletTransform.rotate(Math.toRadians(angle-2),-50,25);
+	    				Image test = bulletUzi.getScaledInstance(hyp-55, 50, Image.SCALE_AREA_AVERAGING);
+	    				g2d.drawImage(test, bulletTransform, null);	    				
+	    			}
+	    			else if(player.getWeapons().get(player.getCurrentWeapon()).getWeaponName().equals("2x Hand Gun")){
+	    					bulletTransform.rotate(Math.toRadians(angle),-50,18);
+	    					Image test = bulletDual.getScaledInstance(hyp-55, 36, Image.SCALE_AREA_AVERAGING);
+	    					g2d.drawImage(test, bulletTransform, null);	    				
+	    			}
+	  
+	    			else if(player.getWeapons().get(player.getCurrentWeapon()).getWeaponName().equals("Hand Gun") || player.getWeapons().get(player.getCurrentWeapon()).getWeaponName().equals("Shotgun")){
+	    				bulletTransform.rotate(Math.toRadians(angle),-50,25);
+	    				Image test = bulletImg.getScaledInstance(hyp-55, 50, Image.SCALE_AREA_AVERAGING);
+	    				g2d.drawImage(test, bulletTransform, null);
+	    			}
+	    		}
+	    		
+	    		dy =0;
+	    		for(int y = firstTileY; y < lastTileY; y++ ){
+					int dx = 0;
+					for(int x = firstTileX; x < lastTileX; x++ ){
+						if(player.getMap().getCharTile(x, y)!= " "){
+							Image image = player.getMap().getTile(x, y);
+							g2d.drawImage(image,dx - offsetX,dy - offsetY, null);}
+						dx = dx+25;
+					}
+					dy = dy+25;
+				}
+	    		
 			
 			
 			// Print Player 
@@ -203,11 +300,13 @@ public class Display extends JPanel {
 			for ( int i = 0; i < player.getMap().PlayerList.size(); i++){	
 				if(player.getMap().PlayerList.get(i) != player){
 					System.out.println(((Player) player.getMap().PlayerList.get(i)).getWeapons().get(player.getMap().PlayerList.get(i).getCurrentWeapon()).getImage());
-					AffineTransform otherTransform = new AffineTransform();
+					AffineTransform otherTransform = player.getPlayerSpriteOrientation();
 					otherTransform.setToTranslation(player.getMap().PlayerList.get(i).getX() - cornerX1 - 25, player.getMap().PlayerList.get(i).getY() - cornerY1 - 25);	
 					otherTransform.rotate(Math.toRadians(player.getMap().PlayerList.get(i).angle),player.getMap().PlayerList.get(i).getSpriteImage().getWidth(null)/2, player.getMap().PlayerList.get(i).getSpriteImage().getHeight(null)/2);   
 					g2d.drawImage(player.getMap().PlayerList.get(i).getSpriteImage(),otherTransform, null);
 					g2d.drawImage(((Player) player.getMap().PlayerList.get(i)).getWeapons().get(player.getMap().PlayerList.get(i).getCurrentWeapon()).getImage(),otherTransform, null);
+					
+				
 				}
 			}
 			

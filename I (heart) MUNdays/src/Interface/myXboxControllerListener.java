@@ -1,15 +1,20 @@
 package Interface;
 
+import ch.aplu.xboxcontroller.XboxController;
+import ch.aplu.xboxcontroller.XboxControllerListener;
+import Main.GameFrame;
+import Model.Player;
+
 
 /**
  * Adds the option of using a Xbox Controller instead of Keyboard and mouse.
  * 
  */
 
-public class myXboxControllerListener /*implements XboxControllerListener*/{
+public class myXboxControllerListener implements XboxControllerListener{
 
 	
-	/*
+	
 	private GameFrame game;
 	private Player p;
 	private XboxController xc;
@@ -219,14 +224,14 @@ public class myXboxControllerListener /*implements XboxControllerListener*/{
 	@Override
 	public void start(boolean arg0) {
 		if (arg0 == true){
-			//if (game.MainMenu.isVisible())
+			if (game.MainMenu.isVisible());
 				//game.CreateGame();
-			//else 
-				//game.showInGameMenu();
+			else 
+				game.showInGameMenu();
 		}
     
 	}
 	
-*/	
+
 
 }

@@ -28,6 +28,7 @@ public abstract class Sprite{
 	public double angle;
 	public enum Direction{ UP, RIGHT, LEFT, DOWN, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT }
 	private ArrayList<Sprite> CollidedSprites;
+	public ArrayList<Bullet> bulletList; 
 	protected boolean random = true;
 	protected int number;
 	public Image Legs;
@@ -401,6 +402,9 @@ public abstract class Sprite{
 					}
 				}
 			}
+			
+			
 		return tmp;
+		
 	}
 }
